@@ -40,7 +40,9 @@ Plugin 'ervandew/supertab'
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'edkolev/promptline.vim'
+Plugin 'tpope/vim-surround'
 
 Plugin 'vim-scripts/indentpython.vim'
 
@@ -160,3 +162,8 @@ let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
 "Supertab reverse problem
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"tmuxline config
+
+"set undo files
+set undofile
