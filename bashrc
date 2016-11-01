@@ -128,5 +128,6 @@ fi
 export PATH="/home/hotshot/anaconda3/bin:$PATH"
 export PYTHONPATH="/home/hotshot/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
 
-# for vi like editing onlu on bash
-set -o vi
+source ~/.shell_prompt.sh
+
+alias tmux='tmux -u'
