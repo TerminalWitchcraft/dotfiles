@@ -38,6 +38,7 @@ Plugin 'ervandew/supertab'
 "Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
