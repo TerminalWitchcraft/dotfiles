@@ -28,3 +28,21 @@ for file in $files; do
 	echo "Creating symlinks to $file in home directory"
 	ln -s $dir/$file ~/.$file
 done
+
+# For installing Vundle
+echo " Installing Vundle..."
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+echo " Done..."
+
+# Making vim folders
+echo " Creating vim swap, undo and backup directories..."
+mkdir -p ~/.vim/undo_files
+mkdir -p ~/.vim/backup_files
+mkdir -p ~/.vim/swap_files
+echo " Done..."
+
+# Post Installation
+echo " Post Installation"
+source ~/.bashrc
+source ~/.vimrc
+echo " Done..."
