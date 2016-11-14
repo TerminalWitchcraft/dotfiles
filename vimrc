@@ -168,3 +168,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 "set undo files
 set undofile
+
+"show typed commands
+set showcmd
