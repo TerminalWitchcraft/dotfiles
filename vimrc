@@ -74,6 +74,8 @@ nnoremap <C-H> <C-W><C-H>
 set foldmethod=indent
 set foldlevel=99
 
+" map leader key
+let mapleader=" "
 " Enable folding with the spacebar
 nnoremap <space> za
 
@@ -137,7 +139,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'"
 
 "Run python/C/C++ scrits within vim with F9
 filetype on
-autocmd FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+autocmd FileType python nnoremap <buffer> <F9> :exec '!clear; python' shellescape(@%, 1)<cr>
 autocmd filetype c nnoremap <F9> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 autocmd filetype cpp nnoremap <F9> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
@@ -171,3 +173,29 @@ set undofile
 
 "show typed commands
 set showcmd
+
+" map system clipboard
+
+nmap <leader>y "*y
+nmap <leader>p "*p
+vmap <leader>y "*y
+vmap <leader>p "*p
+
+nmap <leader>Y "+y
+nmap <leader>P "+p
+vmap <leader>Y "+y
+vmap <leader>P "+p
+
+" set guifont
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
+  set lines=10 columns=60
+  set guioptions-=m  "remove menu bar
+  set guioptions-=T  "remove toolbar
+  set guioptions-=r  "remove right-hand scroll bar
+  set guioptions-=L  "remove left-hand scroll bar
+else
+  " This is console Vim.
+endif
