@@ -123,11 +123,14 @@ fi
 if [ -x /usr/bin/mint-fortune ]; then
      /usr/bin/mint-fortune
 fi
-
+# If not running interactively, do not do anything
+[[ $- != *i* ]] && return
+[[ -z "$TMUX" ]] && exec tmux -u
 # added by Anaconda3 4.1.1 installer
-export PATH="/home/hotshot/anaconda3/bin:$PATH"
-export PYTHONPATH="/home/hotshot/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
+export PATH="/home/hitesh/anaconda3/bin:$PATH"
+export PYTHONPATH="/home/hitesh/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
 
 source ~/.shell_prompt.sh
 
-alias tmux='tmux -u'
+# alias tmux='tmux -u'
+
