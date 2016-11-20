@@ -35,6 +35,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
+Plugin 'ctrlpvim/ctrlp.vim'
 "Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -107,6 +108,7 @@ let g:SimpylFold_docstring_preview = 1
 
 "set line numbering
 set nu
+set rnu
 
 "Settings for syntastic
 set statusline+=%#warningmsg#
@@ -130,7 +132,7 @@ colorscheme monokai
 let g:airline_powerline_fonts = 1
 set laststatus=2
 set t_Co=256
-let g:airline_theme='serene'
+let g:airline_theme='distinguished'
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 
