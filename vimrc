@@ -36,6 +36,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'reedes/vim-pencil'
 "Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -45,8 +47,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'edkolev/promptline.vim'
 Plugin 'tpope/vim-surround'
-
-Plugin 'vim-scripts/indentpython.vim'
+Plugin 'hynek/vim-python-pep8-indent'
+"Plugin 'vim-scripts/indentpython.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
