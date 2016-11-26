@@ -38,6 +38,8 @@ Plugin 'ervandew/supertab'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
+Plugin 'lervag/vimtex'
+Plugin 'shougo/neocomplete.vim'
 "Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -203,17 +205,12 @@ if has("gui_running")
 else
   " This is console Vim.
 endif
-
-" Add the virtualenv's site-packages to vim path
-"if has('python3')
-"py3 << EOF
-"import os.path
-"import sys
-"import vim
-"if 'VIRTUAL_ENV' in os.environ:
-"    project_base_dir = os.environ['VIRTUAL_ENV']
-"    sys.path.insert(0, project_base_dir)
-"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"    execfile(activate_this, dict(__file__=activate_this))
-"EOF
-"endif
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
