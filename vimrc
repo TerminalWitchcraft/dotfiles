@@ -40,10 +40,15 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
 Plugin 'lervag/vimtex'
 Plugin 'shougo/neocomplete.vim'
-Plugin 'maralla/validator.vim'
-"Bundle 'Valloric/YouCompleteMe'
+Plugin 'easymotion/vim-easymotion'
+" for asynchronous syntax checks 
+" Plugin 'maralla/validator.vim'
+" Track the engine.
+Plugin 'SirVer/ultisnips'
 
-"Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -222,5 +227,9 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-
+" for vim validator
+"let g:validator_permament_sign = 1
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
