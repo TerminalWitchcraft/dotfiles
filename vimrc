@@ -40,6 +40,7 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'reedes/vim-pencil'
 Plugin 'lervag/vimtex'
 Plugin 'shougo/neocomplete.vim'
+Plugin 'maralla/validator.vim'
 "Bundle 'Valloric/YouCompleteMe'
 
 "Bundle 'powerline/powerline', {'rtp': 'powerline/bindings/vim/'}
