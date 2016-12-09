@@ -107,8 +107,8 @@ let g:netrw_lifestyle=3 "tree view"
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
-colorscheme angr
-
+set background=light
+colorscheme solarized
 
 "Run python/C/C++ scrits within vim with F9
 filetype on
@@ -135,7 +135,7 @@ endif
 
 " air-line
 let g:airline_powerline_fonts = 1
-let g:airline_theme='distinguished'
+let g:airline_theme='solarized'
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
