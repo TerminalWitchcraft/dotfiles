@@ -4,7 +4,7 @@
 
 dir=~/dotfiles
 olddir=~/dotfiles_old
-files="bashrc vimrc zshrc vim inputrc tmux.conf tmuxline.tmux.conf shell_prompt.sh"
+files="bashrc vimrc vim zshrc inputrc tmux.conf tmuxline.tmux.conf shell_prompt.sh"
 
 # Create dotfiles_old in homedir
 echo "Creating $olddir for backup of existng dotfiles"
@@ -29,10 +29,6 @@ for file in $files; do
 	ln -s $dir/$file ~/.$file
 done
 
-# For installing Vundle
-echo " Installing Vundle..."
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-echo " Done..."
 
 # Making vim folders
 echo " Creating vim swap, undo and backup directories..."
@@ -41,8 +37,3 @@ mkdir -p ~/.vim/backup_files
 mkdir -p ~/.vim/swap_files
 echo " Done..."
 
-# Post Installation
-echo " Post Installation"
-source ~/.bashrc
-source ~/.vimrc
-echo " Done..."

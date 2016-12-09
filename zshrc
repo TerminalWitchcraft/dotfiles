@@ -74,15 +74,23 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 # If not running interactively, do not do anything
-[[ $- != *i* ]] && return
-[[ -z "$TMUX" ]] && exec tmux -u
+# [[ $- != *i* ]] && return
+# [[ -z "$TMUX" ]] && exec tmux -u
+if [[ -z "$TMUX" ]] ;then
+    ID="`tmux ls | grep -vm1 attached | cut -d: -f1`" # get the id of a deattached session
+    if [[ -z "$ID" ]] ;then # if not available create a new one
+        tmux -u new-session
+    else
+        tmux -u attach-session -t "$ID" # if available attach to it
+    fi
+fi
 # bindkey -M menuselect '^M' .accept-line
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey jk vi-cmd-mode
 
 #source ~/PY3/bin/activate
-# export PATH="/home/hitesh/anaconda3/bin:$PATH"
-# export PYTHONPATH="/home/hitesh/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
+export PATH="/home/hitesh/anaconda3/bin:$PATH"
+export PYTHONPATH="/home/hitesh/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -95,4 +103,4 @@ bindkey jk vi-cmd-mode
 export WORKON_HOME=$HOME/.virtualenvs
 # export PROJECT_HOME=$HOME/Devel
 source /usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/activate.sh
+# source /usr/local/bin/activate.sh
