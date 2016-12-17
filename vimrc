@@ -4,12 +4,12 @@ call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 
 Plug 'tmhedberg/SimpylFold'
-Plug 'scrooloose/syntastic'
-Plug 'nvie/vim-flake8'
+" Plug 'scrooloose/syntastic'
+Plug 'nvie/vim-flake8', {'for': 'python'}
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
-Plug 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'ervandew/supertab'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/goyo.vim'
@@ -21,18 +21,20 @@ Plug 'tpope/vim-repeat'
 " for asynchronous syntax checks 
 Plug 'maralla/validator.vim'
 " Track the engine.
-Plug 'SirVer/ultisnips'
-
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 
+Plug 'nathanaelkane/vim-indent-guides', {'for': 'python'}
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
 Plug 'tpope/vim-surround'
-Plug 'hynek/vim-python-pep8-indent'
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+Plug 'majutsushi/tagbar', {'for': ['python', 'cpp']}
+Plug 'tpope/vim-vinegar'
+Plug 'scrooloose/nerdtree'
 "Plugin 'vim-scripts/indentpython.vim'
 " Adg plugins to &runtimepath
 call plug#end()
@@ -107,7 +109,6 @@ let g:netrw_lifestyle=3 "tree view"
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
-set background=light
 colorscheme solarized
 
 "Run python/C/C++ scrits within vim with F9
@@ -142,14 +143,14 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'"
 
 "Settings for syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 
 "Supertab reverse problem
@@ -226,3 +227,11 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_smartcase = 1
 " Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_smartsign_us = 1
+
+" for tagbar toggle
+nmap <F8> :TagbarToggle<CR>
+" autocmd FileType * nested :call tagbar#autoopen(0)
+let g:tagbar_width = 30
+
+" for nerdtree
+map <C-n> :NERDTreeToggle<CR>
