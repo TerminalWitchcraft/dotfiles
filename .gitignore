@@ -1,4 +1,4 @@
-vim/plugged/*
+vim/plugged/
 vim/swap_files/
 vim/undo_files/
 vim/backup_files/

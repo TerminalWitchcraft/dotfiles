@@ -7,7 +7,7 @@ olddir=~/dotfiles_old
 files="bashrc vimrc vim zshrc inputrc tmux.conf tmuxline.tmux.conf shell_prompt.sh"
 
 # Create dotfiles_old in homedir
-echo "Creating $olddir for backup of existng dotfiles"
+echo "Creating $olddir for backup of existing dotfiles"
 mkdir -p $olddir
 echo "...done"
 
