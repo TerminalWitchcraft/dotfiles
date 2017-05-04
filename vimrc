@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tmhedberg/SimpylFold'
 " Plug 'scrooloose/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
+Plug 'VimIRC.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
@@ -59,7 +60,7 @@ au BufNewFile,BufRead *.py
     \ set textwidth=79 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix
+set fileformat=unix
 
 "define BadWhitespace before using in a match
 highlight BadWhitespace ctermbg=blue guibg=darkred
@@ -115,7 +116,7 @@ colorscheme monokai
 filetype on
 autocmd FileType python nnoremap <buffer> <F9> :exec '!clear; python' shellescape(@%, 1)<cr>
 autocmd filetype c nnoremap <F9> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-autocmd filetype cpp nnoremap <F9> :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F9> :w <bar> exec '!g++ -std=gnu++11 -Wall -Wextra -O2 '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 
 
@@ -235,3 +236,22 @@ let g:tagbar_width = 30
 
 " for nerdtree
 map <C-n> :NERDTreeToggle<CR>
+
+" for vimtex autocomplete
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns.tex =
+      \ '\v\\%('
+      \ . '\a*cite\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|\a*ref%(\s*\{[^}]*|range\s*\{[^,}]*%(}\{)?)'
+      \ . '|hyperref\s*\[[^]]*'
+      \ . '|includegraphics\*?%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|%(include%(only)?|input)\s*\{[^}]*'
+      \ . '|\a*(gls|Gls|GLS)(pl)?\a*%(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+      \ . '|includepdf%(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|includestandalone%(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|usepackage%(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|documentclass%(\s*\[[^]]*\])?\s*\{[^}]*'
+      \ . '|\a*'
+      \ . ')'
