@@ -90,7 +90,7 @@ bindkey jk vi-cmd-mode
 
 #source ~/PY3/bin/activate
 export PATH="/home/$USER/anaconda3/bin:$PATH"
-export PYTHONPATH="/home/$USER/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
+# export PYTHONPATH="/home/$USER/anaconda3/lib/python3.5/site-packages:$PYTHONPATH"
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
