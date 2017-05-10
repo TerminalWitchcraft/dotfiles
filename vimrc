@@ -6,7 +6,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'tmhedberg/SimpylFold'
 " Plug 'scrooloose/syntastic'
 Plug 'nvie/vim-flake8', {'for': 'python'}
-Plug 'VimIRC.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
