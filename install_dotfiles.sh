@@ -23,6 +23,10 @@ for file in $files; do
 	mv ~/.$file ~/dotfiles_old
 done
 
+# Installing vim plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 # Create symlinks to home directory
 for file in $files; do
 	echo "Creating symlinks to $file in home directory"
