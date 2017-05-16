@@ -7,40 +7,26 @@ from __future__ import absolute_import
 
 import os
 import sys
-import time
-import subprocess
+from utils.run import run_cmd
+from utils.validate import validate_choice
 
-
-def run_cmd(cmd):
-    i = 0
-    proc = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-    print("Running {}".format(cmd))
-    os.system('setterm -cursor off')
-    while proc.poll() is None:
-        sys.stdout.write('\r')
-        if i  == 0:
-            sys.stdout.write('[/]')
-            i = 1
-        elif i == 1:
-            sys.stdout.write('[-]')
-            i = 2
-        elif i == 2:
-            sys.stdout.write('[\\]')
-            i = 3
-        else:
-            sys.stdout.write('[|]')
-            i = 0
-        time.sleep(0.5)
-        sys.stdout.flush()
-    sys.stdout.write('\r')
-    print("Done...")
-    print(os.linesep)
-    os.system('setterm -cursor on')
 
 def main():
     print("Preparing system.....")
-    run_cmd('apt-get update')
-    run_cmd('apt-get upgrade -y')
+    if sys.platform.startswith('linux'):
+        platform = 'linux'
+    else:
+        platform = 'unknown'
+    # run_cmd(platform, 'apt-get update')
+    # run_cmd(platform, 'apt-get upgrade -y')
+    print("Enter your choice for editor:")
+    editor_choices = {
+        'V': 'Vim',
+        'E': 'Emacs',
+        'SL': 'Sublime Text'
+    }
+    result = validate_choice(editor_choices, False)
+    # TODO
 
 if __name__ == '__main__':
     if os.getuid() != 0:
