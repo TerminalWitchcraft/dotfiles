@@ -24,8 +24,11 @@ def run_cmd(cmd):
         elif i == 1:
             sys.stdout.write('[-]')
             i = 2
-        else:
+        elif i == 2:
             sys.stdout.write('[\\]')
+            i = 3
+        else:
+            sys.stdout.write('[|]')
             i = 0
         time.sleep(0.5)
         sys.stdout.flush()
@@ -36,9 +39,13 @@ def run_cmd(cmd):
 
 def main():
     print("Preparing system.....")
-    run_cmd('sudo apt-get update')
-    run_cmd('sudo apt-get upgrade -y')
+    run_cmd('apt-get update')
+    run_cmd('apt-get upgrade -y')
 
+if __name__ == '__main__':
+    if os.getuid() != 0:
+        print("***Sudo Privileges required!***")
+        os.execvp("sudo", ["sudo"] + sys.argv)
+    else:
+        main()
 
-if __name__ == "__main__":
-    main()
