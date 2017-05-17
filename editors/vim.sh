@@ -10,7 +10,7 @@ then
 	echo "Installing Vim Plug"
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 		    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	# rm $dir/vim/vim
+	rm ~/.vim/vim
 	echo "Installing plugins"
 	vim -c PlugInstall -c PlugClean -c q -c q
 elif [ $1 == "Vundle"]; then
