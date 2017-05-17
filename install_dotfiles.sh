@@ -25,7 +25,7 @@ done
 
 echo "Creating new vim directory"
 # mkdir ~/.vim
-ln -s $dir/vim ~/.vim
+ln -s $dir/config/vim ~/.vim
 # Installing vim plug
 
 echo "Installing vim plug"
