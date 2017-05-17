@@ -31,7 +31,7 @@ ln -s $dir/config/vim ~/.vim
 echo "Installing vim plug"
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-rm $dir/vim/vim
+rm ~/.vim/vim
 
 # # Create symlinks to home directory
 for file in $files; do
