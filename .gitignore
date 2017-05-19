@@ -110,5 +110,9 @@ ENV/
 ##########################################################################
 config/vim/*
 !config/vim/colors
+defaults/vim/*
+!defaults/vim/colors
+minimal/vim/*
+!minimal/vim/colors
 vim/*
 !vim/colors
