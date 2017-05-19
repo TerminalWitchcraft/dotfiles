@@ -1,6 +1,10 @@
 #!/bin/sh
 
 dir='../config'
+default_dir='../defaults'
+minimal_dir='../minimal'
+
+
 echo "Changing current user's default shell"
 
 if [ $1 == "linux" ]then;
