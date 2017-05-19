@@ -8,6 +8,8 @@ from __future__ import unicode_literals
 
 import os
 import sys
+import shutil
+import datetime
 import editors
 import shell
 from utils.run import run_cmd
@@ -31,6 +33,8 @@ class Configure(object):
             self._platform = 'linux'
         else:
             self._platform = 'unknown'
+        self._filenames = ['.vimrc', '.zshrc', '.inputrc',
+                           '.bashrc', '.vim']
 
     def __call__(self):
         os.system('clear')
@@ -52,7 +56,27 @@ class Configure(object):
             self._execution_list.append(instance)
         # programming languages
 
+        self.create_backup()
         self.start()
+
+    def create_backup(self):
+        old_dir = 'config_old_' +\
+            datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
+        os.mkdir(old_dir)
+        for item in self._filenames:
+            if os.path.exsits(item):
+                if os.path.islink(item):
+                    realpath = os.path.realpath(item)
+                    if os.path.isdir(realpath):
+                        shutil.copytree(realpath,old_dir)
+                        shutil.rmtree(item)
+                    else:
+                        shutil.copy2(realpath,old_dir)
+                        os.remove(item)
+                else:
+                    shutil.copy2(item, old_dir)
+            else:
+                pass
 
     def get_ready(self):
         """
