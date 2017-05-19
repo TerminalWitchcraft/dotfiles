@@ -36,7 +36,7 @@ rm ~/.vim/vim
 # # Create symlinks to home directory
 for file in $files; do
 	echo "Creating symlinks to $file in home directory"
-	ln -s $dir/config/$file ~/.$file
+	ln -s $dir/defaults/$file ~/.$file
 done
 # 
 # 
