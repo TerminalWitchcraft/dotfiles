@@ -57,26 +57,48 @@ class Configure(object):
         # programming languages
 
         self.create_backup()
+        # Prepare system
+        self.get_ready()
         self.start()
 
+    @staticmethod
+    def copydir(src, dest):
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dest, item)
+            if os.path.isdir(s):
+                shutil.copytree(s, d)
+            else:
+                shutil.copy2(s, d)
+
     def create_backup(self):
+        """
+        Creates backup of existing configuration files
+        """
         old_dir = 'config_old_' +\
             datetime.datetime.now().strftime("%Y-%m-%d_%H:%M")
         os.mkdir(old_dir)
-        for item in self._filenames:
-            if os.path.exsits(item):
+        files = [os.path.join(os.path.expanduser('~'), val) for val in
+                 self._filenames]
+        for item in files:
+            if os.path.exists(item):
                 if os.path.islink(item):
                     realpath = os.path.realpath(item)
                     if os.path.isdir(realpath):
-                        shutil.copytree(realpath,old_dir)
-                        shutil.rmtree(item)
+                        print(realpath.split(os.pathsep))
+                        # Configure.copydir(realpath,
+                        #                   os.path.join(old_dir,
+                        #                                realpath.rsplit(os.pathsep)[-1]))
+                        # testing purposes
+                        # shutil.rmtree(item)
                     else:
-                        shutil.copy2(realpath,old_dir)
-                        os.remove(item)
+                        shutil.copy2(realpath, old_dir)
+                        # testing purposes
+                        # os.remove(item)
                 else:
                     shutil.copy2(item, old_dir)
             else:
-                pass
+                print("File not found")
 
     def get_ready(self):
         """
@@ -86,8 +108,6 @@ class Configure(object):
         run_cmd(self._platform, 'apt-get upgrade -y')
 
     def start(self):
-        # Prepare system
-        self.get_ready()
         for instance in self._execution_list:
             instance(self._platform)()
         print("Done!")
