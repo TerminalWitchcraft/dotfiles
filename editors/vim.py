@@ -12,6 +12,8 @@ from utils.validate import validate_choice
 
 class Vim(object):
     """Class which sets up vim configuration"""
+    name = 'vim'
+
     def __init__(self, platform, plugin_manager='Plug'):
         self._path = '../scripts/vim.sh'
         self._platform = platform

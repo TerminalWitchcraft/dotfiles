@@ -14,6 +14,7 @@ class Zsh(object):
     Class which sets up zsh shell for the current user
     """
     name = 'zsh'
+
     def __init__(self, platform, framework='omz'):
         """
         platform: linux or darwin
@@ -64,4 +65,5 @@ class Zsh(object):
         print("I am from call of zsh")
 
     def setup(self, default_config=True):
-        pass
+        cmd = self._path + self._platform + self._framework
+        run_cmd(self._platform, cmd)
