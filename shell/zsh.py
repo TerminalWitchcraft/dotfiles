@@ -13,6 +13,7 @@ class Zsh(object):
     """
     Class which sets up zsh shell for the current user
     """
+    name = 'zsh'
     def __init__(self, platform, framework='omz'):
         """
         platform: linux or darwin

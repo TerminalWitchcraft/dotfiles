@@ -8,8 +8,8 @@ CHOICES = {
 
 EDITORS = {
     'V': Vim,
-    'E': None,
-    'S': None
+    'E': Vim,
+    'S': Vim
 }
 
 

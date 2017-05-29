@@ -43,12 +43,14 @@ class Configure(object):
                                  multiple=False,
                                  skippable=True)
         instance = shell.SHELLS.get(choice, None)
+        if getattr(instance, "name", None):
+            self._shell = getattr(instance, "name")
         self._execution_list.append(instance)
 
         # Start with editors
         os.system('clear')
         print("Enter choice for editors")
-        choices = validate_choice(editors.EDITORS,
+        choices = validate_choice(editors.CHOICES,
                                   multiple=True,
                                   skippable=True)
         for choice in choices:
@@ -59,7 +61,7 @@ class Configure(object):
         self.create_backup()
         # Prepare system
         self.get_ready()
-        self.start()
+        # self.start()
 
     @staticmethod
     def copydir(src, dest):
@@ -89,7 +91,6 @@ class Configure(object):
                     realpath = os.path.realpath(item)
                     if os.path.isdir(realpath):
                         folder_name = realpath.rsplit(os.path.sep)[-1]
-                        print(folder_name)
                         Configure.copydir(realpath,
                                           os.path.join(old_dir,
                                                        folder_name))
