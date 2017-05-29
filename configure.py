@@ -66,10 +66,13 @@ class Configure(object):
         for item in os.listdir(src):
             s = os.path.join(src, item)
             d = os.path.join(dest, item)
-            if os.path.isdir(s):
-                shutil.copytree(s, d)
-            else:
-                shutil.copy2(s, d)
+            try:
+                if os.path.isdir(s):
+                    shutil.copytree(s, d)
+                else:
+                    shutil.copy2(s, d)
+            except shutil.Error:
+                print("Failed for {}".format(s))
 
     def create_backup(self):
         """
@@ -85,15 +88,14 @@ class Configure(object):
                 if os.path.islink(item):
                     realpath = os.path.realpath(item)
                     if os.path.isdir(realpath):
-                        print(realpath.split(os.pathsep))
-                        # Configure.copydir(realpath,
-                        #                   os.path.join(old_dir,
-                        #                                realpath.rsplit(os.pathsep)[-1]))
-                        # testing purposes
+                        folder_name = realpath.rsplit(os.path.sep)[-1]
+                        print(folder_name)
+                        Configure.copydir(realpath,
+                                          os.path.join(old_dir,
+                                                       folder_name))
                         # shutil.rmtree(item)
                     else:
                         shutil.copy2(realpath, old_dir)
-                        # testing purposes
                         # os.remove(item)
                 else:
                     shutil.copy2(item, old_dir)
