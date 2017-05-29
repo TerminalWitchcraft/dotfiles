@@ -107,8 +107,8 @@ class Configure(object):
         """
         Function to get the system ready
         """
-        run_cmd(self._platform, 'apt-get update')
-        run_cmd(self._platform, 'apt-get upgrade -y')
+        run_cmd(self._platform, 'sudo apt-get update')
+        run_cmd(self._platform, 'sudo apt-get upgrade -y')
 
     def start(self):
         for instance in self._execution_list:

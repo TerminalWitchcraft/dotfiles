@@ -16,8 +16,4 @@ def main():
 
 
 if __name__ == '__main__':
-    if os.getuid() != 0:
-        print("***Sudo Privileges required!***")
-        os.execvp("sudo", ["sudo"] + sys.argv)
-    else:
-        main()
+    main()
