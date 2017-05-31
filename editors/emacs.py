@@ -14,4 +14,13 @@ class Emacs(object):
     Class which sets up emacs configuration
     """
     name = 'emacs'
-    pass
+    def __init__(self, platform):
+        self._path = ''
+        self._platform = platform
+
+    def __call__(self, *args, **kwargs):
+        print("I am from call")
+
+    def setup(self, default_config=True):
+        run_cmd(self._platform, "{} {} {}".format(self._path,
+                                                  self._platform))

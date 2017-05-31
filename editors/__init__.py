@@ -1,4 +1,6 @@
 from .vim import Vim
+from .emacs import Emacs
+from .sublime import Sublime
 
 CHOICES = {
     'V': 'Vim',
@@ -8,8 +10,8 @@ CHOICES = {
 
 EDITORS = {
     'V': Vim,
-    'E': Vim,
-    'S': Vim
+    'E': Emacs,
+    'S': Sublime
 }
 
 
