@@ -42,10 +42,11 @@ class Configure(object):
         choice = validate_choice(shell.CHOICES,
                                  multiple=False,
                                  skippable=True)
-        instance = shell.SHELLS.get(choice, None)
-        if getattr(instance, "name", None):
-            self._shell = getattr(instance, "name")
-        self._execution_list.append(instance)
+        if choice:
+            instance = shell.SHELLS.get(choice, None)
+            if getattr(instance, "name", None):
+                self._shell = getattr(instance, "name")
+            self._execution_list.append(instance)
 
         # Start with editors
         os.system('clear')
@@ -53,15 +54,16 @@ class Configure(object):
         choices = validate_choice(editors.CHOICES,
                                   multiple=True,
                                   skippable=True)
-        for choice in choices:
-            instance = editors.EDITORS.get(choice, None)
-            self._execution_list.append(instance)
+        if choices:
+            for choice in choices:
+                instance = editors.EDITORS.get(choice, None)
+                self._execution_list.append(instance)
         # programming languages
 
         self.create_backup()
         # Prepare system
         self.get_ready()
-        # self.start()
+        self.start()
 
     @staticmethod
     def copydir(src, dest):
@@ -112,5 +114,6 @@ class Configure(object):
 
     def start(self):
         for instance in self._execution_list:
+            print(instance.name)
             instance(self._platform)()
         print("Done!")

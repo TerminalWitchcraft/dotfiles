@@ -22,6 +22,7 @@ class Sublime(object):
 
     def __call__(self, *args, **kwargs):
         print("I am from call")
+        self.setup()
 
     def setup(self, default_config=True):
         run_cmd(self._platform, "sudo add-apt-repository {}".format(self._ppa))

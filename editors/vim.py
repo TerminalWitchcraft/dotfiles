@@ -15,7 +15,7 @@ class Vim(object):
     name = 'vim'
 
     def __init__(self, platform, plugin_manager='Plug'):
-        self._path = '../scripts/vim.sh'
+        self._path = 'scripts/vim.sh'
         self._platform = platform
         self._plugin_manager = plugin_manager
         self.get_plugin_manager()
@@ -59,6 +59,7 @@ class Vim(object):
         print(args)
         print(kwargs)
         print("I am from call")
+        self.setup()
 
     def setup(self, default_config=True):
         if default_config:
