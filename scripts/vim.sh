@@ -7,15 +7,18 @@ minimal_dir='../minimal'
 if [ $1 == "Plug" ]
 then
 	echo "Creating new vim directory"
-	if [ $2 == "defaults" ]then;
+	if [ $2 == "defaults" ]
+	then
 		cp $default_dir/vimrc $dir
 		cp -rf $default_dir/vim $dir
-	elif [ $2 == "minimal" ]then;
+	elif [ $2 == "minimal" ]
+	then
 		cp $minimal_dir/vimrc_plug $dir
 		mv $dir/vimrc_plug $dir/vimrc
 		cp -rf $minimal_dir/vim $dir
 	else
 		# nothing
+		echo "Nothing"
 	fi
 	ln -s $dir/vim ~/.vim
 	ln -s $dir/vimrc ~/.vimrc
@@ -28,15 +31,18 @@ then
 elif [ $1 == "Vundle"]; then
 	#for vundle
 	echo "Creating new vim directory"
-	if [ $2 == "defaults" ]then;
+	if [ $2 == "defaults" ]
+	then
 		cp $default_dir/vimrc $dir
 		cp -rf $default_dir/vim $dir
-	elif [ $2 == "minimal" ]then;
+	elif [ $2 == "minimal" ]
+	then
 		cp $minimal_dir/vimrc_vundle $dir
 		mv $dir/vimrc_vundle $dir/vimrc
 		cp -rf $minimal_dir/vim $dir
 	else
 		# nothing
+		echo "nothing"
 	fi
 	ln -s $dir/vim ~/.vim
 	ln -s $dir/vimrc ~/.vimrc
@@ -45,15 +51,17 @@ elif [ $1 == "Vundle"]; then
 	echo "Installing Plugins"
 else
 	#for panthogen
-	if [ $2 == "defaults" ]then;
+	if [ $2 == "defaults" ]
+	then
 		cp $default_dir/vimrc $dir
 		cp -rf $default_dir/vim $dir
-	elif [ $2 == "minimal" ]then;
+	elif [ $2 == "minimal" ]
+	then
 		cp $minimal_dir/vimrc_panthogen $dir
 		mv $dir/vimrc_panthogen $dir/vimrc
 		cp -rf $minimal_dir/vim $dir
 	else
-		# nothing
+		echo "Nothing"
 	fi
 	echo "Creating new vim directory"
 	ln -s $dir/vim ~/.vim

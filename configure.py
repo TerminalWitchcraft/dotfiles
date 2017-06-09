@@ -54,6 +54,7 @@ class Configure(object):
         choices = validate_choice(editors.CHOICES,
                                   multiple=True,
                                   skippable=True)
+        print(">>>>>>>", choices)
         if choices:
             for choice in choices:
                 instance = editors.EDITORS.get(choice, None)
@@ -113,6 +114,7 @@ class Configure(object):
         run_cmd(self._platform, 'sudo apt-get upgrade -y')
 
     def start(self):
+        print(self._execution_list)
         for instance in self._execution_list:
             print(instance.name)
             instance(self._platform)()

@@ -5,13 +5,13 @@ from .sublime import Sublime
 CHOICES = {
     'V': 'Vim',
     'E': 'Emacs',
-    'S': 'Sublime Text'
+    'Sb': 'Sublime Text'
 }
 
 EDITORS = {
     'V': Vim,
     'E': Emacs,
-    'S': Sublime
+    'Sb': Sublime
 }
 
 
