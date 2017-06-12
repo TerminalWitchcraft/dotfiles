@@ -109,7 +109,8 @@ let g:netrw_lifestyle=3 "tree view"
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 
-colorscheme monokai
+" colorscheme monokai
+colorscheme OceanicNext
 
 "Run python/C/C++ scrits within vim with F9
 filetype on
