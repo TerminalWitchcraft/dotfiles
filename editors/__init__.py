@@ -1,15 +1,17 @@
 from .vim import Vim
+from .emacs import Emacs
+from .sublime import Sublime
 
 CHOICES = {
     'V': 'Vim',
     'E': 'Emacs',
-    'S': 'Sublime Text'
+    'Sb': 'Sublime Text'
 }
 
 EDITORS = {
     'V': Vim,
-    'E': Vim,
-    'S': Vim
+    'E': Emacs,
+    'Sb': Sublime
 }
 
 

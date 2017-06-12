@@ -1,10 +1,11 @@
-
+from zsh import Zsh
 CHOICES = {
     'Z': 'Zsh shell',
-    'F': 'Fish shell',
+    # 'F': 'Fish shell',
     'B': 'Bash(Default)'
 }
 
 SHELLS = {
-    'Z': 'Z'
+    'Z': Zsh,
+    'B': None
 }

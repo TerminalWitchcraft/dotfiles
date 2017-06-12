@@ -19,7 +19,7 @@ class Zsh(object):
         """
         platform: linux or darwin
         """
-        self._path = '../scripts/install_zsh.sh'
+        self._path = 'scripts/install_zsh.sh'
         self._platform = platform
         self._framework = framework
         self.get_framwork()
@@ -63,7 +63,9 @@ class Zsh(object):
         print(args)
         print(kwargs)
         print("I am from call of zsh")
+        self.setup()
 
     def setup(self, default_config=True):
-        cmd = self._path + self._platform + self._framework
+        cmd = " ".join([self._path, self._platform, self._framework])
+        print(cmd)
         run_cmd(self._platform, cmd)
