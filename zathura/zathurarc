@@ -1,0 +1,6 @@
+set page-padding		"10"
+set window-title-basename	"true"
+set window-title-page		"true"
+set statusbar-home-tilde	"true"
+set smooth-scroll		"true"
+set scroll-page-aware		"true"
