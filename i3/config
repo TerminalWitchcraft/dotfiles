@@ -1,0 +1,281 @@
+# Constants
+set $bg-color            #2f343f
+set $inactive-bg-color   #2f343f
+set $text-color          #f3f4f5
+set $inactive-text-color #676E7D
+set $urgent-bg-color     #E53935
+
+set $WS1 "1"
+set $WS2 "2"
+set $WS3 "3"
+set $WS4 "4"
+set $WS5 "5"
+set $WS6 "6"
+set $WS7 "7"
+set $WS8 "8"
+set $WS9 "9"
+set $WS10 "10"
+
+# General Options
+
+new_window none
+new_float normal
+font pango:DejaVuSansMono Nerd Font Book  10
+hide_edge_borders both
+focus_follows_mouse no
+workspace_auto_back_and_forth yes
+default_orientation horizontal
+popup_during_fullscreen smart
+
+gaps inner 10 
+gaps outer 6
+# smart_gaps on
+# smart_borders on
+
+
+# executing appliactions
+exec setxkbmap -option caps:swapescape
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec unclutter 
+exec compton
+exec_always feh --no-fehbg --bg-scale ~/Pictures/final.jpg
+exec redshift
+
+# Colors
+#  window colors
+#                       border              background         text                      indicator
+client.focused          $bg-color           $bg-color          $text-color               #00ff00
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text     -color #00ff00
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text     -color #00ff00
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color               #00ff00
+
+
+# Bindings
+set $mod Mod4
+floating_modifier $mod
+bindsym $mod+Return exec termite;focus
+# bindsym $mod+Shift+Return exec termite;move window to workspace prev;focus
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec rofi -show run
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+Shift+v split h
+bindsym $mod+v split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+bindsym $mod+1 workspace $WS1
+bindsym $mod+2 workspace $WS2
+bindsym $mod+3 workspace $WS3
+bindsym $mod+4 workspace $WS4
+bindsym $mod+5 workspace $WS5
+bindsym $mod+6 workspace $WS6
+bindsym $mod+7 workspace $WS7
+bindsym $mod+8 workspace $WS8
+bindsym $mod+9 workspace $WS9
+bindsym $mod+0 workspace $WS10
+
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $WS1; workspace $WS1
+bindsym $mod+Shift+2 move container to workspace $WS2; workspace $WS2
+bindsym $mod+Shift+3 move container to workspace $WS3; workspace $WS3
+bindsym $mod+Shift+4 move container to workspace $WS4; workspace $WS4
+bindsym $mod+Shift+5 move container to workspace $WS5; workspace $WS5
+bindsym $mod+Shift+6 move container to workspace $WS6; workspace $WS6
+bindsym $mod+Shift+7 move container to workspace $WS7; workspace $WS7
+bindsym $mod+Shift+8 move container to workspace $WS8; workspace $WS8
+bindsym $mod+Shift+9 move container to workspace $WS9; workspace $WS9
+bindsym $mod+Shift+0 move container to workspace $WS10; workspace $WS10
+
+
+bindsym $mod+n workspace next
+bindsym $mod+shift+n workspace prev
+bindsym $mod+p workspace prev
+bindsym $mod+shift+p workspace next
+bindsym $mod+Tab workspace back_and_forth
+
+#changing border style
+bindsym $mod+t border normal
+bindsym $mod+y border 1pixel
+bindsym $mod+u border none
+
+bindsym XF86AudioRaiseVolume exec "amixer -D pulse sset Master '5%+'"
+bindsym XF86AudioLowerVolume exec "amixer -D pulse sset Master '5%-'"
+bindsym XF86AudioMute exec "amixer -D pulse set Master toggle"
+#https://github.com/acrisci/playerctl/
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioStop exec playerctl stop
+
+##################Brightness#######################
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5  # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5  # decrease screen brightness
+
+################### SCREENSHOTS ######################
+bindsym $mod+Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+###########################################################################
+###################       I3 GAPS CHANGE     ##############################
+###########################################################################
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+
+################### MODE_SYSTEM ######################
+bindsym $mod+Shift+z mode "$mode_system"
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+
+mode "$mode_system" {
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
+    bindsym e exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh suspend, mode "default"
+    bindsym h exec --no-startup-id ~/.config/i3/scripts/i3exit.sh hibernate, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Window Decorations
+#for_window [class="^.*"] border pixel 0
+for_window [class=".*"] title_format "%title"
+
+#for_window [class="Gnome-disks"] floating enable
+for_window [class="^Skype$"] floating enable
+#for_window [class="^Gnome-font-viewer$"] floating enable
+for_window [class="^Gpick$"] floating enable
+#for_window [class="^Vlc$"] floating enable
+#for_window [class="^Spotify$"] floating enable workspace 10
+for_window [instance="gimp"] floating enable
+for_window [window_role="^gimp-toolbox-color-dialog$"] floating enable
+for_window [instance="variety"] floating enable
+#for_window [class="Gnome-system-monitor"] floating enable
+#for_window [class="Mate-system-monitor"] floating enable
+#for_window [class="Xfce4-taskmanager"] floating enable
+#for_window [class="Brasero"] floating enable
+#for_window [class="Xfburn"] floating enable
+#for_window [class="Xfce4-appfinder"] floating enable
+#for_window [class="Wine"] floating enable
+#for_window [class="Pavucontrol"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="^Preferences$"] floating enable
+for_window [window_role="setup"] floating enable
+#for_window [class="Font-manager"] floating enable
+for_window [class="System-config-printer.py"] floating enable
+for_window [class="Nitrogen"] floating enable
+for_window [title="Copying"] floating enable  
+for_window [title="Deleting"] floating enable  
+for_window [title="Moving"] floating enable
+for_window [class="Unetbootin.elf"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="Usb-creator-gtk"] floating enable
+for_window [instance="script-fu"] border normal
+for_window [class="Imagewriter"] floating enable
+#for_window [class="MintUpdate.py"] floating enable
+#for_window [class="Bleachbit"] floating enable
+#for_window [class="Hexchat"] floating disable
+#for_window [class="Xfce4-settings-manager"] floating disable
+#for_window [class="Gnome-control-center"] floating disable
+#for_window [class="Gnome-terminal"] focus
+
+assign [class="termite|Termite"] $WS1
+for_window [class="termite|Termite"] focus
+
+# assign [class="Google-chrome|google-chrome"] $WS2
+# for_window [class="Google-chrome|google-chrome"] focus
+assign [class="Firefox"] $WS2
+for_window [class="Firefox"] focus
+
+assign [class="mpv|vaapi"] $WS3
+for_window [class="mpv|vaapi"] focus
+
+assign [class="Zathura|zathura"] $WS10
+for_window [class="Zathura|zathura"] focus, layout tabbed, border normal
