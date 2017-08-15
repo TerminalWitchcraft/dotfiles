@@ -56,7 +56,7 @@ floating_modifier $mod
 bindsym $mod+Return exec termite;focus
 # bindsym $mod+Shift+Return exec termite;move window to workspace prev;focus
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec rofi -show run
+bindsym Control+space exec rofi -show run
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
