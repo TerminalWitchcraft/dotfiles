@@ -1,45 +1,45 @@
 ! "Enabled modi" Set from: Default
-! rofi.modi:                           window,run,ssh
+rofi.modi:                           window,run,ssh
 ! "Window width" Set from: Default
 rofi.width:                          50
 ! "Number of lines" Set from: Default
-! rofi.lines:                          15
+rofi.lines:                          10
 ! "Number of columns" Set from: Default
 rofi.columns:                        1
 ! "Font to use" Set from: Default
-rofi.font:                           Monospace 15
+rofi.font:                           Monospace 12
 ! "Color scheme for normal row" Set from: Default
-rofi.color-normal:                   #2f343f,#f3f4f5,#2f343f,#2f343f,#f3f4f5
+rofi.color-normal:                   #1b2b34,#f3f4f5,#343d46,#5fb3b3,#1b2b34
 ! "Color scheme for urgent row" Set from: Default
-rofi.color-urgent:                   #e53935,#f3f4f5,#2f343f,#2f343f,#f3f4f5
+rofi.color-urgent:                   #1b2b34,#f3f4f5,#343d46,#2f343f,#f3f4f5
 ! "Color scheme for active row" Set from: Default
-rofi.color-active:                   #2f343f,#f3f4f5,#2f343f,#2f343f,#f3f4f5
+rofi.color-active:                   #1b2b34,#f3f4f5,#343d46,#2f343f,#f3f4f5
 ! "Color scheme window" Set from: Default
-rofi.color-window:                   #2f343f,#002b36
+rofi.color-window:                   #1b2b34,#002b36
 ! "Border width" Set from: Default
 rofi.bw:                             0
 ! "Location on screen" Set from: Default
-! rofi.location:                       0
+rofi.location:                       0
 ! "Padding" Set from: Default
-! rofi.padding:                        5
+rofi.padding:                        5
 ! "Y-offset relative to location" Set from: Default
 ! rofi.yoffset:                        0
 ! "X-offset relative to location" Set from: Default
 ! rofi.xoffset:                        0
 ! "Always show number of lines" Set from: Default
-! rofi.fixed-num-lines:                true
+rofi.fixed-num-lines:                true
 ! "Terminal to use" Set from: Default
 rofi.terminal:                       termite
 ! "Ssh client to use" Set from: Default
 rofi.ssh-client:                     ssh
 ! "Ssh command to execute" Set from: Default
-! rofi.ssh-command:                    {terminal} -e {ssh-client} {host}
+rofi.ssh-command:                    {terminal} -e {ssh-client} {host}
 ! "Run command to execute" Set from: Default
 rofi.run-command:                    {cmd}
 ! "Command to get extra run targets" Set from: Default
 ! rofi.run-list-command:               
 ! "Run command to execute that runs in shell" Set from: Default
-! rofi.run-shell-command:              {terminal} -e {cmd}
+rofi.run-shell-command:              {terminal} -e {cmd}
 ! "Command executed on accep-entry-custom for window modus" Set from: Default
 ! rofi.window-command:                 xkill -id {window}
 ! "Disable history in run/ssh" Set from: Default
@@ -51,7 +51,7 @@ rofi.case-sensitive:                 false
 ! "Cycle through the results list" Set from: Default
 ! rofi.cycle:                          true
 ! "Enable sidebar-mode" Set from: Default
-! rofi.sidebar-mode:                   false
+rofi.sidebar-mode:                   true
 ! "Row height (in chars)" Set from: Default
 ! rofi.eh:                             1
 ! "Enable auto select mode" Set from: Default
@@ -75,7 +75,7 @@ rofi.case-sensitive:                 false
 ! "Pre-set filter" Set from: Default
 ! rofi.filter:                         
 ! "Separator style (none, dash, solid)" Set from: Default
-rofi.separator-style:                dash
+rofi.separator-style:                none
 ! "Hide scroll-bar" Set from: Default
 rofi.hide-scrollbar:                 true
 ! "Fullscreen" Set from: Default
@@ -87,7 +87,7 @@ rofi.fake-transparency:              true
 ! "Threads to use for string matching" Set from: Default
 ! rofi.threads:                        0
 ! "Scrollbar width" Set from: Default
-! rofi.scrollbar-width:                8
+! rofi.scrollbar-width:                5
 ! "Scrolling method. (0: Page, 1: Centered)" Set from: Default
 ! rofi.scroll-method:                  0
 ! "Background to use for fake transparency. (background or screenshot)" Set from: Default
@@ -99,7 +99,7 @@ rofi.click-to-exit:                  true
 ! "Indicate how it match by underlining it." Set from: Default
 rofi.show-match:                     true
 ! "Pidfile location" Set from: Default
-! rofi.pid:                            /run/user/1000/rofi.pid
+rofi.pid:                            /run/user/1000/rofi.pid
 ! "Paste primary selection" Set from: Default
 ! rofi.kb-primary-paste:               Control+V,Shift+Insert
 ! "Paste clipboard" Set from: Default
@@ -137,7 +137,7 @@ rofi.show-match:                     true
 ! "Use alternate accept command." Set from: Default
 ! rofi.kb-accept-alt:                  Shift+Return
 ! "Delete entry from history" Set from: Default
-! rofi.kb-delete-entry:                Shift+Delete
+rofi.kb-delete-entry:                Shift+Delete
 ! "Switch to the next mode." Set from: Default
 ! rofi.kb-mode-next:                   Shift+Right,Control+Tab
 ! "Switch to the previous mode." Set from: Default
@@ -209,13 +209,13 @@ rofi.show-match:                     true
 ! "Custom Keybinding 19" Set from: Default
 ! rofi.kb-custom-19:                   Alt+parenleft
 ! "The display name of this browser" Set from: Default
-! rofi.display-ssh:                    
+rofi.display-ssh:                    
 ! "The display name of this browser" Set from: Default
-rofi.display-run:   >>>                 
+rofi.display-run:                    
 ! "The display name of this browser" Set from: Default
 ! rofi.display-drun:                   
 ! "The display name of this browser" Set from: Default
-! rofi.display-window:                 
+rofi.display-window:                 
 ! "The display name of this browser" Set from: Default
 ! rofi.display-windowcd:               
 ! "The display name of this browser" Set from: Default

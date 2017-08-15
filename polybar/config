@@ -36,10 +36,10 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 1
 line-color = #f00
 
-border-size = 4
+border-size = 5
 border-color = #00000000
 
 padding-left = 0
@@ -174,13 +174,27 @@ ws-icon-default = 
 
 [module/mpd]
 type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+format-online =  <label-song> <icon-stop> <icon-prev> <toggle> <icon-next>
+format-online-foreground = ${colors.secondary}
+format-offline = <label-offline>
+format-offline-foreground = ${colors.secondary}
 
-icon-prev = .
-icon-stop = .
-icon-play = .
-icon-pause = .
-icon-next = .
+label-offline = 
+
+label-song =  %artist% - %title%
+label-song-foreground = ${colors.secondary}
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+icon-prev-foreground = ${colors.secondary}
+icon-stop-foreground = ${colors.secondary}
+icon-play-foreground = ${colors.secondary}
+icon-pause-foreground = ${colors.secondary}
+icon-next-foreground = ${colors.secondary}
 
 label-song-maxlen = 20
 label-song-ellipsis = true
