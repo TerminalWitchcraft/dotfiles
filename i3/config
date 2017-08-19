@@ -35,11 +35,14 @@ gaps outer 6
 
 # executing appliactions
 exec setxkbmap -option caps:swapescape
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec unclutter 
 exec compton
-exec_always feh --no-fehbg --bg-scale ~/Pictures/final.jpg
 exec redshift
+exec --no-startup-id dunst
+
+
+exec_always feh --no-fehbg --bg-scale ~/Pictures/final.jpg
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Colors
 #  window colors

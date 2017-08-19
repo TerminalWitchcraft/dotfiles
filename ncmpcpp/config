@@ -1,7 +1,7 @@
+ncmpcpp_directory = ~/.config/ncmpcpp
 mpd_host = "127.0.0.1"
 mpd_port = "6600"
-mpd_music_dir = "/media/entertainment/Music"
-ncmpcpp_directory = ~/.config/ncmpcpp
+mpd_music_dir = "/media/warehouse/Music"
 
 
 
@@ -45,7 +45,7 @@ progressbar_look = "▪▪▫"
 #progressbar_look = "■◣ "
 #progressbar_look = "◈◆◇"
 #
-progressbar_boldness = yes
+#### removing ### progressbar_boldness = yes
 
 user_interface = alternative
 external_editor = "/usr/bin/vim"
@@ -55,17 +55,17 @@ use_console_editor = yes
 ##### colors definitions #####
 # #
 colors_enabled = yes
-header_window_color = "white"
+header_window_color = "cyan"
 volume_color = "cyan"
-state_line_color = "default"
-state_flags_color = "yellow"
-main_window_color = "white"
-color1 = "default"
-color2 = "green"
-main_window_highlight_color = "default"
-progressbar_color = "yellow"
-statusbar_color = "default"
-active_column_color = "cyan"
-visualizer_color = "yellow"
+state_line_color = "white"
+state_flags_color = "white"
+main_window_color = "cyan"
+color1 = "cyan"
+color2 = "red"
+#### Removing #### main_window_highlight_color = "default"
+progressbar_color = "blue"
+statusbar_color = "green"
+#### Removing #### active_column_color = "cyan"
+visualizer_color = "red"
 
 #
