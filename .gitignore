@@ -1,0 +1,6 @@
+zsh/.histfile
+zsh/.zcompdump
+zsh/.zshrc.zwc
+xmonad/*
+!xmonad/xmonad.hs
+

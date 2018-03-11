@@ -1,0 +1,16 @@
+decorations none
+transparent false
+geometry 1x1+683+2
+max_geometry 5x1+693+2
+background "#282828"
+kludges force_icons_size
+grow_gravity NE
+icon_gravity NE
+icon_size 10
+sticky true
+window_strut none
+window_type dock
+window_layer bottom
+#no_shrink false
+skip_taskbar true
+dockapp_mode wmaker
