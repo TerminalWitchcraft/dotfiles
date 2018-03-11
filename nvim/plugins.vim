@@ -30,12 +30,12 @@ let g:sneak#prompt = '>>>'
 "let g:ctrlp_switch_buffer = "ET"
 
 " Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_auto_close_preview = 1
-let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-let g:deoplete#sources#rust#show_duplicates=0
-let g:deoplete#sources#rust#documentation_max_height=20
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_auto_close_preview = 1
+"let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
+"let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+"let g:deoplete#sources#rust#show_duplicates=0
+"let g:deoplete#sources#rust#documentation_max_height=20
 "if executable('rustc')
 "    " if src installed via rustup, we can get it by running 
 "    " rustc --print sysroot then appending the rest of the path
@@ -50,15 +50,19 @@ let g:deoplete#sources#rust#documentation_max_height=20
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
 "Oceanic-next
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
+"let g:oceanic_next_terminal_bold = 1
+"let g:oceanic_next_terminal_italic = 1
+let g:gruvbox_italic = 1
+let g:gruvbox_italicize_strings = 1
+"let g:gruvbox_improved_strings = 1
+let g:gruvbox_improved_warnings = 1
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'"
 let g:airline_powerline_fonts = 1
-let g:airline_theme='oceanicnext'
+let g:airline_theme='gruvbox'
 
 " Grepper
 "runtime plugin/grepper.vim
@@ -143,14 +147,14 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 let g:vimtex_view_method = "zathura"
 "let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
-let g:deoplete#omni#input_patterns.tex = 
-        \   '\\(?:'
-        \  .   '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-        \  .  '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-        \  .  '|hyperref\s*\[[^]]*'
-        \  .  '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-        \  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
-        \  .')'
+"let g:deoplete#omni#input_patterns.tex = 
+"        \   '\\(?:'
+"        \  .   '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+"        \  .  '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+"        \  .  '|hyperref\s*\[[^]]*'
+"        \  .  '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+"        \  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
+"        \  .')'
 
 " Temp
 "let g:gfm_syntax_enable_always = 0

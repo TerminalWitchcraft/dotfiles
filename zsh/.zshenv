@@ -1,7 +1,7 @@
 # Exports
 
-export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
-export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+#export GTK_RC_FILES="$XDG_CONFIG_HOME"/gtk-1.0/gtkrc
+#export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 export GIMP2_DIRECTORY="$XDG_CONFIG_HOME"/gimp
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export CCACHE_DIR="$XDG_CACHE_HOME"/ccache
@@ -27,20 +27,25 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export WEECHAT_HOME="$XDG_CONFIG_HOME"/weechat
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
-export XSERVERRC="$XDG_CONFIG_HOME"/X11/xserverrc
-export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
+export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
+export NLTK_DATA=$XDG_DATA_HOME/nltk_data
+#export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
+#export XINITRC="$XDG_CONFIG_HOME"/X11/xinitrc
+#export XSERVERRC="$XDG_CONFIG_HOME"/X11/xserverrc
+#export VIMINIT=":source $XDG_CONFIG_HOME"/vim/vimrc
 
 
 #Alias
 alias less=$PAGER
 alias zless=$PAGER
-alias tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf"
-alias lh="ls -ah"
+#alias tmux="tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf"
 
 #Others
 # install xdg-usr-dirs package
 if [ -f ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs ]; then
 	. ${XDG_CONFIG_HOME:-~/.config}/user-dirs.dirs
+fi
+
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
 fi

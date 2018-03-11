@@ -106,6 +106,7 @@ nmap <Leader>h :Helptags<CR>
 nmap <Leader>l :BLines<CR>
 nmap <Leader>L :Lines<CR>
 nmap <Leader>g :Rg<cr>
+nmap <Leader>pl :Pad ls<cr>
 "nmap <Leader>G :DeniteProjectDir grep<cr>
 
 "Neomake
