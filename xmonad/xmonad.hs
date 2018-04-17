@@ -296,6 +296,7 @@ main = do
     , focusedBorderColor = myFocusedBorderColor
     -- key bindings
     , keys               = myKeys
+    , focusFollowsMouse  = False
     --mouseBindings      = myMouseBindings,
 
     -- hooks, layouts
