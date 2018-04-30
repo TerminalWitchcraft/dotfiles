@@ -22,8 +22,8 @@ set confirm
 set conceallevel=2
 set noshowmode
 set hidden
-set cursorline
-"set guicursor="n-v-c-sm:block-blinkwait300-blinkon1000-blinkoff1000,i-ci-ve:ver25,r-cr-o:hor20"
+"set cursorline
+"set guicursor="n-v-c-sm:block-blinkwait300-blinkon200-blinkoff150,i-ci-ve:ver25,r-cr-o:hor20"
 colorscheme gruvbox
 set background=dark
 set nowrap

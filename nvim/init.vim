@@ -17,8 +17,10 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   " For UI
   "call dein#add('mhartington/oceanic-next')
   call dein#add('morhetz/gruvbox')
+  "call dein#add('rakr/vim-one')
   call dein#add('vim-airline/vim-airline')
   call dein#add('ryanoasis/vim-devicons')
+  call dein#add('gcmt/taboo.vim')
 
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
@@ -35,6 +37,10 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('tpope/vim-unimpaired')
   call dein#add('fmoralesc/vim-pad')
   call dein#add('roxma/nvim-completion-manager')
+  call dein#add('autozimu/LanguageClient-neovim', {
+    \ 'rev': 'next',
+    \ 'build': 'bash install.sh',
+    \ })
   "call dein#add('Shougo/denite.nvim')
   "call dein#add('nixprime/cpsm', {'build': 'PY3=ON ./install.sh'})
   "call dein#add('BurningEther/iron.nvim')
@@ -49,10 +55,10 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('gregsexton/gitv', {'on_cmd': 'Gitv', 'depends': 'fugitive'})
   "call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
   "call dein#add('sebastianmarkow/deoplete-rust', {'on_ft': 'rust'})
-  call dein#add('mattn/webapi-vim', {'on_ft': 'rust'})
-  call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
-  call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
-  call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
+  " call dein#add('mattn/webapi-vim', {'on_ft': 'rust'})
+  " call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
+  " call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
+  " call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
   "call dein#add('mhinz/vim-grepper', {'on_cmd': ['Grepper', '<plug>(GrepperOperator)']})
 
   " For text writing and notes!

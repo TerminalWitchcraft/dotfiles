@@ -12,10 +12,14 @@ let mapleader=" "
 " vmap <leader>P "+p
 
 
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-W>
+"nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W>W
+"nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W>>
+nnoremap <C-H> <C-W><
+"nnoremap <C-L> <C-W><C-L>
+"nnoremap <C-H> <C-W><C-H>
 
 " For terminal use
 tnoremap <C-j><C-k> <C-\><C-N>
@@ -116,3 +120,8 @@ nnoremap <F9> :Neomake<CR>
 autocmd FileType python map <buffer> <Leader>r <Plug>(IPy-RunCell)
 autocmd FileType python map <buffer> <Leader>R <Plug>(IPy-Run)
 autocmd FileType python map <buffer> <Leader>q <Plug>(IPy-Terminate)
+
+"LSP
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>

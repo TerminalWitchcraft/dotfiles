@@ -2,6 +2,11 @@
 "let g:dein#enable_notification = 1
 let g:dein#install_progress_type = "echo"
 
+"LSP
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'python': ['pyls'],
+    \ }
 
 
 " Incsearch
@@ -59,10 +64,33 @@ let g:gruvbox_improved_warnings = 1
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
+
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_buffers=1
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+"let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+"let g:airline#extensions#tabline#show_tabs = 0
 " Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'"
+" let g:airline#extensions#tabline#fnamemod = ':t'"
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#buffers_label = 'Buffers'
+let g:airline#extensions#tabline#tabs_label = 'Tabs'
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline_skip_empty_sections = 1
 let g:airline_theme='gruvbox'
+
+"Taboo
+let g:taboo_tabline = 0
+let g:taboo_tab_format = " %f "
+let g:taboo_renamed_tab_format = " [%l]%f "
+"let g:taboo_unnamed_tab_label = "[Default]"
 
 " Grepper
 "runtime plugin/grepper.vim
