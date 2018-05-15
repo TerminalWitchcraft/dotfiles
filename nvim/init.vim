@@ -31,16 +31,16 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('justinmk/vim-sneak')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-surround')
-  "call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/neomru.vim')
   call dein#add('neomake/neomake')
   call dein#add('tpope/vim-unimpaired')
   call dein#add('fmoralesc/vim-pad')
-  call dein#add('roxma/nvim-completion-manager')
-  call dein#add('autozimu/LanguageClient-neovim', {
-    \ 'rev': 'next',
-    \ 'build': 'bash install.sh',
-    \ })
+  "call dein#add('roxma/nvim-completion-manager')
+  "call dein#add('autozimu/LanguageClient-neovim', {
+  "  \ 'rev': 'next',
+  "  \ 'build': 'bash install.sh',
+  "  \ })
   "call dein#add('Shougo/denite.nvim')
   "call dein#add('nixprime/cpsm', {'build': 'PY3=ON ./install.sh'})
   "call dein#add('BurningEther/iron.nvim')
@@ -53,12 +53,13 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('tpope/vim-fugitive', {'on_cmd': 'Gstatus', 'augroup': 'fugitive', 'on_source': 'gitv'})
   call dein#add('airblade/vim-gitgutter', {'depends': 'fugitive', 'on_source': 'fugitive'})
   call dein#add('gregsexton/gitv', {'on_cmd': 'Gitv', 'depends': 'fugitive'})
-  "call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
-  "call dein#add('sebastianmarkow/deoplete-rust', {'on_ft': 'rust'})
-  " call dein#add('mattn/webapi-vim', {'on_ft': 'rust'})
-  " call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
-  " call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
-  " call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
+  call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
+  call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
+  call dein#add('sebastianmarkow/deoplete-rust', {'on_ft': 'rust'})
+  call dein#add('mattn/webapi-vim', {'on_ft': 'rust'})
+  call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
+  "call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
+  "call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
   "call dein#add('mhinz/vim-grepper', {'on_cmd': ['Grepper', '<plug>(GrepperOperator)']})
 
   " For text writing and notes!

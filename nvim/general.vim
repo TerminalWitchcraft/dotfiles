@@ -14,7 +14,7 @@ set grepformat^=%f:%l:%c:%m
 set encoding=utf-8
 set termguicolors
 set clipboard+=unnamedplus
-set completeopt-=preview
+"set completeopt-=preview
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 set splitbelow
 set splitright
@@ -26,7 +26,7 @@ set hidden
 "set guicursor="n-v-c-sm:block-blinkwait300-blinkon200-blinkoff150,i-ci-ve:ver25,r-cr-o:hor20"
 colorscheme gruvbox
 set background=dark
-set nowrap
+"set nowrap
 
 let g:python_host_prog = '/home/hotshot/.local/share/virtualenvs/neovim2/bin/python'
 let g:python3_host_prog = '/home/hotshot/.local/share/virtualenvs/neovim3/bin/python'

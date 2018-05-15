@@ -3,10 +3,10 @@
 let g:dein#install_progress_type = "echo"
 
 "LSP
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ }
+"let g:LanguageClient_serverCommands = {
+"    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+"    \ 'python': ['pyls'],
+"    \ }
 
 
 " Incsearch
@@ -35,12 +35,12 @@ let g:sneak#prompt = '>>>'
 "let g:ctrlp_switch_buffer = "ET"
 
 " Use deoplete.
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_auto_close_preview = 1
-"let g:deoplete#sources#rust#racer_binary='/usr/bin/racer'
-"let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-"let g:deoplete#sources#rust#show_duplicates=0
-"let g:deoplete#sources#rust#documentation_max_height=20
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_auto_close_preview = 1
+let g:deoplete#sources#rust#racer_binary='/home/hotshot/.local/share/cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+let g:deoplete#sources#rust#show_duplicates=0
+let g:deoplete#sources#rust#documentation_max_height=20
 "if executable('rustc')
 "    " if src installed via rustup, we can get it by running 
 "    " rustc --print sysroot then appending the rest of the path
@@ -53,6 +53,14 @@ let g:sneak#prompt = '>>>'
 "
 "  ervandew/supertab 
 "let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Jedi vim
+let g:jedi#completions_enabled = 0
+let g:jedi#documentation_command = "K"
+let g:jedi#goto_definitions_command = "gd"
+let g:jedi#show_call_signatures = "1"
+"let g:jedi#auto_vim_configuration = 0
+
 
 "Oceanic-next
 "let g:oceanic_next_terminal_bold = 1
@@ -110,7 +118,7 @@ let g:taboo_renamed_tab_format = " [%l]%f "
 "let g:netrw_liststyle= 3
 
 "Neomake
-call neomake#configure#automake('w')
+call neomake#configure#automake('nrwi', 500)
 let g:neomake_open_list = 0
 
 " Enable snipMate compatibility feature.
