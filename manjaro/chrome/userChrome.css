@@ -1,0 +1,10 @@
+#main-window:not([customizing]):not([tabsintitlebar="true"]) #TabsToolbar {
+  visibility: collapse;
+}
+#navigator-toolbox {
+  margin-top: 1px;
+}
+
+#sidebar-box[sidebarcommand="_0ad88674-2b41-4cfb-99e3-e206c74a0076_-sidebar-action"] #sidebar-header {
+  visibility: collapse;
+}
