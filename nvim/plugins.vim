@@ -1,3 +1,15 @@
+" vim-one
+"
+let g:one_allow_italics = 1
+
+
+"Dim 
+let g:diminactive_use_colorcolumn = 1
+let g:diminactive_use_syntax = 0
+let g:diminactive_enable_focus = 1
+let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix', 'help']
+let g:diminactive_filetype_blacklist = ['startify', 'qf']
+
 " Dein.vim
 "let g:dein#enable_notification = 1
 let g:dein#install_progress_type = "echo"
@@ -36,7 +48,7 @@ let g:sneak#prompt = '>>>'
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_auto_close_preview = 1
+" let g:deoplete#enable_auto_close_preview = 1
 let g:deoplete#sources#rust#racer_binary='/home/hotshot/.local/share/cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 let g:deoplete#sources#rust#show_duplicates=0
@@ -65,10 +77,10 @@ let g:jedi#show_call_signatures = "1"
 "Oceanic-next
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
-let g:gruvbox_italic = 1
-let g:gruvbox_italicize_strings = 1
-"let g:gruvbox_improved_strings = 1
-let g:gruvbox_improved_warnings = 1
+" let g:gruvbox_italic = 1
+" let g:gruvbox_italicize_strings = 1
+" "let g:gruvbox_improved_strings = 1
+" let g:gruvbox_improved_warnings = 1
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -92,7 +104,8 @@ let g:airline#extensions#tabline#buffers_label = 'Buffers'
 let g:airline#extensions#tabline#tabs_label = 'Tabs'
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='gruvbox'
+let g:airline_theme='one'
+
 
 "Taboo
 let g:taboo_tabline = 0
@@ -118,8 +131,20 @@ let g:taboo_renamed_tab_format = " [%l]%f "
 "let g:netrw_liststyle= 3
 
 "Neomake
-call neomake#configure#automake('nrwi', 500)
-let g:neomake_open_list = 0
+" call neomake#configure#automake('nw')
+" let g:neomake_open_list = 0
+
+
+"Ale
+let g:ale_completion_enabled = 0
+let g:ale_keep_list_window_open = 1
+let g:ale_list_window_size = 5
+let g:ale_open_list = 1
+let g:ale_linters = {'rust': ['rls']}
+let g:ale_rust_rls_toolchain = "stable"
+let g:ale_set_quickfix = 1 
+let g:ale_set_loclist = 0
+
 
 " Enable snipMate compatibility feature.
 "let g:neosnippet#enable_snipmate_compatibility = 1
@@ -192,7 +217,7 @@ let g:vimtex_view_method = "zathura"
 "        \  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
 "        \  .')'
 
-" Temp
+" zenburnTemp
 "let g:gfm_syntax_enable_always = 0
 "let g:gfm_syntax_enable_filetypes = ['pandoc']
 "let g:gfm_syntax_emoji_conceal = 1

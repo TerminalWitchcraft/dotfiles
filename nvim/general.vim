@@ -24,7 +24,7 @@ set noshowmode
 set hidden
 "set cursorline
 "set guicursor="n-v-c-sm:block-blinkwait300-blinkon200-blinkoff150,i-ci-ve:ver25,r-cr-o:hor20"
-colorscheme gruvbox
+colorscheme one
 set background=dark
 "set nowrap
 
@@ -44,7 +44,8 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 " For vim split terminals
 command! -nargs=* Term 10split | terminal <args>
 command! -nargs=* Vterm vsplit | terminal <args>
-
+autocmd CompleteDone * silent! pclose!
+autocmd InsertLeave * silent! pclose!
 """Colors
 ""let g:terminal_color_0 = "#121c21"
 ""let g:terminal_color_8 = "#52606b"

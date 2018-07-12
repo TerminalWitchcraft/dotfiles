@@ -12,13 +12,17 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   " Let dein manage dein
   " Required:
   call dein#add('/home/hotshot/.local/share/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('blueyed/vim-diminactive')
 
   " Always loaded
   " For UI
   "call dein#add('mhartington/oceanic-next')
-  call dein#add('morhetz/gruvbox')
-  "call dein#add('rakr/vim-one')
+  "call dein#add('morhetz/gruvbox')
+  call dein#add('rakr/vim-one')
+  "call dein#add('mhartington/oceanic-next')
+  "call dein#add('jnurmine/Zenburn')
   call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
   call dein#add('ryanoasis/vim-devicons')
   call dein#add('gcmt/taboo.vim')
 
@@ -33,7 +37,8 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('tpope/vim-surround')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/neomru.vim')
-  call dein#add('neomake/neomake')
+  "call dein#add('neomake/neomake')
+  call dein#add('w0rp/ale')
   call dein#add('tpope/vim-unimpaired')
   call dein#add('fmoralesc/vim-pad')
   "call dein#add('roxma/nvim-completion-manager')
