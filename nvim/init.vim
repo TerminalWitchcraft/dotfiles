@@ -13,6 +13,8 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   " Required:
   call dein#add('/home/hotshot/.local/share/dein/repos/github.com/Shougo/dein.vim')
   call dein#add('blueyed/vim-diminactive')
+  call dein#add('tpope/vim-commentary')
+  call dein#add('wellle/targets.vim')
 
   " Always loaded
   " For UI
@@ -41,6 +43,8 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('w0rp/ale')
   call dein#add('tpope/vim-unimpaired')
   call dein#add('fmoralesc/vim-pad')
+  call dein#add('vimwiki/vimwiki')
+  call dein#add('mhinz/vim-startify')
   "call dein#add('roxma/nvim-completion-manager')
   "call dein#add('autozimu/LanguageClient-neovim', {
   "  \ 'rev': 'next',

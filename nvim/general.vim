@@ -36,6 +36,8 @@ au BufNewFile,BufRead *.md
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4
+au FileType vimwiki set syntax=pandoc
+autocmd FileType rust setlocal commentstring=//\ %s
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

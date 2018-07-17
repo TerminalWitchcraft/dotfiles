@@ -321,3 +321,22 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 "let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+
+"Vim wiki
+"
+let g:vimwiki_list = [{'path': '/home/hotshot/Dropbox/wiki', 'ext': '.md', 'auto_toc': 1,
+  \'index': 'main', 'syntax': 'markdown'}]
+
+
+"Startify
+let g:startify_lists = [
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
+
+let g:startify_bookmarks = [ {'c': '~/Dropbox/wiki/main.md'}]
+
