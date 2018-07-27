@@ -21,13 +21,13 @@ let g:dein#install_progress_type = "echo"
 "    \ }
 
 
-" Incsearch
-let g:incsearch#auto_nohlsearch = 1
 
 " Vim Sneak
 let g:sneak#s_next = 1
 let g:sneak#label = 1
 let g:sneak#prompt = '>>>'
+autocmd ColorScheme * hi Sneak guifg=#61afef guibg=#3e4452 ctermfg=75 ctermbg=17
+autocmd ColorScheme * hi SneakScope guifg=#61afef guibg=#3e4452 ctermfg=75 ctermbg=17
 
 "  Ctrlp vim
 "let g:ctrlp_map = '<C-p>'
@@ -53,6 +53,9 @@ let g:deoplete#sources#rust#racer_binary='/home/hotshot/.local/share/cargo/bin/r
 let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 let g:deoplete#sources#rust#show_duplicates=0
 let g:deoplete#sources#rust#documentation_max_height=20
+call deoplete#custom#source('_',  'max_menu_width', 0)
+call deoplete#custom#source('_',  'max_abbr_width', 0)
+call deoplete#custom#source('_',  'max_kind_width', 0)
 "if executable('rustc')
 "    " if src installed via rustup, we can get it by running 
 "    " rustc --print sysroot then appending the rest of the path
@@ -137,9 +140,9 @@ let g:taboo_renamed_tab_format = " [%l]%f "
 
 "Ale
 let g:ale_completion_enabled = 0
-let g:ale_keep_list_window_open = 1
+let g:ale_keep_list_window_open = 0
 let g:ale_list_window_size = 5
-let g:ale_open_list = 1
+let g:ale_open_list = 'on_save'
 let g:ale_linters = {'rust': ['rls']}
 let g:ale_rust_rls_toolchain = "stable"
 let g:ale_set_quickfix = 1 
@@ -167,7 +170,8 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/.local/share/dein/repos/github.com/honza/vim-snippets/snippets'
 " For conceal markers.
 "if has('conceal')
 "  set conceallevel=2 concealcursor=niv
@@ -207,6 +211,7 @@ if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
 let g:vimtex_view_method = "zathura"
+let g:vimtex_compiler_progname = 'nvr'
 "let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 "let g:deoplete#omni#input_patterns.tex = 
 "        \   '\\(?:'
@@ -314,9 +319,9 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 let $FZF_DEFAULT_COMMAND = 'rg --files --no-messages --glob "!.git" --maxdepth=40'
-let g:fzf_tags_command = 'ctags -R --exclude=target/* --exclude="*.json"'
+let g:fzf_tags_command = 'ctags -x -R  --exclude="target/*" --exclude="*.json"'
 command! -bang -nargs=* BTags :call fzf#vim#buffer_tags(<q-args>, {'options': ['--no-reverse', '--prompt', 'TAGS ❯❯❯ ']}, <bang>0)
-command! -bang -nargs=* Tags :call fzf#vim#tags(<q-args>, {'options': ['--no-reverse', '--prompt', 'TAGS ❯❯❯ ']}, <bang>0)
+command! -bang -nargs=* Tags :call fzf#vim#tags(<q-args>, {'options': ['--no-reverse', '--prompt', 'TAGS ❯❯❯ '], 'source': 'ctags -x -R  --exclude="target/*" --exclude="*.json"'}, <bang>0)
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
@@ -327,6 +332,7 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 "
 let g:vimwiki_list = [{'path': '/home/hotshot/Dropbox/wiki', 'ext': '.md', 'auto_toc': 1,
   \'index': 'main', 'syntax': 'markdown'}]
+let g:vimwiki_global_ext = 0
 
 
 "Startify
@@ -340,3 +346,12 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [ {'c': '~/Dropbox/wiki/main.md'}]
 
+"echodoc
+let g:echodoc#enable_at_startup = 1
+
+
+
+"Clang
+let g:deoplete#sources#clang#libclang_path="/usr/lib/libclang.so"
+"let g:deoplete#sources#clang#clang_header="/lib/clang/6.0.1/include/"
+let g:deoplete#sources#clang#clang_header="/usr/lib/clang/"
