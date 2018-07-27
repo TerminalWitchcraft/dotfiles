@@ -37,17 +37,25 @@ tnoremap <C-l> <C-\><C-N><C-w>l
 " nnoremap <C-k> <C-w>k
 " nnoremap <C-l> <C-w>l
 
+" For tabs
+nnoremap tj :tabprevious<CR>
+nnoremap tk :tabnext<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+nnoremap tn :tabnew<CR>
+nnoremap tr :TabooRename 
+nnoremap Tn :TabooOpen 
 
 
 " Incsearch
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map n  <Plug>(incsearch-nohl-n)
+" map N  <Plug>(incsearch-nohl-N)
+" map *  <Plug>(incsearch-nohl-*)
+" map #  <Plug>(incsearch-nohl-#)
+" map g* <Plug>(incsearch-nohl-g*)
+" map g# <Plug>(incsearch-nohl-g#)
 
 
 " Vim Sneak
@@ -114,7 +122,7 @@ nmap <Leader>pl :Pad ls<cr>
 "nmap <Leader>G :DeniteProjectDir grep<cr>
 
 "Neomake
-nnoremap <F9> :Neomake<CR>
+"nnoremap <F9> :Neomake<CR>
 
 "Ipython
 autocmd FileType python map <buffer> <Leader>r <Plug>(IPy-RunCell)
