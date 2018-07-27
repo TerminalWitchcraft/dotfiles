@@ -15,6 +15,9 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('blueyed/vim-diminactive')
   call dein#add('tpope/vim-commentary')
   call dein#add('wellle/targets.vim')
+  call dein#add('Shougo/echodoc.vim')
+  call dein#add('qpkorr/vim-bufkill')
+  call dein#add('romainl/vim-cool')
 
   " Always loaded
   " For UI
@@ -30,10 +33,10 @@ if dein#load_state('/home/hotshot/.local/share/dein')
 
   call dein#add('Shougo/neosnippet.vim')
   call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('honza/vim-snippets')
   "call dein#add('Shougo/deol.nvim')
   call dein#add('jiangmiao/auto-pairs')
   "call dein#add('ctrlpvim/ctrlp.vim')
-  call dein#add('haya14busa/incsearch.vim')
   call dein#add('justinmk/vim-sneak')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-surround')
@@ -70,6 +73,8 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   "call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
   "call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
   "call dein#add('mhinz/vim-grepper', {'on_cmd': ['Grepper', '<plug>(GrepperOperator)']})
+  call dein#add('zchee/deoplete-clang')
+  call dein#add('Shougo/neoinclude.vim')
 
   " For text writing and notes!
   call dein#add('vim-pandoc/vim-pandoc', {'name': 'vim_pandoc', 'on_source': 'pandoc-after'})
