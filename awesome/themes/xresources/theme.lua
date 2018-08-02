@@ -14,16 +14,12 @@ local themes_path = gfs.get_themes_dir()
 local theme = dofile(themes_path.."default/theme.lua")
 -- load vector assets' generators for this theme
 
-theme.font          = "sans 9"
-theme.tasklist_disable_icon = true
-theme.tasklist_align = "left"
-theme.tasklist_bg_focus = xrdb.background
-theme.tasklist_fg_focus = xrdb.color12
---theme.tasklist_spacing = 3
+theme.wallpaper = "~/Pictures/Background4.jpg"
+theme.font      = "DejaVuSansMono Nerd Font:style=Book 8"
 
 theme.bg_normal     = xrdb.background
-theme.bg_focus      = xrdb.color12
-theme.bg_urgent     = xrdb.color9
+theme.bg_focus      = xrdb.color9
+theme.bg_urgent     = xrdb.color1
 theme.bg_minimize   = xrdb.color8
 theme.bg_systray    = theme.bg_normal
 
@@ -32,12 +28,24 @@ theme.fg_focus      = theme.bg_normal
 theme.fg_urgent     = theme.bg_normal
 theme.fg_minimize   = theme.bg_normal
 
--- theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
 theme.border_normal = xrdb.color0
 theme.border_focus  = theme.bg_focus
 theme.border_marked = xrdb.color10
 
+theme.taglist_font = "sans 11"
+theme.taglist_bg_focus = "#3e4452"
+theme.taglist_fg_focus = "#abb2bf"
+theme.taglist_spacing = 10
+
+theme.tasklist_font = theme.font
+theme.tasklist_disable_icon = true
+theme.tasklist_bg_normal = theme.bg_normal
+theme.tasklist_bg_focus = theme.bg_normal
+theme.tasklist_fg_focus = "#abb2bf"
+theme.tasklist_fg_normal = theme.taglist_bg_focus
+theme.bg_systray = theme.bg_normal
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -108,7 +116,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 )
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(0)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
@@ -124,15 +132,15 @@ end
 local is_dark_bg = (bg_numberic_value < 383)
 
 -- Generate wallpaper:
-local wallpaper_bg = xrdb.color8
-local wallpaper_fg = xrdb.color7
-local wallpaper_alt_fg = xrdb.color12
-if not is_dark_bg then
-    wallpaper_bg, wallpaper_fg = wallpaper_fg, wallpaper_bg
-end
-theme.wallpaper = function(s)
-    return theme_assets.wallpaper(wallpaper_bg, wallpaper_fg, wallpaper_alt_fg, s)
-end
+--local wallpaper_bg = xrdb.color8
+--local wallpaper_fg = xrdb.color7
+--local wallpaper_alt_fg = xrdb.color12
+--if not is_dark_bg then
+--    wallpaper_bg, wallpaper_fg = wallpaper_fg, wallpaper_bg
+--end
+--theme.wallpaper = function(s)
+--    return theme_assets.wallpaper(wallpaper_bg, wallpaper_fg, wallpaper_alt_fg, s)
+--end
 
 return theme
 

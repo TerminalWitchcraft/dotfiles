@@ -8,8 +8,9 @@ function run {
 }
 
 ## run feh --bg-scale /home/hotshot/Pictures/background.jpg &
-run compton
-run dunst
-run unclutter -idle 2
+#run compton -b
+# run dunst
+run unclutter -idle 3
 run setxkbmap -option caps:swapescape
 run redshift
+run light-locker

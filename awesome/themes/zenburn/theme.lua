@@ -8,11 +8,12 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
+--theme.wallpaper = themes_path .. "zenburn/zenburn-background.png"
+theme.wallpaper = "~/Pictures/Background.jpg"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "DejaVuSansMono Nerd Font:style=Book 8"
 
 -- {{{ Colors
 theme.fg_normal  = "#DCDCCC"
@@ -21,16 +22,28 @@ theme.fg_urgent  = "#CC9393"
 theme.bg_normal  = "#3F3F3F"
 theme.bg_focus   = "#1E2320"
 theme.bg_urgent  = "#3F3F3F"
+
+theme.taglist_font = "sans 11"
+theme.taglist_bg_focus = "#4d4d4d"
+theme.taglist_spacing = 10
+
+theme.tasklist_font = theme.font
+theme.tasklist_disable_icon = true
+theme.tasklist_bg_normal = "#3F3F3F"
+theme.tasklist_bg_focus = "#3F3F3F"
 theme.bg_systray = theme.bg_normal
 -- }}}
 
 -- {{{ Borders
 theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(3)
 theme.border_normal = "#3F3F3F"
 theme.border_focus  = "#6F6F6F"
 theme.border_marked = "#CC9393"
 -- }}}
+
+theme.notification_bg = "#8cd03d"
+theme.notification_fg = "#3f3f3f"
 
 -- {{{ Titlebars
 theme.titlebar_bg_focus  = "#3F3F3F"
@@ -67,14 +80,14 @@ theme.mouse_finder_color = "#CC9393"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_height = dpi(15)
+theme.menu_height = dpi(20)
 theme.menu_width  = dpi(100)
 -- }}}
 
 -- {{{ Icons
 -- {{{ Taglist
-theme.taglist_squares_sel   = themes_path .. "zenburn/taglist/squarefz.png"
-theme.taglist_squares_unsel = themes_path .. "zenburn/taglist/squarez.png"
+--theme.taglist_squares_sel   = themes_path .. "zenburn/taglist/squarefz.png"
+--theme.taglist_squares_unsel = themes_path .. "zenburn/taglist/squarez.png"
 --theme.taglist_squares_resize = "false"
 -- }}}
 
