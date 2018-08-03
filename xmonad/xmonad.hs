@@ -1,35 +1,82 @@
 import System.IO
 import System.Exit
+
 import XMonad
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Layout.Tabbed
-import XMonad.Layout.Spacing
-import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Spiral
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.SetWMName
-import XMonad.Actions.CycleWS
-import XMonad.Util.Scratchpad
+import XMonad.Hooks.ManageHelpers(doFullFloat, isFullscreen)
+import XMonad.Config.Desktop
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Actions.CycleWS
+import XMonad.Layout.Tabbed
+import XMonad.Layout.Spacing
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Fullscreen (fullscreenFull)
+import XMonad.Hooks.EwmhDesktops
+
 import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
+
+main = do
+  xmproc <- spawnPipe (myBar ++ myXmobarrc)
+  xmonad $ ewmh myBaseConfig
+    { terminal    = myTerminal
+    , startupHook = spawn "~/.config/xmonad/autorun.sh"
+    --, layoutHook  = avoidStruts $ smartBorders $ layoutHook myBaseConfig
+    , layoutHook  = smartBorders(avoidStruts $ layoutHook myBaseConfig)
+    --, manageHook  = manageDocks <+> myManageHook <+> manageHook myBaseConfig
+    , manageHook  = manageDocks <+> myManageHook
+    , modMask     = myModMask
+    , borderWidth = myBorderWidth
+    , focusFollowsMouse  = myFocusFollowsMouse
+    , workspaces  = myWorkspaces
+    , keys 	  = myKeys
+    --, handleEventHook    = ewmhDesktopsEventHook <+> fullscreenEventHook
+    --, handleEventHook    = handleEventHook myBaseConfig <+> docksEventHook
+    , handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
+    --, handleEventHook = docksEventHook <+> fullscreenEventHook
+    , logHook = dynamicLogWithPP $ xmobarPP {
+      	    ppOutput = hPutStrLn xmproc . pad
+      	  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
+	  , ppHidden = xmobarColor "#5c6370" ""
+      	  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+          , ppUrgent = xmobarColor "#fe8019" ""
+          , ppOrder = \(ws:_:t:_) -> [ws,t]
+      	  , ppSep = " | "
+      	  , ppWsSep = " "
+	}
+    }
+
+ 
+myModMask = mod4Mask
+myFocusFollowsMouse = False
+myBar = "xmobar "
+myBorderWidth = 1
 myTerminal = "urxvt"
 myScreensaver = "i3lock-fancy"
 myXmobarrc = "~/.xmobarrc"
-myWorkspaces = ["1:term","2:web","3:play","4:vm","5:media"] ++ map show [6..9]
+myWorkspaces = ["\xf120", "\xf269", "play"] ++ map show [4..9]
 mySelectScreenshot = "scrot"
 myScreenshot = "scrot"
 myLauncher = "rofi -show run"
+myBaseConfig = desktopConfig
+--myBaseConfig = defaultConfig
 
+-- colors
+myNormalBorderColor  = "#000000"
+myFocusedBorderColor = "#be5046"
+xmobarTitleColor = "#abb2bf"
+-- Color of current workspace in xmobar.
+xmobarCurrentWorkspaceColor = "#be5046"
+
+
+-- window manipulations
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "2:web"
-    , className =? "Firefox"  --> doShift "2:web"
+    [ className =? "Chromium"       --> doShift "\xf269"
+    , className =? "Firefox"  --> doShift "\xf269"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
     , className =? "Steam"          --> doFloat
@@ -41,61 +88,15 @@ myManageHook = composeAll
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> doFullFloat]
 
-myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#ffb6b0"
-xmobarTitleColor = "#FFB6B0"
-
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
-
--- Width of the window border in pixels.
-myBorderWidth = 1
-myModMask = mod4Mask
---myLayout = avoidStruts (
---    ThreeColMid 1 (3/100) (1/2) |||
---    Tall 1 (3/100) (1/2) |||
---    Mirror (Tall 1 (3/100) (1/2)) |||
---    tabbed shrinkText tabConfig |||
---    Full |||
---    spiral (6/7)) |||
---    noBorders (fullscreenFull Full)
---myLayout = tiled ||| Mirror tiled ||| Full
---  where
---    tiled = smartSpacing 5 $ Tall nmaster delta ratio
---    nmaster = 1
---    ratio = 1/2
---    delta = 3/100
-
-manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
-
-  where
-
-    h = 0.3     -- terminal height, 10%
-    w = 1       -- terminal width, 100%
-    --t = 1 - h   -- distance from top edge, 90%
-    --l = 1 - w   -- distance from left edge, 0%
-    t = 0   -- distance from top edge, 90%
-    l = 0   -- distance from left edge, 0%
-
-
+-- layout config
 myLayout = avoidStruts (
     smartSpacingWithEdge 3 ( Tall 1 (3/100) (1/2) )|||
     smartSpacingWithEdge 3 ( Mirror (Tall 1 (3/100) (1/2))) |||
     --tabbed shrinkText tabConfig |||
     simpleTabbedAlways) |||
     noBorders (fullscreenFull Full)
-    
 
-tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
-    inactiveBorderColor = "#7C7C7C",
-    inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
-}
-
+-- keys config
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
@@ -112,8 +113,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((controlMask, xK_space),
      spawn myLauncher)
-  , ((modMask, xK_d),
-     scratchpadSpawnActionTerminal "urxvt")
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
   , ((modMask, xK_n),
@@ -267,59 +266,3 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
-
-
-main = do
-  xmproc <- spawnPipe ("xmobar " ++ myXmobarrc)
-  xmonad $ defaultConfig {
-	logHook = dynamicLogWithPP $ xmobarPP {
-		    ppOutput = hPutStrLn xmproc
-		  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
-		  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-                  , ppUrgent = xmobarColor "#fe8019" ""
-                  , ppOrder = \(ws:_:t:_) -> [ws,t]
-		  , ppSep = "  "
-	}
-	, manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig <+> manageScratchPad
-	--      , startupHook = docksStartupHook <+> setWMName "LG3D"
-	, startupHook = setWMName "VXMonad"
-	, handleEventHook = docksEventHook <+> fullscreenEventHook
-    -- simple stuff
-    , terminal           = myTerminal
-    --focusFollowsMouse  = myFocusFollowsMouse,
-    , borderWidth        = myBorderWidth
-    --, layoutHook = avoidStruts  $  layoutHook defaultConfig
-    , modMask            = myModMask
-    , workspaces         = myWorkspaces
-    , normalBorderColor  = myNormalBorderColor
-    , focusedBorderColor = myFocusedBorderColor
-    -- key bindings
-    , keys               = myKeys
-    , focusFollowsMouse  = False
-    --mouseBindings      = myMouseBindings,
-
-    -- hooks, layouts
-    , layoutHook         = smartBorders $ myLayout
-  }
-
---defaults = defaultConfig {
---    -- simple stuff
---    terminal           = myTerminal,
---    --focusFollowsMouse  = myFocusFollowsMouse,
---    borderWidth        = myBorderWidth,
---    modMask            = myModMask,
---    workspaces         = myWorkspaces,
---    normalBorderColor  = myNormalBorderColor,
---    focusedBorderColor = myFocusedBorderColor,
---
---    -- key bindings
---    --keys               = myKeys,
---    --mouseBindings      = myMouseBindings,
---
---    -- hooks, layouts
---    --layoutHook         = smartBorders $ myLayout,
---    manageHook         = myManageHook,
---    startupHook        = myStartupHook
---}
-

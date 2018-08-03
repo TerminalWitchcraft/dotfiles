@@ -15,7 +15,7 @@ local theme = dofile(themes_path.."default/theme.lua")
 -- load vector assets' generators for this theme
 
 theme.wallpaper = "~/Pictures/Background4.jpg"
-theme.font      = "DejaVuSansMono Nerd Font:style=Book 8"
+theme.font      = "DejaVuSansMono Nerd Font 12"
 
 theme.bg_normal     = xrdb.background
 theme.bg_focus      = xrdb.color9
@@ -34,7 +34,7 @@ theme.border_normal = xrdb.color0
 theme.border_focus  = theme.bg_focus
 theme.border_marked = xrdb.color10
 
-theme.taglist_font = "sans 11"
+theme.taglist_font = theme.font
 theme.taglist_bg_focus = "#3e4452"
 theme.taglist_fg_focus = "#abb2bf"
 theme.taglist_spacing = 10
