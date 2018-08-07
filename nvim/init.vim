@@ -18,6 +18,7 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('Shougo/echodoc.vim')
   call dein#add('qpkorr/vim-bufkill')
   call dein#add('romainl/vim-cool')
+  call dein#add('kshenoy/vim-signature')
 
   " Always loaded
   " For UI

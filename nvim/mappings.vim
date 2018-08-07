@@ -101,14 +101,14 @@ map T <Plug>Sneak_T
 
 
 " Denite
-nmap <Leader>a :Colors<CR>
+nmap <Leader>a :History<CR>
 nmap <Leader>f :FZF<CR>
 nmap <Leader>F :FZF ~<CR>
 "nmap <Leader>d :Denite -buffer-name=directory_rec -resume -refresh directory_rec<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>t :BTags<CR>
 nmap <Leader>T :Tags<CR>
-nmap <Leader>m :History<CR>
+nmap <Leader>m :Marks<CR>
 nmap <Leader>M :History:<CR>
 nmap <Leader>c :Commands<CR>
 "nmap <Leader>C :Denite change<CR>

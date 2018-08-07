@@ -2,6 +2,8 @@
 "
 let g:one_allow_italics = 1
 
+"Startify
+let g:startify_fortune_use_unicode = 1
 
 "Dim 
 let g:diminactive_use_colorcolumn = 1
@@ -71,9 +73,14 @@ call deoplete#custom#source('_',  'max_kind_width', 0)
 
 " Jedi vim
 let g:jedi#completions_enabled = 0
-let g:jedi#documentation_command = "K"
-let g:jedi#goto_definitions_command = "gd"
 let g:jedi#show_call_signatures = "1"
+let g:jedi#goto_command = "gd"
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = ""
+let g:jedi#rename_command = ""
 "let g:jedi#auto_vim_configuration = 0
 
 
@@ -107,7 +114,7 @@ let g:airline#extensions#tabline#buffers_label = 'Buffers'
 let g:airline#extensions#tabline#tabs_label = 'Tabs'
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='one'
+let g:airline_theme='silver'
 
 
 "Taboo
