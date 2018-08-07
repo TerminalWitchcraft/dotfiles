@@ -1,17 +1,21 @@
 Config { 
 
    -- appearance
-     font =         "xft:DejaVuSansMono Nerd Font:size=10:style:bold:antialias=true"
-   , bgColor =      "#282828"
-   , fgColor =      "#fabd2f"
+   --  font =         "xft:DejaVuSansMono Nerd Font:size=9:style:book:antialias=true"
+     --font =         "xft:FuraCode Nerd Font:size=10:style:Regular:antialias=true"
+     font =         "xft:ShureTechMono Nerd Font:size=11:style:Regular:antialias=true"
+     --font =         "xft:BitstreamVeraSansMono Nerd Font:size=10:style:Roman:antialias=true"
+     --font =         "xft:Mononoki Nerd Font:size=10:style:Regular:antialias=true"
+   , bgColor =      "#ffffff"
+   , fgColor =      "#191919"
    , position =     Top
    , border =       BottomB
-   , borderColor =  "#d79921"
+   , borderColor =  "#be5046"
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ <fc=#fb4934>%locks%</fc> %battery% | %cpu% | %memory% | %dynnetwork% | %date% "
+   , template = "%StdinReader% }{Terminal Witchcraft  >><fc=#fb4934>%locks%</fc> %battery% %bright% %default:Master% %cpu% %memory% %dynnetwork% %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -41,39 +45,39 @@ Config {
         [
         Run StdinReader
 	-- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , " <tx>kB/s|<rx>kB/s"
+        , Run DynNetwork     [ "--template" , " <tx>kB/s  <rx>kB/s"
                              , "--Low"      , "100000"       -- units: B/s
                              , "--High"     , "50000000"       -- units: B/s
-                             , "--low"      , "#b8bb26"
-                             , "--normal"   , "#fe8019"
-                             , "--high"     , "#fb4934"
+                             , "--low"      , "#191919"
+                             , "--normal"   , "#191919"
+                             , "--high"     , "#be5046"
                              ] 10
 
         -- cpu activity monitor
-        , Run Cpu       [  "--template" , " <total>"
+        , Run Cpu       [  "--template" , " <total>"
 			     , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
-                             , "--low"      , "#b8bb26"
-                             , "--normal"   , "#fe8019"
-                             , "--high"     , "#fb4934"
+                             , "--low"      , "#191919"
+                             , "--normal"   , "#191919"
+                             , "--high"     , "#e06c75"
                              ] 10
 
         -- cpu core temperature monitor
         --, Run CoreTemp       [ "--template" , "Temp: <core0>°C|<core1>°C"
         --                     , "--Low"      , "70"        -- units: °C
         --                     , "--High"     , "80"        -- units: °C
-        --                     , "--low"      , "#b8bb26"
-        --                     , "--normal"   , "#fe8019"
-        --                     , "--high"     , "#fb4934"
+        --                     , "--low"      , "#191919"
+        --                     , "--normal"   , "#191919"
+        --                     , "--high"     , "#e06c75"
         --                     ] 50
                           
         -- memory usage monitor
         , Run Memory         [ "--template" ," <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
-                             , "--low"      , "#b8bb26"
-                             , "--normal"   , "#fe8019"
-                             , "--high"     , "#fb4934"
+                             , "--low"      , "#191919"
+                             , "--normal"   , "#191919"
+                             , "--high"     , "#e06c75"
                              ] 10
 
         -- battery monitor
@@ -82,7 +86,7 @@ Config {
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "#fb4934"
                              , "--normal"   , "#fe8019"
-                             , "--high"     , "#b8bb26"
+                             , "--high"     , "#be5046"
 
                              , "--" -- battery specific options
                                        -- discharging status
@@ -94,10 +98,19 @@ Config {
                              ] 50
 
         -- time and date indicator 
+	, Run Volume "default" "Master"
+	            [ "-t",	"<status><volume>%"
+		    , "--"
+		    , "-O",	" "
+		    , "-o", 	" "
+		    , "-C",	"#191919"
+		    , "-c",	"#fb4934"
+	            ] 10
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#83a598>%F (%a) %H:%M</fc>" "date" 10
+        , Run Date           "<fc=#191919> (%a)%b %d,%y  %H:%M</fc>" "date" 10
 
         -- keyboard layout indicator
 	, Run Locks
+	, Run Brightness	["--template", " <percent>", "--", "-D", "intel_backlight"] 50
         ],
    }
