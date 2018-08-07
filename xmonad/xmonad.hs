@@ -4,16 +4,25 @@ import System.Exit
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers(doFullFloat, isFullscreen)
 import XMonad.Config.Desktop
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.CycleWS
+
+
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen (fullscreenFull)
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Layout.Cross(simpleCross)
+import XMonad.Layout.Cross(simpleCross)
+import XMonad.Layout.Spiral(spiral)
+import XMonad.Layout.GridVariants
+import XMonad.Layout.ThreeColumns
+
+import XMonad.Layout.CenteredMaster(centerMaster)
 
 import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
@@ -22,13 +31,13 @@ import qualified Data.Map as M
 
 main = do
   xmproc <- spawnPipe (myBar ++ myXmobarrc)
-  xmonad $ ewmh myBaseConfig
+  xmonad $ docks $ ewmh myBaseConfig
     { terminal    = myTerminal
-    , startupHook = spawn "~/.config/xmonad/autorun.sh"
+    --, startupHook = spawn "~/.config/xmonad/autorun.sh"
     --, layoutHook  = avoidStruts $ smartBorders $ layoutHook myBaseConfig
-    , layoutHook  = smartBorders(avoidStruts $ layoutHook myBaseConfig)
+    , layoutHook  = smartBorders $ myLayout 
     --, manageHook  = manageDocks <+> myManageHook <+> manageHook myBaseConfig
-    , manageHook  = manageDocks <+> myManageHook
+    , manageHook  = myManageHook
     , modMask     = myModMask
     , borderWidth = myBorderWidth
     , focusFollowsMouse  = myFocusFollowsMouse
@@ -44,10 +53,13 @@ main = do
 	  , ppHidden = xmobarColor "#5c6370" ""
       	  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppUrgent = xmobarColor "#fe8019" ""
-          , ppOrder = \(ws:_:t:_) -> [ws,t]
-      	  , ppSep = " | "
+	  , ppLayout = xmobarColor xmobarCurrentWorkspaceColor ""
+          , ppOrder = \(ws:a:t:_) -> [ws,a,t]
+      	  , ppSep = " "
       	  , ppWsSep = " "
 	}
+    , normalBorderColor = myNormalBorderColor
+    , focusedBorderColor = myFocusedBorderColor
     }
 
  
@@ -55,10 +67,10 @@ myModMask = mod4Mask
 myFocusFollowsMouse = False
 myBar = "xmobar "
 myBorderWidth = 1
-myTerminal = "urxvt"
+myTerminal = "alacritty"
 myScreensaver = "i3lock-fancy"
 myXmobarrc = "~/.xmobarrc"
-myWorkspaces = ["\xf120", "\xf269", "play"] ++ map show [4..9]
+myWorkspaces = ["\xf120", "\xf269"] ++ map show [3..9]
 mySelectScreenshot = "scrot"
 myScreenshot = "scrot"
 myLauncher = "rofi -show run"
@@ -66,9 +78,9 @@ myBaseConfig = desktopConfig
 --myBaseConfig = defaultConfig
 
 -- colors
-myNormalBorderColor  = "#000000"
+myNormalBorderColor  = "#ffffff"
 myFocusedBorderColor = "#be5046"
-xmobarTitleColor = "#abb2bf"
+xmobarTitleColor = "#323232"
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#be5046"
 
@@ -89,11 +101,19 @@ myManageHook = composeAll
     , isFullscreen --> doFullFloat]
 
 -- layout config
+--myLayout = avoidStruts (
+--    ThreeColMid 1 (3/100) (1/2) |||
+--    Tall 1 (3/100) (1/2) |||
+--    Mirror (Tall 1 (3/100) (1/2)) |||
+--    Full |||
+--    spiral (6/7)) |||
+--    noBorders (fullscreenFull Full)
 myLayout = avoidStruts (
-    smartSpacingWithEdge 3 ( Tall 1 (3/100) (1/2) )|||
-    smartSpacingWithEdge 3 ( Mirror (Tall 1 (3/100) (1/2))) |||
-    --tabbed shrinkText tabConfig |||
-    simpleTabbedAlways) |||
+    Tall 1 (3/100) (1/2) |||
+    Mirror (Tall 1 (3/100) (1/2)) |||
+    spiral (16/9)  |||
+    Grid(16/10) ||| 
+    ThreeColMid 1 (3/100) (1/2) ) |||
     noBorders (fullscreenFull Full)
 
 -- keys config
@@ -111,7 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_l),
      spawn myScreensaver)
 
-  , ((controlMask, xK_space),
+  , ((modMask, xK_semicolon),
      spawn myLauncher)
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
@@ -139,11 +159,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master 5%+")
 
   -- Decrease volume.
-  , ((0, xF86XK_KbdBrightnessUp),
+  , ((0, xF86XK_MonBrightnessUp),
      spawn "light -A 5")
 
   -- Increase volume.
-  , ((0, xF86XK_KbdBrightnessDown),
+  , ((0, xF86XK_MonBrightnessDown),
      spawn "light -U 5")
   -- Mute volume.
   , ((modMask .|. controlMask, xK_m),
@@ -157,21 +177,21 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -q set Master 5%+")
 
-  -- Audio previous.
-  , ((0, 0x1008FF16),
-     spawn "")
+  -- -- Audio previous.
+  -- , ((0, 0x1008FF16),
+  --    spawn "")
 
-  -- Play/pause.
-  , ((0, 0x1008FF14),
-     spawn "")
+  -- -- Play/pause.
+  -- , ((0, 0x1008FF14),
+  --    spawn "")
 
-  -- Audio next.
-  , ((0, 0x1008FF17),
-     spawn "")
+  -- -- Audio next.
+  -- , ((0, 0x1008FF17),
+  --    spawn "")
 
-  -- Eject CD tray.
-  , ((0, 0x1008FF2C),
-     spawn "eject -T")
+  -- -- Eject CD tray.
+  -- , ((0, 0x1008FF2C),
+  --    spawn "eject -T")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
@@ -242,6 +262,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage (IncMasterN (-1)))
 
   -- Toggle the status bar gap.
+  ,((modMask, xK_b),
+     sendMessage ToggleStruts)
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
