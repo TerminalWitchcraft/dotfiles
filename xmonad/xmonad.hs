@@ -30,7 +30,8 @@ import qualified Data.Map as M
 
 
 main = do
-  xmproc <- spawnPipe (myBar ++ myXmobarrc)
+  xmproc <- spawnPipe (myTopBar)
+  spawn myBottomBar
   xmonad $ docks $ ewmh myBaseConfig
     { terminal    = myTerminal
     --, startupHook = spawn "~/.config/xmonad/autorun.sh"
@@ -65,11 +66,11 @@ main = do
  
 myModMask = mod4Mask
 myFocusFollowsMouse = False
-myBar = "xmobar "
-myBorderWidth = 1
+myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
+myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
+myBorderWidth = 3
 myTerminal = "alacritty"
 myScreensaver = "i3lock-fancy"
-myXmobarrc = "~/.xmobarrc"
 myWorkspaces = ["\xf120", "\xf269"] ++ map show [3..9]
 mySelectScreenshot = "scrot"
 myScreenshot = "scrot"
@@ -108,7 +109,7 @@ myManageHook = composeAll
 --    Full |||
 --    spiral (6/7)) |||
 --    noBorders (fullscreenFull Full)
-myLayout = avoidStruts (
+myLayout = avoidStrutsOn [U] (
     Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (16/9)  |||
@@ -266,6 +267,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage ToggleStruts)
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
+  , ((modMask, xK_s),
+     sendMessage $ ToggleStrut D)
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_c),
      io (exitWith ExitSuccess))

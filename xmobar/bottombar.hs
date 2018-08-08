@@ -3,19 +3,21 @@ Config {
    -- appearance
    --  font =         "xft:DejaVuSansMono Nerd Font:size=9:style:book:antialias=true"
      --font =         "xft:FuraCode Nerd Font:size=10:style:Regular:antialias=true"
-     font =         "xft:ShureTechMono Nerd Font:size=11:style:Regular:antialias=true"
+     --font =         "xft:ShureTechMono Nerd Font:size=11:style:Regular:antialias=true"
      --font =         "xft:BitstreamVeraSansMono Nerd Font:size=10:style:Roman:antialias=true"
-     --font =         "xft:Mononoki Nerd Font:size=10:style:Regular:antialias=true"
+     font =         "xft:Mononoki Nerd Font:size=10:style:Regular:antialias=true"
    , bgColor =      "#ffffff"
    , fgColor =      "#191919"
-   , position =     Top
-   , border =       BottomB
-   , borderColor =  "#be5046"
+   , position =     Bottom
+   , border =       NoBorder
+   , borderColor =  "#191919"
+   , borderWidth = 0
+   --, alpha = 0
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{Terminal Witchcraft  >><fc=#fb4934>%locks%</fc> %battery% %bright% %default:Master% %cpu% %memory% %dynnetwork% %date% "
+   , template = "hotshot@void -> %uptime%  %coretemp%  %disku%  %multicpu%  %memory% }{%dynnetwork%  %wlp59s0wi%"
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -43,74 +45,49 @@ Config {
 
         -- weather monitor
         [
-        Run StdinReader
 	-- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , " <tx>kB/s  <rx>kB/s"
+        Run DynNetwork     [ "--template" , " <tx>kB/s  <rx>kB/s"
                              , "--Low"      , "100000"       -- units: B/s
                              , "--High"     , "50000000"       -- units: B/s
                              , "--low"      , "#191919"
                              , "--normal"   , "#191919"
                              , "--high"     , "#be5046"
                              ] 10
+        , Run Wireless  "wlp59s0"   [ "--template" , "<qualitybar> [<essid>]"
+                             ] 50
+	, Run Uptime 	[ "--template", "UPTIME: <days>d <hours>h <minutes>m" ] 3600
 
         -- cpu activity monitor
-        , Run Cpu       [  "--template" , " <total>"
+        , Run MultiCpu       [  "--template" , "CPU: <total>% <bar>"
 			     , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "#191919"
                              , "--normal"   , "#191919"
                              , "--high"     , "#e06c75"
+                             --, "--bwidth"     , "5"
+			     , "-b",         ":"
+			     , "-f",		"#"
                              ] 10
-
         -- cpu core temperature monitor
-        --, Run CoreTemp       [ "--template" , "Temp: <core0>°C|<core1>°C"
-        --                     , "--Low"      , "70"        -- units: °C
-        --                     , "--High"     , "80"        -- units: °C
-        --                     , "--low"      , "#191919"
-        --                     , "--normal"   , "#191919"
-        --                     , "--high"     , "#e06c75"
-        --                     ] 50
-                          
-        -- memory usage monitor
-        , Run Memory         [ "--template" ," <usedratio>%"
-                             , "--Low"      , "20"        -- units: %
-                             , "--High"     , "90"        -- units: %
+        , Run CoreTemp       [ "--template" , "TEMP: <core0>|<core1>|<core2>|<core3>|<core4>|<core5>|<core6>°C"
+                             , "--Low"      , "30"        -- units: °C
+                             , "--High"     , "65"        -- units: °C
                              , "--low"      , "#191919"
                              , "--normal"   , "#191919"
                              , "--high"     , "#e06c75"
-                             ] 10
+                             ] 30
+                          
+        -- memory usage monitor
+        , Run Memory         [ "--template" ,"MEM: <usedratio>% <usedbar>(<cache>M)"
+                             , "--Low"      , "20"        -- units: %
+                             , "--High"     , "14000"        -- units: %
+                             , "--low"      , "#191919"
+                             , "--normal"   , "#191919"
+                             , "--high"     , "#e06c75"
+                             ] 20
+	, Run DiskU [("/", "ROOT:<usedp>%")]
+         	["-L", "20", "-H", "50", "-m", "1", "-p", "3"]
+         9000
 
-        -- battery monitor
-        , Run Battery        [ "--template" , "<acstatus>"
-                             , "--Low"      , "10"        -- units: %
-                             , "--High"     , "80"        -- units: %
-                             , "--low"      , "#fb4934"
-                             , "--normal"   , "#fe8019"
-                             , "--high"     , "#be5046"
-
-                             , "--" -- battery specific options
-                                       -- discharging status
-                                       , "-o"	, "<left>%"
-                                       -- AC "on" status
-                                       , "-O"	, "<fc=#b8bb26><left></fc>"
-                                       -- charged status
-                                       , "-i"	, "<fc=#fb4934></fc>"
-                             ] 50
-
-        -- time and date indicator 
-	, Run Volume "default" "Master"
-	            [ "-t",	"<status><volume>%"
-		    , "--"
-		    , "-O",	" "
-		    , "-o", 	" "
-		    , "-C",	"#191919"
-		    , "-c",	"#fb4934"
-	            ] 10
-        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#191919> (%a)%b %d,%y  %H:%M</fc>" "date" 10
-
-        -- keyboard layout indicator
-	, Run Locks
-	, Run Brightness	["--template", " <percent>", "--", "-D", "intel_backlight"] 50
         ],
    }
