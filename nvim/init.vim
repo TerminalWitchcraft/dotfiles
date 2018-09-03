@@ -29,7 +29,6 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   "call dein#add('jnurmine/Zenburn')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('ryanoasis/vim-devicons')
   call dein#add('gcmt/taboo.vim')
 
   call dein#add('Shougo/neosnippet.vim')
@@ -68,10 +67,10 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('gregsexton/gitv', {'on_cmd': 'Gitv', 'depends': 'fugitive'})
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
   call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
-  call dein#add('sebastianmarkow/deoplete-rust', {'on_ft': 'rust'})
+  "call dein#add('sebastianmarkow/deoplete-rust', {'on_ft': 'rust'})
   call dein#add('mattn/webapi-vim', {'on_ft': 'rust'})
   call dein#add('rust-lang/rust.vim', {'on_ft': 'rust'})
-  "call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
+  call dein#add('racer-rust/vim-racer',{'on_ft': 'rust'} )
   "call dein#add('roxma/nvim-cm-racer',{'on_ft': 'rust'} )
   "call dein#add('mhinz/vim-grepper', {'on_cmd': ['Grepper', '<plug>(GrepperOperator)']})
   call dein#add('zchee/deoplete-clang')
@@ -89,6 +88,7 @@ if dein#load_state('/home/hotshot/.local/share/dein')
   call dein#add('junegunn/limelight.vim', {'on_cmd': 'Limelight'})
   " You can specify revision/branch/tag.
 
+  call dein#add('ryanoasis/vim-devicons')
   " Required:
   call dein#end()
   call dein#save_state()
@@ -104,6 +104,6 @@ syntax enable
 " endif
 
 "-------------------Load files-----------------
-source ~/.config/nvim/plugins.vim
+source ~/.config/nvim/base.vim
 source ~/.config/nvim/mappings.vim
-source ~/.config/nvim/general.vim
+source ~/.config/nvim/plugins.vim

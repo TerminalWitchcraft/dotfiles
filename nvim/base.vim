@@ -25,7 +25,7 @@ set noshowmode
 set hidden
 "set guicursor="n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
-au ColorScheme * hi Normal ctermbg=none guibg=none
+"au ColorScheme * hi Normal ctermbg=none guibg=none
 
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 	\,a:blinkwait700-blinkoff1000-blinkon1000-Cursor/lCursor
@@ -33,8 +33,8 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 "set cursorline
 "set guicursor="n-v-c-sm:block-blinkwait300-blinkon200-blinkoff150,i-ci-ve:ver25,r-cr-o:hor20"
 colorscheme one
-set background=light
-"set nowrap
+set background=dark
+set nowrap
 
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'

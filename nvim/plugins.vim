@@ -1,37 +1,45 @@
-" vim-one
-"
+" ----------------------------vim-one-----------------------
 let g:one_allow_italics = 1
 
-"Startify
+"-----------------------------Startify----------------------
 let g:startify_fortune_use_unicode = 1
 
-"Dim 
+"-----------------------------vim-diminactive--------------- 
 let g:diminactive_use_colorcolumn = 1
 let g:diminactive_use_syntax = 0
 let g:diminactive_enable_focus = 1
 let g:diminactive_buftype_blacklist = ['nofile', 'nowrite', 'acwrite', 'quickfix', 'help']
 let g:diminactive_filetype_blacklist = ['startify', 'qf']
 
-" Dein.vim
+"----------------------------Dein.vim----------------------
 "let g:dein#enable_notification = 1
 let g:dein#install_progress_type = "echo"
 
-"LSP
+"------------------------------LSP-------------------------
 "let g:LanguageClient_serverCommands = {
 "    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
 "    \ 'python': ['pyls'],
 "    \ }
+"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 
-
-" Vim Sneak
+"--------------------------Vim-Sneak------------------------
 let g:sneak#s_next = 1
 let g:sneak#label = 1
 let g:sneak#prompt = '>>>'
 autocmd ColorScheme * hi Sneak guifg=#61afef guibg=#3e4452 ctermfg=75 ctermbg=17
 autocmd ColorScheme * hi SneakScope guifg=#61afef guibg=#3e4452 ctermfg=75 ctermbg=17
+nmap <Leader>s <Plug>Sneak_s
+nmap <Leader>S <Plug>Sneak_S
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
 
-"  Ctrlp vim
+
+"--------------------------Ctrlp-vim-------------------------
 "let g:ctrlp_map = '<C-p>'
 "let g:ctrlp_cmd = 'CtrlP'
 "let g:ctrlp_show_hidden = 1
@@ -47,14 +55,25 @@ autocmd ColorScheme * hi SneakScope guifg=#61afef guibg=#3e4452 ctermfg=75 cterm
 "let g:ctrlp_arg_map = 1
 "let g:ctrlp_types = ['fil', 'buf', 'mru', 'bft']
 "let g:ctrlp_switch_buffer = "ET"
+"nmap <Leader>f :CtrlP<CR>
+"nmap <Leader>b :CtrlPBuffer<CR>
+"nmap <Leader>t :CtrlPBufTag<CR>
+"nmap <Leader>T :CtrlPBufTagAll<CR>
+"nmap <Leader>m :CtrlPMRU<CR>
+"nmap <Leader>c :CtrlPChange<CR>
+"nmap <Leader>C :CtrlPChangeAll<CR>
+"nmap <Leader>u :CtrlPUndo<CR>
+"nmap <Leader>l :CtrlPLine<CR>
+"nmap <Leader>g :Grepper -buffer <cr>
+"nmap <Leader>G :Grepper <cr>
 
-" Use deoplete.
+"---------------------------deoplete------------------------
 let g:deoplete#enable_at_startup = 1
 " let g:deoplete#enable_auto_close_preview = 1
-let g:deoplete#sources#rust#racer_binary='/home/hotshot/.local/share/cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
-let g:deoplete#sources#rust#show_duplicates=0
-let g:deoplete#sources#rust#documentation_max_height=20
+" let g:deoplete#sources#rust#racer_binary='/home/hotshot/.local/share/cargo/bin/racer'
+" let g:deoplete#sources#rust#rust_source_path = '/home/hotshot/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+" let g:deoplete#sources#rust#show_duplicates=0
+" let g:deoplete#sources#rust#documentation_max_height=20
 call deoplete#custom#source('_',  'max_menu_width', 0)
 call deoplete#custom#source('_',  'max_abbr_width', 0)
 call deoplete#custom#source('_',  'max_kind_width', 0)
@@ -67,11 +86,20 @@ call deoplete#custom#source('_',  'max_kind_width', 0)
 "        let g:deoplete#sources#rust#rust_source_path = rustc_src_dir
 "    endif
 "endif
-"
+
+
+
+"-------------------------vim-racer------------------------
+let g:racer_cmd = "~/.local/share/cargo/bin/racer"
+let g:racer_experimental_completer = 0
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
 "  ervandew/supertab 
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" Jedi vim
+"---------------------------Jedi vim-------------------------
 let g:jedi#completions_enabled = 0
 let g:jedi#show_call_signatures = "1"
 let g:jedi#goto_command = "gd"
@@ -84,7 +112,7 @@ let g:jedi#rename_command = ""
 "let g:jedi#auto_vim_configuration = 0
 
 
-"Oceanic-next
+"-----------------------------Oceanic-next--------------------
 "let g:oceanic_next_terminal_bold = 1
 "let g:oceanic_next_terminal_italic = 1
 " let g:gruvbox_italic = 1
@@ -92,9 +120,8 @@ let g:jedi#rename_command = ""
 " "let g:gruvbox_improved_strings = 1
 " let g:gruvbox_improved_warnings = 1
 
-" Airline
+"---------------------------Airline---------------------------
 let g:airline#extensions#tabline#enabled = 1
-
 let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_buffers=1
 let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
@@ -102,7 +129,7 @@ let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 "let g:airline#extensions#tabline#show_tabs = 0
 " Show just the filename
 " let g:airline#extensions#tabline#fnamemod = ':t'"
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -114,16 +141,23 @@ let g:airline#extensions#tabline#buffers_label = 'Buffers'
 let g:airline#extensions#tabline#tabs_label = 'Tabs'
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='silver'
+let g:airline_theme='one'
 
 
-"Taboo
+"--------------------------Taboo----------------------------
 let g:taboo_tabline = 0
 let g:taboo_tab_format = " %f "
-let g:taboo_renamed_tab_format = " [%l]%f "
+let g:taboo_renamed_tab_format = " [%l]%u "
 "let g:taboo_unnamed_tab_label = "[Default]"
+nnoremap tj :tabprevious<CR>
+nnoremap tk :tabnext<CR>
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+nnoremap tn :tabnew<CR>
+nnoremap tr :TabooRename 
+nnoremap Tn :TabooOpen 
 
-" Grepper
+"--------------------------Grepper--------------------------
 "runtime plugin/grepper.vim
 "let g:grepper = {}
 "let g:grepper.dir = 'repo,cwd,file'
@@ -134,33 +168,34 @@ let g:taboo_renamed_tab_format = " [%l]%f "
 ""let g:grepper.rg.grepprg .= ' --smartcase --vimgrep'
 "let &statusline .= ' %{grepper#statusline()}'
 
-"  Vinegar
+
+"----------------------Vinegar------------------------------
 "autocmd FileType netrw nmap <buffer> <esc> <C-^>
 "let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 "let g:netrw_bufsettings = 'noma nomod nu nowrap ro nobl'
 "let g:netrw_liststyle= 3
 
-"Neomake
+"----------------------Neomake-----------------------------
 " call neomake#configure#automake('nw')
 " let g:neomake_open_list = 0
+"nnoremap <F9> :Neomake<CR>
 
-
-"Ale
+"---------------------------Ale----------------------------
 let g:ale_completion_enabled = 0
 let g:ale_keep_list_window_open = 0
 let g:ale_list_window_size = 5
-let g:ale_open_list = 'on_save'
+let g:ale_open_list = 0
 let g:ale_linters = {'rust': ['rls']}
 let g:ale_rust_rls_toolchain = "stable"
 let g:ale_set_quickfix = 1 
 let g:ale_set_loclist = 0
 
 
+"-----------------------neosnippet----------------------------
 " Enable snipMate compatibility feature.
 "let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 "let g:neosnippet#snippets_directory='~/.local/share/dein/repos/github.com/honza/vim-snippets/snippets/'
-
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -185,8 +220,9 @@ let g:neosnippet#snippets_directory='~/.local/share/dein/repos/github.com/honza/
 "endif
 
 
-" Writing tools
-" Vim Pandoc
+"================================ Writing tools==============
+
+"------------------------Vim Pandoc---------------------------
 let g:pandoc#spell#enabled = 0
 let g:pandoc#filetypes#handled = ["markdown", "rst", "extra", "textile", "html", "latex" ]
 let g:pandoc#modules#disabled = ["spell", "folding"]
@@ -196,11 +232,11 @@ let g:pandoc#syntax#conceal#urls = 1
 "Pandoc after
 let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
 
-"Goyo
+"----------------------------Goyo----------------------------
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-"Vim-pad
+"-------------------------Vim-pad------------------------------
 let g:pad#set_mappings = 0
 let g:pad#dir = "/home/hotshot/Dropbox/notes"
 let g:pad#default_format = "pandoc"
@@ -213,7 +249,7 @@ let g:pad#search_backend = "rg"
 let g:pad#title_first_line = 1
 let g:pad#open_in_split = 0
 
-"Vimtex
+"-----------------------Vimtex---------------------------------
 if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
@@ -229,22 +265,21 @@ let g:vimtex_compiler_progname = 'nvr'
 "        \  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
 "        \  .')'
 
-" zenburnTemp
-"let g:gfm_syntax_enable_always = 0
-"let g:gfm_syntax_enable_filetypes = ['pandoc']
-"let g:gfm_syntax_emoji_conceal = 1
 
-" Vim table-mode
+"-----------------------table-mode---------------------------
 let g:table_mode_corner='|'
 
-" Vim Ipython
+"------------------------Vim Ipython----------------------------
 let g:nvim_ipy_perform_mappings = 0
 let g:ipy_set_ft=1
 let g:ipy_highlight=1
 let g:ipy_truncate_input=5
+autocmd FileType python map <buffer> <Leader>r <Plug>(IPy-RunCell)
+autocmd FileType python map <buffer> <Leader>R <Plug>(IPy-Run)
+autocmd FileType python map <buffer> <Leader>q <Plug>(IPy-Terminate)
 "let g:ipy_shortprompt =1
 
-"Denite.vim
+"-----------------------------Denite.vim-------------------------
 "call denite#custom#option('_', 'prompt', '❯❯❯')
 "call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
 "call denite#custom#option('_', 'highlight_mode_normal', 'WildMenu')
@@ -299,9 +334,26 @@ let g:ipy_truncate_input=5
 "	\ ['Open zsh menu', 'Denite menu:zsh'],
 "	\ ]
 "call denite#custom#var('menu', 'menus', s:menus)
+"nmap <Leader>a :Denite -buffer-name=colorscheme -resume colorscheme<CR>
+"nmap <Leader>f :Denite -buffer-name=file_rec -resume -refresh file_rec<CR>
+"nmap <Leader>F :Denite -buffer-name=file -resume -refresh file<CR>
+"nmap <Leader>d :Denite -buffer-name=directory_rec -resume -refresh directory_rec<CR>
+"nmap <Leader>b :Denite buffer<CR>
+"nmap <Leader>t :Denite outline<CR>
+"nmap <Leader>T :DeniteProjectDir outline<CR>
+"nmap <Leader>m :Denite file_mru<CR>
+"nmap <Leader>M :Denite directory_mru<CR>
+"nmap <Leader>c :Denite command_history<CR>
+"nmap <Leader>C :Denite change<CR>
+"nmap <Leader>h :Denite command<CR>
+"nmap <Leader>o :Denite -mode=normal menu <CR>
+""nmap <Leader>u :CtrlPUndo<CR>
+"nmap <Leader>l :Denite line<CR>
+"nmap <Leader>g :Denite grep<cr>
+"nmap <Leader>G :DeniteProjectDir grep<cr>
 
 
-" fzf
+"------------------------------fzf---------------------------------------
 let g:fzf_layout = { 'window': '10split enew' }
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -333,16 +385,34 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 "let g:fzf_history_dir = '~/.local/share/fzf-history'
+nmap <Leader>a :History<CR>
+nmap <Leader>f :FZF<CR>
+nmap <Leader>F :FZF ~<CR>
+"nmap <Leader>d :Denite -buffer-name=directory_rec -resume -refresh directory_rec<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+nmap <Leader>m :Marks<CR>
+nmap <Leader>M :History:<CR>
+nmap <Leader>c :Commands<CR>
+"nmap <Leader>C :Denite change<CR>
+nmap <Leader>h :Helptags<CR>
+"nmap <Leader>o :Denite -mode=normal menu <CR>
+"nmap <Leader>u :CtrlPUndo<CR>
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>g :Rg<cr>
+nmap <Leader>pl :Pad ls<cr>
+"nmap <Leader>G :DeniteProjectDir grep<cr>
 
 
-"Vim wiki
-"
-let g:vimwiki_list = [{'path': '/home/hotshot/Dropbox/wiki', 'ext': '.md', 'auto_toc': 1,
+"--------------------------------------Vim-wiki----------------
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki', 'ext': '.md', 'auto_toc': 1,
   \'index': 'main', 'syntax': 'markdown'}]
 let g:vimwiki_global_ext = 0
 
 
-"Startify
+"-------------------------------------Startify-----------------------
 let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
       \ { 'type': 'files',     'header': ['   MRU']            },
@@ -353,12 +423,12 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = [ {'c': '~/Dropbox/wiki/main.md'}]
 
-"echodoc
+"-------------------------------echodoc---------------------------
 let g:echodoc#enable_at_startup = 1
 
 
 
-"Clang
+"--------------------------------Clang-----------------------------
 let g:deoplete#sources#clang#libclang_path="/usr/lib/libclang.so"
 "let g:deoplete#sources#clang#clang_header="/lib/clang/6.0.1/include/"
 let g:deoplete#sources#clang#clang_header="/usr/lib/clang/"
