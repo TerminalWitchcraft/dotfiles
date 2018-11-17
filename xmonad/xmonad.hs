@@ -2,15 +2,18 @@ import System.IO
 import System.Exit
 
 import XMonad
+import XMonad.Config.Kde
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers(doFullFloat, isFullscreen)
 import XMonad.Config.Desktop
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Actions.SpawnOn
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.CycleWS
-
+import XMonad.Hooks.UrgencyHook
+import qualified Codec.Binary.UTF8.String as UTF8
 
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Spacing
@@ -27,79 +30,103 @@ import XMonad.Layout.CenteredMaster(centerMaster)
 import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
+import Control.Monad (liftM2)
+import qualified DBus as D
+import qualified DBus.Client as D
 
+setFullscreenSupported :: X ()
+setFullscreenSupported = withDisplay $ \dpy -> do
+    r <- asks theRoot
+    a <- getAtom "_NET_SUPPORTED"
+    c <- getAtom "ATOM"
+    supp <- mapM getAtom ["_NET_WM_STATE_HIDDEN"
+                         ,"_NET_WM_STATE_FULLSCREEN" -- XXX Copy-pasted to add this line
+                         ,"_NET_NUMBER_OF_DESKTOPS"
+                         ,"_NET_CLIENT_LIST"
+                         ,"_NET_CLIENT_LIST_STACKING"
+                         ,"_NET_CURRENT_DESKTOP"
+                         ,"_NET_DESKTOP_NAMES"
+                         ,"_NET_ACTIVE_WINDOW"
+                         ,"_NET_WM_DESKTOP"
+                         ,"_NET_WM_STRUT"
+                         ]
+    io $ changeProperty32 dpy r a c propModeReplace (fmap fromIntegral supp)
 
-main = do
-  xmproc <- spawnPipe (myTopBar)
-  spawn myBottomBar
-  xmonad $ docks $ ewmh myBaseConfig
-    { terminal    = myTerminal
-    --, startupHook = spawn "~/.config/xmonad/autorun.sh"
-    --, layoutHook  = avoidStruts $ smartBorders $ layoutHook myBaseConfig
-    , layoutHook  = smartBorders $ myLayout 
-    --, manageHook  = manageDocks <+> myManageHook <+> manageHook myBaseConfig
-    , manageHook  = myManageHook
-    , modMask     = myModMask
-    , borderWidth = myBorderWidth
-    , focusFollowsMouse  = myFocusFollowsMouse
-    , workspaces  = myWorkspaces
-    , keys 	  = myKeys
-    --, handleEventHook    = ewmhDesktopsEventHook <+> fullscreenEventHook
-    --, handleEventHook    = handleEventHook myBaseConfig <+> docksEventHook
-    , handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
-    --, handleEventHook = docksEventHook <+> fullscreenEventHook
-    , logHook = dynamicLogWithPP $ xmobarPP {
-      	    ppOutput = hPutStrLn xmproc . pad
-      	  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
-	  , ppHidden = xmobarColor "#5c6370" ""
-      	  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppUrgent = xmobarColor "#fe8019" ""
-	  , ppLayout = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppOrder = \(ws:a:t:_) -> [ws,a,t]
-      	  , ppSep = " "
-      	  , ppWsSep = " "
-	}
-    , normalBorderColor = myNormalBorderColor
-    , focusedBorderColor = myFocusedBorderColor
+myLogHook :: D.Client -> PP
+myLogHook dbus = def
+    { ppOutput = dbusOutput dbus
+    , ppCurrent = wrap ("%{u" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{-u}"
+    , ppVisible = wrap ("%{B" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{B-}"
+    -- , ppLayout = wrap ("%{B" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{B-}"
+    , ppUrgent = wrap ("%{F" ++ "#fe8019" ++ "} ") " %{F-}"
+    , ppHidden = wrap " " " "
+    , ppLayout = wrap ("%{u" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{-u}"
+    , ppWsSep = ""
+    , ppSep = " "
+    , ppOrder = \(ws:a:t:_) -> [ws,a,t]
+    , ppTitle = shorten 40
     }
+
+-- Emit a DBus signal on log updates
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
+
+myStartupHook = do
+    setFullscreenSupported
+    spawn ".config/polybar/launch.sh"
+    spawnOn "4" "konsole -e neomutt"
+    spawn "firefox"
+
 
  
 myModMask = mod4Mask
 myFocusFollowsMouse = False
 myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
 myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
-myBorderWidth = 3
-myTerminal = "alacritty"
+myBorderWidth = 8
+myTerminal = "konsole"
 myScreensaver = "i3lock-fancy"
-myWorkspaces = ["\xf120", "\xf269"] ++ map show [3..9]
+myWorkspaces = map show [1..9]
 mySelectScreenshot = "scrot"
 myScreenshot = "scrot"
-myLauncher = "rofi -show run"
+myLauncher = "rofi -show drun"
 myBaseConfig = desktopConfig
 --myBaseConfig = defaultConfig
 
 -- colors
-myNormalBorderColor  = "#ffffff"
-myFocusedBorderColor = "#be5046"
-xmobarTitleColor = "#323232"
+myNormalBorderColor  = "#000000"
+myFocusedBorderColor = "#fffff0"
+xmobarTitleColor = "#ECEFF4"
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#be5046"
+xmobarCurrentWorkspaceColor = "#5DBCD2"
 
 
 -- window manipulations
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "\xf269"
-    , className =? "Firefox"  --> doShift "\xf269"
+    [ className =? "Chromium"       --> doShift "1"
+    , className =? "Firefox"  --> viewShift "2"
+    , className =? "Mailspring"  --> viewShift "4"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
+    , className =? "NeovimGtk"     --> viewShift "4"
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "tdrop"           --> doFloat
     , resource  =? "gpicview"       --> doFloat
-    , className =? "MPlayer"        --> doFloat , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "Xchat"          --> doShift "5:media"
+    , className =? "MPlayer"        --> doFloat
+    , className =? "mpv"        --> viewShift "3"
+    , className =? "zathura"        --> viewShift "9"
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> doFullFloat]
+    where viewShift = doF . liftM2 (.) W.greedyView W.shift
 
 -- layout config
 --myLayout = avoidStruts (
@@ -109,10 +136,25 @@ myManageHook = composeAll
 --    Full |||
 --    spiral (6/7)) |||
 --    noBorders (fullscreenFull Full)
+
+
+tabConfig = defaultTheme {
+    activeBorderColor = "#7C7C7C",
+    activeTextColor = "#5DBCD2",
+    activeColor = "#000000",
+    inactiveBorderColor = "#7C7C7C",
+    inactiveTextColor = "#EEEEEE",
+    inactiveColor = "#000000",
+	decoHeight = 48,
+	fontName = "xft:Iosevka:size=22"
+}
+
 myLayout = avoidStrutsOn [U] (
     Tall 1 (3/100) (1/2) |||
+	-- simpleTabBar (simpleTabbed) |||
+    tabbed shrinkText tabConfig |||
     Mirror (Tall 1 (3/100) (1/2)) |||
-    spiral (16/9)  |||
+    spiral (6/7)  |||
     Grid(16/10) ||| 
     ThreeColMid 1 (3/100) (1/2) ) |||
     noBorders (fullscreenFull Full)
@@ -291,3 +333,66 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+
+main :: IO ()
+main = do
+
+    dbus <- D.connectSession
+    -- Request access to the DBus name
+    D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
+
+    xmonad . ewmh $
+            myBaseConfig
+                { logHook = dynamicLogWithPP (myLogHook dbus)
+, startupHook = myStartupHook
+, terminal = myTerminal
+, layoutHook = smartBorders $ myLayout ||| layoutHook myBaseConfig
+, manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
+, modMask = myModMask
+, borderWidth = myBorderWidth
+, handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
+, focusFollowsMouse = myFocusFollowsMouse
+, workspaces = myWorkspaces
+, keys = myKeys
+, normalBorderColor = myNormalBorderColor
+, focusedBorderColor = myFocusedBorderColor
+}
+  -- xmproc <- spawnPipe (myTopBar)
+  -- spawn myBottomBar
+  --xmonad . ewmh . withUrgencyHook NoUrgencyHook $ myBaseConfig
+  --  { terminal    = myTerminal
+  --  , startupHook = startupHook def <+> setFullscreenSupported
+  --  --, startupHook = spawn "~/.config/xmonad/autorun.sh"
+  --  --, layoutHook  = avoidStruts $ smartBorders $ layoutHook myBaseConfig
+  --  , layoutHook  = smartBorders $ myLayout ||| layoutHook myBaseConfig
+  --  --, manageHook  = manageDocks <+> myManageHook <+> manageHook myBaseConfig
+  --  , manageHook  = myManageHook <+> manageHook myBaseConfig
+  --  , modMask     = myModMask
+  --  , borderWidth = myBorderWidth
+  --  , focusFollowsMouse  = myFocusFollowsMouse
+  --  , workspaces  = myWorkspaces
+  --  , keys 	  = myKeys
+  --  --, handleEventHook    = ewmhDesktopsEventHook <+> fullscreenEventHook
+  --  --, handleEventHook    = handleEventHook myBaseConfig <+> docksEventHook
+  --  , handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
+  --  --, handleEventHook = docksEventHook <+> fullscreenEventHook
+  --  -- , logHook = dynamicLogWithPP $ xmobarPP {
+  --  --   	    ppOutput = hPutStrLn xmproc . pad
+  --  --   	  , ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
+		  ---- , ppHidden = xmobarColor "#E5E9F0" ""
+  --  --   	  , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+  --  --   	  , ppVisible = xmobarColor xmobarCurrentWorkspaceColor ""
+  --  --   	  -- , ppHiddenNoWindows = xmobarColor "#E5E9F0" ""
+  --  --       , ppUrgent = xmobarColor "#fe8019" ""
+		  ---- , ppLayout = xmobarColor xmobarCurrentWorkspaceColor ""
+  --  --       , ppOrder = \(ws:a:t:_) -> [ws,a,t]
+  --  --   	  , ppSep = " "
+  --  --   	  , ppWsSep = " "
+	---- }
+  --  , logHook = dynamicLogWithPP (myLogHook dbus)
+  --  , normalBorderColor = myNormalBorderColor
+  --  , focusedBorderColor = myFocusedBorderColor
+  --  }
