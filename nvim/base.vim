@@ -1,6 +1,6 @@
 syntax enable
 set nu
-set rnu
+" set rnu
 set laststatus=2
 set undofile
 set smartcase
