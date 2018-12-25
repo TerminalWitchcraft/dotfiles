@@ -1,42 +1,35 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.config/zsh/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
+autoload -U promptinit; promptinit
+prompt pure
+autoload -U compinit && compinit
+zstyle ':completion:*' completer _complete _correct _approximate
+zstyle ':completion:*' menu select
 
-setopt autocd beep extendedglob nomatch notify
-bindkey -v
-fpath+=~/.config/zsh/.zfunc
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/hotshot/.config/zsh/.zshrc'
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-source /usr/share/zsh/share/antigen.zsh
-antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-antigen bundle command-not-found
-antigen bundle vi-mode
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
-# Load the theme.
-# antigen theme theunraveler
-# Tell Antigen that you're done.
-antigen apply
-
-
-bindkey jk vi-cmd-mode
-bindkey '^[[Z' reverse-menu-complete
-source /usr/bin/virtualenvwrapper.sh
-alias ll="exa -lh"
-alias vim="nvim"
-alias ls=exa
-alias lh="exa -ah"
-PATH="$PATH:$(ruby -e 'print Gem.user_dir')/bin"
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+## pyenv configs
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
+
+export GPG_TTY=$(tty)
+gpg-connect-agent /bye
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
+
