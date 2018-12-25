@@ -1,0 +1,82 @@
+[Default]
+trashfolder = [Gmail]/Bin
+
+[general]
+accounts = Paulhitesh,Nyu,Hiteshpaul94
+maxsyncaccounts = 5
+
+[mbnames]
+enabled = yes
+filename = ~/.mailboxes
+header = "mailboxes "
+peritem = "+%(accountname)s/%(foldername)s"
+sep = " "
+footer = "\n"
+
+
+[Account Paulhitesh]
+localrepository = LocalPaulhitesh
+remoterepository = RemotePaulhitesh
+synclabels = yes
+autorefresh = 5
+quick = 10
+
+
+[Account Hiteshpaul94]
+localrepository = LocalHiteshpaul94
+remoterepository = RemoteHiteshpaul94
+synclabels = yes
+labelsheader = X-Keywords
+autorefresh = 5
+quick = 10
+
+
+[Account Nyu]
+localrepository = LocalNyu
+remoterepository = RemoteNyu
+synclabels = yes
+autorefresh = 5
+quick = 10
+
+
+[Repository LocalHiteshpaul94]
+type=GmailMaildir
+localfolders=~/.cache/neomutt/com.google.hiteshpaul94/mail
+
+[Repository RemoteHiteshpaul94]
+type=Gmail
+ssl_version = tls1_2
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+idlefolders = ['INBOX']
+trashfolder = [Gmail].Trash
+maxconnections=2
+keepalive=60
+holdconnectionopen = yes
+
+[Repository LocalPaulhitesh]
+type=GmailMaildir
+localfolders=~/.cache/neomutt/com.google.paulhitesh.hp/mail
+
+[Repository RemotePaulhitesh]
+type=Gmail
+ssl_version = tls1_2
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+idlefolders = ['INBOX']
+maxconnections=2
+keepalive=60
+holdconnectionopen = yes
+
+
+[Repository LocalNyu]
+type=GmailMaildir
+localfolders=~/.cache/neomutt/edu.nyu.hp1293/mail
+
+
+[Repository RemoteNyu]
+type=Gmail
+ssl_version = tls1_2
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+idlefolders = ['INBOX']
+maxconnections=2
+keepalive=60
+holdconnectionopen = yes
