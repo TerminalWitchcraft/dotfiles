@@ -1,0 +1,279 @@
+/*
+ * Created by jub on 23.12.2017.
+/*----------------------------------------------------------------
+        General Styling
+----------------------------------------------------------------*/
+html {
+    --black12-color: #121212;
+    --black1c-color: #1c1c1c;
+    --black21-color: #212121;
+    --black2d-color: #2d2d2d;
+    --black33-color: #333333;
+    --black3e-color: #3e3e3e;
+    --black77-color: #777777;
+
+    --child01-color: #F38181;
+    --child02-color: #9DD3CC;
+    --child03-color: #D0F9B1;
+    --child04-color: #FFBBE1;
+    --child05-color: #FFA06F;
+    --child06-color: #DBDBEB;
+    --child07-color: #60C7EC;
+    --child08-color: #0060CA;
+    --child09-color: #FFECBA;
+    --child10-color: #FFCAE4;
+    --child11-color: #B793E6;
+    --child12-color: #F4E7D3;
+    --child13-color: #c5f0a4;
+
+    --thy-wt-color: #fff;
+    --thy-rd-color: #FF5F5D;
+    --thy-yw-color: #FFDE85;
+    --thy-bl-color: #98FFE1;
+
+    --bg1-color:        #232931;
+    --bg2-color:        #171819;
+    --main1-color:      #282A36;
+    --main2-color:      #484B61;
+    --hub-color:        var(--child01-color);
+    --strtpg2-color:    var(--main1-color);
+    --tmpltA-color:     var(--child02-color);
+    --wtch-color:       var(--child07-color);
+    --thy-color:        var(--child03-color);
+    --thy-sclr-color:   var(--thy-yw-color);
+
+    --shadow1-color:    rgba(0,0,0,.1);
+    --shadow25-color:   rgba(0,0,0,.25);
+    --shadow3-color:    rgba(0,0,0,.3);
+    --shadow35-color:   rgba(0,0,0,.35);
+    --shadow5-color:    rgba(0,0,0,.5);
+    --shadow6-color:    rgba(0,0,0,.6);
+    --shadow75-color:   rgba(0,0,0,.75);
+    --text-color:       #8787A3;
+    --text-shadow-color:rgba(242,242,249,.25);
+
+    --header-nav-width: 14ch;
+    --header-button-width: 2ch;
+    --header-title-width: 12ch;
+
+    --spacing: .25em;
+    --default-margin: 14px;
+    --default-padding: 16px;
+    --font-size-normal: 1.08em;
+    --font-size-big: 2em;
+    --font-size-header: 3em;
+    --label-width: 160px;
+    --label-width: 10ch;
+
+    min-height: 100%;
+    background: var(--bg2-color);
+    font-family: 'Varela Round', sans-serif;
+}
+
+body {
+    height:100%;
+    background: linear-gradient(var(--bg1-color),var(--bg2-color));
+    background-repeat:no-repeat !important;
+    color: #bbb;
+    margin: 0 0 0;
+}
+
+.colorline_top {
+    height: 4px;
+    width: auto;
+    background: var(--bg2-color);
+    background: linear-gradient(to right,
+    var(--child01-color),
+    var(--child02-color),
+    var(--child03-color),
+    var(--child04-color),
+    var(--child05-color),
+    var(--child06-color),
+    var(--child07-color),
+    var(--child08-color),
+    var(--child09-color),
+    var(--child10-color));
+}
+
+.spacer_top {
+    height: 150px;
+}
+
+/*.spacer_links {
+    width: 12px;
+    height: 100%;
+    float: left;
+}*/
+
+a {
+    color: var(--text-color);
+    margin-left: 20px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 200ms, text-shadow 250ms;
+}
+
+a:hover {
+    color:inherit;
+    /*text-shadow: 0 0 8px var(--text-shadow-color);*/
+    /*text-shadow: 0 0 8px;*/
+    color:inherit;
+    transition: color 150ms, text-shadow 200ms;
+}
+
+.hide {
+    display: none;
+}
+
+/*----------------------------------------------------------------
+        Rules
+----------------------------------------------------------------*/
+
+/* Width of Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: linear-gradient(var(--bg1-color), var(--bg2-color));
+    -webkit-box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--main1-color);
+    background: rgba(90,92,104,.6);
+    -webkit-box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 3px 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(60,62,74,.8);
+}
+
+/*----------------------------------------------------------------
+        Header Styling
+----------------------------------------------------------------*/
+header {
+    position: relative;
+    color: var(--black33-color);
+    background: var(--strtpg2-color);
+    max-width: calc(100% - var(--label-width));
+    /*min-width: 44ch;*/
+    max-width: 120ch;
+    height: 82px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22px;
+    border: 2px solid  var(--shadow1-color);
+    box-shadow: 0 0px 20px 0px var(--shadow5-color);
+    transition: box-shadow 500ms ease;
+    font-family: 'Varela Round', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+header:before {
+    border: 2px solid var(--shadow25-color);
+    box-shadow: 0 0px 8px 0px var(--shadow35-color);
+}
+
+header:hover {
+    box-shadow: 0 0 25px 0px var(--shadow5-color);
+    transition: box-shadow 500ms ease;
+}
+
+#header_top {
+    height: 26px;
+    height: 16px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#header_mid {
+    margin-left: var(--default-margin);
+    margin-right: var(--default-margin);
+
+}
+
+#header_info {
+    color: var(--black33-color);
+    -webkit-font-smoothing: antialiased;
+    text-align: justify;
+    /*margin-left: 2em;*/
+    cursor: initial;
+    white-space: nowrap;
+}
+
+.header_info_nav {
+    position: absolute;
+    float: left;
+    color: inherit;
+    text-align: center;
+    font-size: var(--font-size-header);
+    width: var(--header-nav-width);
+    margin-top: -0px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.header_info_nav_button {
+    position: relative;
+    float: left;
+    color: inherit;
+    text-align: center;
+    height: var(--font-size-normal);
+    width: var(--header-button-width);
+    margin-top: 3px;
+}
+
+.header_info_nav_button:hover {
+    color: var(--black2d-color);
+}
+
+.header_info_title {
+    position: relative;
+    float: left;
+}
+
+/*----------------------------------------------------------------
+        Pages Styling
+----------------------------------------------------------------*/
+.backboard {
+    margin: -8px var(--spacing) 0px;
+}
+
+.pagecontent {
+    position: relative;
+    color: var(--text-color);
+    background: var(--strtpg2-color);
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.08em;
+    text-align: justify;
+    height: auto;
+    width: auto;
+    max-width: calc(100% - var(--label-width));
+    /*min-width: 44ch;*/
+    max-width: 100ch;
+    padding: var(--default-padding);
+    margin-top: var(--default-margin);
+    margin-bottom: var(--default-margin);
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    box-shadow: 0 0 20px 0 var(--shadow5-color);
+    transition: box-shadow 500ms ease;
+}
+
+.pagecontent:hover {
+    box-shadow: 0 0 25px 0 var(--shadow6-color);
+    transition: box-shadow 500ms ease;
+
+}

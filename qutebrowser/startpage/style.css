@@ -1,0 +1,25 @@
+/*
+ * Created by jub on 06.12.2017.
+/*----------------------------------------------------------------
+        General Styling
+----------------------------------------------------------------*/
+
+/*input[type='text']:focus {
+    color: var(--strtpg2-color);
+}*/
+
+/*----------------------------------------------------------------
+        Pages Styling
+----------------------------------------------------------------*/
+#dashboard {
+    color: var(--text-color);
+    display: inline-block;
+    /*font-size: 2em;*/
+    /*font-size: var(--font-size-big);*/
+    text-align: left;
+    transition: color 200ms;
+}
+
+.pagecontentspacing {
+    margin: 34px 48px 34px;
+}

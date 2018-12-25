@@ -1,0 +1,105 @@
+/*
+ * Created by jub on 23.12.2017.
+/*----------------------------------------------------------------
+        Category List Styling
+----------------------------------------------------------------*/
+.category_01 {
+    width: 100%;
+    display: flex;
+    position: relative;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.category_02 {
+    width: 100%;
+    display: flex;
+    position: relative;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.category_01:not(:first-child) {
+    margin-top: 8px;
+}
+
+.label {
+    width: var(--label-width);
+}
+
+.links {
+    width: 100%;
+    max-width: calc(100% - var(--label-width));
+    border-left: 2px solid;
+    transition: border-left 300ms;
+}
+
+.links:first-child {
+    /*margin-left: 2ch;*/
+}
+
+.links:hover {
+    border-left: 4px solid;
+    transition: border-left 200ms;
+}
+
+/* Media */
+.category_01:nth-child(1) {
+    color: var(--child01-color);
+}
+
+/* Social */
+.category_01:nth-child(2) {
+    color: var(--child02-color);
+}
+
+/* Games */
+.category_01:nth-child(3) {
+    color: var(--child03-color);
+}
+
+/* Shop */
+.category_01:nth-child(4) {
+    color: var(--child04-color);
+}
+
+/* Reddit */
+.category_01:nth-child(5) {
+    color: var(--child05-color);
+}
+
+/* Code */
+.category_01:nth-child(6) {
+    color: var(--child06-color);
+}
+
+/* Work */
+.category_01:nth-child(7) {
+    color: var(--child07-color);
+}
+
+/* School */
+.category_01:nth-child(8) {
+    color: var(--child08-color);
+}
+
+/* Banking */
+.category_01:nth-child(9) {
+    color: var(--child09-color);
+}
+
+/* Misc */
+.category_01:nth-child(10) {
+    color: var(--child10-color);
+}
+
+/* Bookmarks */
+.category_02:nth-child(1) {
+    color: var(--child11-color);
+}
