@@ -1,0 +1,45 @@
+# Account related settings
+
+unset my_login
+unset my_pass
+unset my_from
+
+source "bash $my_cfgdir/get_credentials google.com/paulhitesh.hp |"
+
+set imap_user=$my_login
+set imap_pass=$my_pass
+set smtp_url = "smtp://$my_login@smtp.gmail.com:587/"
+set smtp_pass=$my_pass
+set ssl_starttls="yes"
+set ssl_force_tls="yes"
+
+set realname="Hitesh Paul"
+set from=$my_from
+set use_from = yes
+set signature = '~/.config/neomutt/com.google.paulhitesh.hp/signature|'
+set sig_dashes=yes
+
+# Folders
+set mbox_type = "Maildir"
+set folder = "$XDG_CACHE_HOME/neomutt/com.google.paulhitesh.hp/mail"
+set spoolfile="+INBOX"
+set mbox="+[Gmail].All Mail"
+# # set record="+[Gmail]/Sent Mail"
+# unset record
+set postponed="+[Gmail]/Drafts"
+
+# Caches
+set header_cache = "$XDG_CACHE_HOME/neomutt/com.google.paulhitesh.hp/cache/headers"
+set message_cachedir = "$XDG_CACHE_HOME/neomutt/com.google.paulhitesh.hp/cache/bodies"
+set certificate_file = "$XDG_CACHE_HOME/neomutt/com.google.paulhitesh.hp/certificates"
+
+# Misc
+# Important!
+unmailboxes *
+source "python $my_cfgdir/mailboxes.py Paulhitesh |"
+# set imap_check_subscribed="yes"
+# set imap_list_subscribed="yes"
+set sort=reverse-date
+
+set query_command="goobook -c $XDG_CONFIG_HOME/goobook/paulhitesh.hp.rc query '%s'"
+macro index,pager a "<pipe-message>goobook -c $XDG_CONFIG_HOME/goobook/paulhitesh.hp.rc add<return>" "add sender to google contacts"

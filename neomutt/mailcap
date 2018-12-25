@@ -1,0 +1,22 @@
+application/excel;                        libreoffice %s
+application/x-excel;                      libreoffice %s
+application/x-msexcel;                    libreoffice %s
+application/vnd.ms-excel;                 libreoffice %s
+application/ms-word;                      antiword %s;          copiousoutput
+application/ms-word;                      libreoffice %s
+application/msword;                       antiword %s;          copiousoutput
+application/msword;                       libreoffice %s
+application/powerpoint;                   libreoffice %s
+application/mspowerpoint;                 libreoffice %s
+application/vnd.ms-powerpoint;            libreoffice %s
+application/vnd.oasis.opendocument.text; libreoffice %s
+
+image/pdf; zathura %s
+image/*; feh %s
+video/*; mpv %s 
+application/pdf; zathura %s
+
+application/html;  /usr/bin/firefox %s >/dev/null 2>&1; needsterminal
+application/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html;  /usr/bin/firefox %s; needsterminal
+text/html; w3m -dump -s -o display_link=yes -o display_link_number=yes -o decode_url=yes -I %{charset} -T text/html; copiousoutput;

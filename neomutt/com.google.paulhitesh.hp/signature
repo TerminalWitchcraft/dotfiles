@@ -1,0 +1,5 @@
+#!/bin/sh
+. /etc/os-release
+echo "Hitesh Paul
+
+Sent using Mutt on $PRETTY_NAME at $(date +"%a, %b %d %Y %H:%M %Z")"

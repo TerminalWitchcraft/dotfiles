@@ -1,0 +1,15 @@
+#!/bin/sh
+. /etc/os-release
+echo "Hitesh Paul
+Graduate Student, MS CS
+
+Tandon School of Engineering
+New York University
+
+Phone:
+Email: hitesh.paul@nyu.edu
+
+Today's fortune:
+$(cowthink -f small $(fortune /usr/share/fortune/{linux,computers,definitions,wisdom}))
+
+Sent using Mutt on $PRETTY_NAME at $(date +"%a, %b %d %Y %H:%M %Z")"
