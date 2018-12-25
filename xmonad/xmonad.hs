@@ -12,12 +12,14 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Actions.SpawnOn
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Actions.CycleWS
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
 import qualified Codec.Binary.UTF8.String as UTF8
 
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoBorders
+import XMonad.Layout.LayoutHints
 import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.Cross(simpleCross)
 import XMonad.Layout.Cross(simpleCross)
@@ -67,6 +69,9 @@ myLogHook dbus = def
     , ppTitle = shorten 40
     }
 
+myLogHook2 :: X ()
+myLogHook2 = fadeInactiveLogHook fadeAmount
+    where fadeAmount = 0.8
 -- Emit a DBus signal on log updates
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus str = do
@@ -83,15 +88,16 @@ myStartupHook = do
     setFullscreenSupported
     spawn ".config/polybar/launch.sh"
     spawnOn "4" "konsole -e neomutt"
-    spawn "firefox"
+    spawn myBrowser
 
 
  
 myModMask = mod4Mask
 myFocusFollowsMouse = False
+myBrowser = "firefox"
 myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
 myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
-myBorderWidth = 8
+myBorderWidth = 0
 myTerminal = "konsole"
 myScreensaver = "i3lock-fancy"
 myWorkspaces = map show [1..9]
@@ -111,8 +117,9 @@ xmobarCurrentWorkspaceColor = "#5DBCD2"
 
 -- window manipulations
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "1"
+    [ className =? "Chromium"       --> doShift "2"
     , className =? "Firefox"  --> viewShift "2"
+    , className =? "qutebrowser"  --> viewShift "2"
     , className =? "Mailspring"  --> viewShift "4"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
@@ -124,6 +131,7 @@ myManageHook = composeAll
     , className =? "MPlayer"        --> doFloat
     , className =? "mpv"        --> viewShift "3"
     , className =? "zathura"        --> viewShift "9"
+    , className =? "Zathura"        --> viewShift "9"
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> doFullFloat]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
@@ -149,14 +157,14 @@ tabConfig = defaultTheme {
 	fontName = "xft:Iosevka:size=22"
 }
 
-myLayout = avoidStrutsOn [U] (
+myLayout = layoutHints (avoidStrutsOn [U] (
     Tall 1 (3/100) (1/2) |||
 	-- simpleTabBar (simpleTabbed) |||
     tabbed shrinkText tabConfig |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     spiral (6/7)  |||
     Grid(16/10) ||| 
-    ThreeColMid 1 (3/100) (1/2) ) |||
+    ThreeColMid 1 (3/100) (1/2) ) ) |||
     noBorders (fullscreenFull Full)
 
 -- keys config
@@ -220,6 +228,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -q set Master 5%+")
 
+  , ((modMask, xK_r),
+     spawn "konsole -e ranger")
+
+  , ((modMask, xK_b),
+     spawn myBrowser)
   -- -- Audio previous.
   -- , ((0, 0x1008FF16),
   --    spawn "")
@@ -241,7 +254,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --
 
   -- Close focused window.
-  , ((modMask .|. shiftMask, xK_q),
+  , ((modMask, xK_q),
      kill)
 
   -- Cycle through the available layout algorithms.
@@ -305,7 +318,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage (IncMasterN (-1)))
 
   -- Toggle the status bar gap.
-  ,((modMask, xK_b),
+  ,((modMask, xK_f),
      sendMessage ToggleStruts)
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
@@ -316,7 +329,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      io (exitWith ExitSuccess))
 
   -- Restart xmonad.
-  , ((modMask, xK_q),
+  , ((modMask .|. shiftMask, xK_q),
      restart "xmonad" True)
   ]
   ++
@@ -326,13 +339,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, k), windows $ f i)
       | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
       , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-  ++
+  -- ++
 
   -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
   -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  -- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
 main :: IO ()
@@ -346,7 +359,7 @@ main = do
 
     xmonad . ewmh $
             myBaseConfig
-                { logHook = dynamicLogWithPP (myLogHook dbus)
+                { logHook = myLogHook2 <+> dynamicLogWithPP (myLogHook dbus)
 , startupHook = myStartupHook
 , terminal = myTerminal
 , layoutHook = smartBorders $ myLayout ||| layoutHook myBaseConfig
