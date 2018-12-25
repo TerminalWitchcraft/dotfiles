@@ -1,6 +1,11 @@
 [user]
-	email = hiteshpaul94@gmail.com
+	email = git@hiteshpaul.com
 	name = Hitesh Paul
+	signingKey = FEF67205
 [credential]
 	helper = store
 
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2
