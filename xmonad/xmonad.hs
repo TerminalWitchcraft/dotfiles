@@ -16,6 +16,13 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
 import qualified Codec.Binary.UTF8.String as UTF8
 
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Accordion
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.StackTile
+import XMonad.Layout.TwoPane
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Tabbed
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoBorders
@@ -87,7 +94,8 @@ dbusOutput dbus str = do
 myStartupHook = do
     setFullscreenSupported
     spawn ".config/polybar/launch.sh"
-    spawnOn "4" "konsole -e neomutt"
+    spawnOn "Chat" "urxvt -e neomutt"
+    spawnOn "Chat" "urxvt -e weechat"
     spawn myBrowser
 
 
@@ -97,19 +105,20 @@ myFocusFollowsMouse = False
 myBrowser = "firefox"
 myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
 myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
-myBorderWidth = 0
-myTerminal = "konsole"
+myBorderWidth = 2
+myTerminal = "urxvt"
 myScreensaver = "i3lock-fancy"
-myWorkspaces = map show [1..9]
+-- myWorkspaces = map show [1..9]
+myWorkspaces = ["Main", "Dev", "Web", "Chat", "Media", "Games", "Read", "Misc", "Scratch"]
 mySelectScreenshot = "scrot"
 myScreenshot = "scrot"
-myLauncher = "rofi -show drun"
+myLauncher = "rofi -modi combi -show combi -combi-modi drun,window,ssh,run"
 myBaseConfig = desktopConfig
 --myBaseConfig = defaultConfig
 
 -- colors
-myNormalBorderColor  = "#000000"
-myFocusedBorderColor = "#fffff0"
+myNormalBorderColor  = "#282a36"
+myFocusedBorderColor = "#ff5555"
 xmobarTitleColor = "#ECEFF4"
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#5DBCD2"
@@ -117,55 +126,70 @@ xmobarCurrentWorkspaceColor = "#5DBCD2"
 
 -- window manipulations
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "2"
-    , className =? "Firefox"  --> viewShift "2"
-    , className =? "qutebrowser"  --> viewShift "2"
-    , className =? "Mailspring"  --> viewShift "4"
+    [ className =? "Chromium"       --> doShift "Web"
+    , className =? "Firefox"  --> viewShift "Web"
+    , className =? "qutebrowser"  --> viewShift "Web"
+    -- , className =? "Mailspring"  --> viewShift "4"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
-    , className =? "NeovimGtk"     --> viewShift "4"
+    , className =? "NeovimGtk"     --> viewShift "Dev"
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "tdrop"           --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
-    , className =? "mpv"        --> viewShift "3"
-    , className =? "zathura"        --> viewShift "9"
-    , className =? "Zathura"        --> viewShift "9"
+    , className =? "mpv"        --> viewShift "Media"
+    , className =? "zathura"        --> viewShift "Read"
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> doFullFloat]
     where viewShift = doF . liftM2 (.) W.greedyView W.shift
-
--- layout config
---myLayout = avoidStruts (
---    ThreeColMid 1 (3/100) (1/2) |||
---    Tall 1 (3/100) (1/2) |||
---    Mirror (Tall 1 (3/100) (1/2)) |||
---    Full |||
---    spiral (6/7)) |||
---    noBorders (fullscreenFull Full)
 
 
 tabConfig = defaultTheme {
     activeBorderColor = "#7C7C7C",
     activeTextColor = "#5DBCD2",
-    activeColor = "#000000",
+    activeColor = "#282a36",
     inactiveBorderColor = "#7C7C7C",
     inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000",
+    inactiveColor = "#282a36",
 	decoHeight = 48,
-	fontName = "xft:Iosevka:size=22"
+	fontName = "xft:Iosevka Nerd Font:size=8"
 }
 
-myLayout = layoutHints (avoidStrutsOn [U] (
-    Tall 1 (3/100) (1/2) |||
-	-- simpleTabBar (simpleTabbed) |||
-    tabbed shrinkText tabConfig |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    spiral (6/7)  |||
-    Grid(16/10) ||| 
-    ThreeColMid 1 (3/100) (1/2) ) ) |||
-    noBorders (fullscreenFull Full)
+workspaceLayout = onWorkspace "Web" webLayout $ onWorkspace "Dev" devLayout $ defaultLayout
+    where
+        -- webLayout = avoidStrutsOn [U] (noBorders (Full (tabbed shrinkText tabConfig)) )
+        webLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (TwoPane (3/100) (1/2)) ||| noBorders (fullscreenFull webTabbed)
+        devLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (
+            ResizableTall 1 (3/100) (3/5) [] |||
+            Mirror (ResizableTall 1 (3/100) (3/5) []) |||
+            Accordion |||
+            StackTile 3 (3/100) (4/5) |||
+            ThreeCol 1 (3/100) (3/5)  |||
+            TwoPane (3/100) (3/5) |||
+            tabbed shrinkText tabConfig |||
+            spiral (6/7)  |||
+            Grid(16/10) )
+        defaultLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (
+            ResizableTall 1 (3/100) (1/2) [] |||
+            -- simpleTabBar (simpleTabbed) |||
+            tabbed shrinkText tabConfig |||
+            Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+            spiral (6/7)  |||
+            Grid(16/10) ||| 
+            ThreeColMid 1 (3/100) (1/2) ) |||
+            noBorders (fullscreenFull Full) 
+        webTabbed = tabbed shrinkText tabConfig ||| Grid(16/10)
+
+-- myLayout = avoidStrutsOn [U] (
+--     Tall 1 (3/100) (1/2) |||
+-- 	-- simpleTabBar (simpleTabbed) |||
+--     tabbed shrinkText tabConfig |||
+--     Mirror (Tall 1 (3/100) (1/2)) |||
+--     spiral (6/7)  |||
+--     Grid(16/10) ||| 
+--     ThreeColMid 1 (3/100) (1/2) ) |||
+--     noBorders (fullscreenFull Full)
 
 -- keys config
 
@@ -177,7 +201,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
      windows W.swapMaster)
-
+    , ((modMask,               xK_a), sendMessage MirrorShrink)
+    , ((modMask,               xK_z), sendMessage MirrorExpand)
   -- Lock the screen using command specified by myScreensaver.
   , ((modMask .|. shiftMask, xK_l),
      spawn myScreensaver)
@@ -229,7 +254,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master 5%+")
 
   , ((modMask, xK_r),
-     spawn "konsole -e ranger")
+     spawn "urxvt -e ranger")
 
   , ((modMask, xK_b),
      spawn myBrowser)
@@ -319,7 +344,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Toggle the status bar gap.
   ,((modMask, xK_f),
-     sendMessage ToggleStruts)
+     -- sendMessage ToggleStruts)
+     sendMessage $ Toggle NBFULL)
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   , ((modMask, xK_s),
@@ -328,6 +354,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_c),
      io (exitWith ExitSuccess))
 
+  , ((modMask .|. shiftMask, xK_s),
+     spawn "systemctl poweroff")
+  , ((modMask .|. shiftMask, xK_r),
+     spawn "systemctl reboot")
   -- Restart xmonad.
   , ((modMask .|. shiftMask, xK_q),
      restart "xmonad" True)
@@ -362,7 +392,7 @@ main = do
                 { logHook = myLogHook2 <+> dynamicLogWithPP (myLogHook dbus)
 , startupHook = myStartupHook
 , terminal = myTerminal
-, layoutHook = smartBorders $ myLayout ||| layoutHook myBaseConfig
+, layoutHook = smartBorders $ workspaceLayout
 , manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
 , modMask = myModMask
 , borderWidth = myBorderWidth
