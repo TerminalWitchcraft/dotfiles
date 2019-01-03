@@ -8,164 +8,26 @@ Xft.hintin:	1
 Xft.antialias:	1
 Xft.rgba:	rgb
 
-! *foreground:   #d3d0c8
-! #ifdef background_opacity
-! ! *background:   [background_opacity]#2d2d2d
-! #else
-! *background:   #2d2d2d
-! #endif
-! *cursorColor:  #d3d0c8
-! 
-! *color0:       #2d2d2d
-! *color1:       #f2777a
-! *color2:       #99cc99
-! *color3:       #ffcc66
-! *color4:       #6699cc
-! *color5:       #cc99cc
-! *color6:       #66cccc
-! *color7:       #d3d0c8
-! 
-! *color8:       #747369
-! *color9:       #f2777a
-! *color10:      #99cc99
-! *color11:      #ffcc66
-! *color12:      #6699cc
-! *color13:      #cc99cc
-! *color14:      #66cccc
-! *color15:      #f2f0ec
-! 
-! ! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
-! ! use 'shell' template to set these if necessary
-! *color16:      #f99157
-! *color17:      #d27b53
-! *color18:      #393939
-! *color19:      #515151
-! *color20:      #a09f93
-! *color21:      #e8e6df
-
-
-!
-!  ! Generated with :
-!  ! XRDB2Xreources.py
-!  !
-!  *.foreground:  #dcdccc
-!  *.background:  #3f3f3f
-!  *.cursorColor: #dcdccc
-!  !
-!  ! Black
-!  *.color0:      #4d4d4d
-!  *.color8:      #709080
-!  !
-!  ! Red
-!  *.color1:      #705050
-!  *.color9:      #dca3a3
-!  !
-!  ! Green
-!  *.color2:      #60b48a
-!  *.color10:     #c3bf9f
-!  !
-!  ! Yellow
-!  *.color3:      #f0dfaf
-!  *.color11:     #e0cf9f
-!  !
-!  ! Blue
-!  ! *.color4:      #506070
-!  *.color4:      #94bff3
-!  *.color12:     #94bff3
-!  !
-!  ! Magenta
-!  *.color5:      #dc8cc3
-!  *.color13:     #ec93d3
-!  !
-!  ! Cyan
-!  *.color6:      #8cd0d3
-!  *.color14:     #93e0e3
-!  !
-!  ! White
-!  *.color7:      #dcdccc
-!  *.color15:     #ffffff
-!  !
-!  ! Bold, Italic, Underline
-!  *.colorBD:     #dcdccc
-!  !*.colorIT:
-!  !*.colorUL:
-
-
 ! URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
 
 ! alternative font settings with 'terminus':
-URxvt.font: xft:Iosevka Nerd Font:style=Regular:size=7, \
-            xft:Ubuntu Nerd Font:style=Book:size=8, \
+URxvt.font: xft:Iosevka Nerd Font:style=Regular:size=10, \
+            xft:DejaVuSansMono Nerd Font:style=Book:size=8, \
 	xft:DroidSansMono Nerd Font:style=Book:size=9
 ! URxvt.font:      -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1
 !URxvt.bold.font: -xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1
 
-URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select,selection-to-clipboard
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select,selection-to-clipboard,fullscreen
 URxvt.url-select.launcher:  firefox
 URxvt.url-select.underline: true
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.keysym.F11: perl:fullscreen:switch
 URxvt*scrollBar:                  false
 URxvt.cursorBlink:                true
-URxvt*cursorColor: #528bff
-! URxvt*saveLines:                  5000
-
-! for 'fake' transparency (without Compton) uncomment the following three lines
-! URxvt*inheritPixmap:            true
-! URxvt*transparent:              true
-! URxvt*shading:                  138
-
-! other possible settings:
-!  URxvt.iso14755: false
-!URxvt.perl-ext:
-!URxvt.perl-ext-common:
-! URxvt.keysym.Shift-Control-V: eval:paste_clipboard
-! URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
-!! Cursor word movement
-! URxvt*altSendsEscape: true
-! URxvt.keysym.Control-Left:    \033[1;5D
-! URxvt.keysym.Shift-Control-Left:    \033[1;6D
-! URxvt.keysym.Control-Right:    \033[1;5C
-! URxvt.keysym.Shift-Control-Right:    \033[1;6C
-! URxvt.keysym.Control-Up:    \033[1;5A
-! URxvt.keysym.Shift-Control-Up:    \033[1;6A
-! URxvt.keysym.Control-Down:    \033[1;5B
-! URxvt.keysym.Shift-Control-Down:    \033[1;6B
-! URxvt.clipboard.autocopy: true
-! URxvt.keysym.M-C-v:              perl:clipboard:paste_escaped
-! URxvt*termName:                  string
-! URxvt*geometry:                  geometry
-! URxvt*chdir:                     string
-! URxvt*reverseVideo:              boolean
-! URxvt*loginShell:                boolean
-! URxvt*multiClickTime:            number
-! URxvt*jumpScroll:                boolean
-! URxvt*skipScroll:                boolean
-! URxvt*pastableTabs:              boolean
-! URxvt*scrollstyle:               plain
-! URxvt*scrollBar_right:           boolean
-! URxvt*scrollBar_floating:        true
-! URxvt*scrollBar_align:           mode
-! URxvt*thickness:                 number
-! URxvt*scrollTtyOutput:           boolean
-! URxvt*scrollTtyKeypress:         boolean
-! URxvt*scrollWithBuffer:          boolean
-! URxvt*tintColor:                 !7DA55
-! URxvt*blurRadius:                HxV
-! URxvt*fading:                    number
-! URxvt*fadeColor:                 color
-! URxvt*utmpInhibit:               boolean
-! URxvt*urgentOnBell:              boolean
-! URxvt*visualBell:                boolean
-! URxvt*mapAlert:                  boolean
-! URxvt*meta8:                     boolean
-! URxvt*tripleclickwords:          boolean
-! URxvt*insecure:                  boolean
-! URxvt*cursorUnderline:           boolean
-! URxvt*pointerBlank:              boolean
 Xcursor.size: 64
-Xcursor.theme: FlatbedCursors-Black
+Xcursor.theme: FlatbedCursors-White
 
 ! urxvt*transparent: true
 ! urxvt*shading: 20
@@ -173,78 +35,25 @@ Xcursor.theme: FlatbedCursors-Black
 
 ! special
 urxvt*depth: 32
-! urxvt*background: [90]#282C34
-! *.foreground:   #ABB2BF
-! ! *.background:   #282C34
-! ! *.cursorColor:  #ABB2BF
-! 
-! ! black
-! *.color0:       #282C34
-! *.color8:       #3E4452
-! 
-! ! red
-! *.color1:       #E06C75
-! *.color9:       #BE5046
-! 
-! ! green
-! *.color2:       #98C379
-! *.color10:      #98C379
-! 
-! ! yellow
-! *.color3:       #E5C07B
-! *.color11:      #D19A66
-! 
-! ! blue
-! *.color4:       #61AFEF
-! *.color12:      #61AFEF
-! 
-! ! magenta
-! *.color5:       #C678DD
-! *.color13:      #C678DD
-! 
-! ! cyan
-! *.color6:       #56B6C2
-! *.color14:      #56B6C2
-! 
-! ! white
-! *.color7:       #ABB2BF
-! *.color15:      #5C6370
 
+! Dracula Xresources palette
+*.foreground: #F8F8F2
+*.background: #282A36
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #BD93F9
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15: #E6E6E6
+XTerm.vt100.faceName: Iosevka Nerd Font:size=10:antialias=false
 
-
-! special
-*.foreground:   #191919
-*.background:   [97]#ffffff
-*.cursorColor:  #191919
-
-! black
-*.color0:       #191919
-*.color8:       #191919
-
-! red
-*.color1:       #323232
-*.color9:       #323232
-
-! green
-*.color2:       #4b4b4b
-*.color10:      #4b4b4b
-
-! yellow
-*.color3:       #646464
-*.color11:      #646464
-
-! blue
-*.color4:       #7d7d7d
-*.color12:      #7d7d7d
-
-! magenta
-*.color5:       #969696
-*.color13:      #969696
-
-! cyan
-*.color6:       #afafaf
-*.color14:      #afafaf
-
-! white
-*.color7:       #c8c8c8
-*.color15:      #c8c8c8

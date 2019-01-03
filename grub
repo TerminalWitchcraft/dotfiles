@@ -1,10 +1,9 @@
 # GRUB boot loader configuration
 
 GRUB_DEFAULT=0
-GRUB_TIMEOUT=4
-GRUB_HIDDEN_TIMEOUT=3
+GRUB_TIMEOUT=5
 GRUB_DISTRIBUTOR="Arch"
-GRUB_CMDLINE_LINUX_DEFAULT="quiet acpi_rev_override=1 nmi_watchdog=0"
+GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/disk/by-uuid/eebdfe9e-8033-4fdc-99c0-e463bf2a3c88:system cryptkey=rootfs:/crypto_keyfile.bin quiet acpi_rev_override=1 nmi_watchdog=0"
 GRUB_CMDLINE_LINUX=""
 
 # Preload both GPT and MBR modules so that they are not missed
@@ -26,12 +25,9 @@ GRUB_TERMINAL_INPUT=console
 # The resolution used on graphical terminal
 # note that you can use only modes which your graphic card supports via VBE
 # you can see them in real GRUB with the command `vbeinfo'
-GRUB_GFXMODE=3840x2160x32
-# GRUB_GFXMODE=1920x1440x32
-
+GRUB_GFXMODE=auto
 
 # Uncomment to allow the kernel use the same resolution used by grub
-
 GRUB_GFXPAYLOAD_LINUX=keep
 
 # Uncomment if you want GRUB to pass to the Linux kernel the old parameter
@@ -47,7 +43,7 @@ GRUB_DISABLE_RECOVERY=true
 #GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
 
 # Uncomment one of them for the gfx desired, a image background or a gfxtheme
-GRUB_BACKGROUND="/boot/grub.jpg"
+GRUB_BACKGROUND="/boot/grub.png"
 #GRUB_THEME="/path/to/gfxtheme"
 
 # Uncomment to get a beep at GRUB start
@@ -55,8 +51,10 @@ GRUB_BACKGROUND="/boot/grub.jpg"
 
 # Uncomment to make GRUB remember the last selection. This requires to
 # set 'GRUB_DEFAULT=saved' above.
-#GRUB_SAVEDEFAULT="true"
-GRUB_FONT="/boot/grubfont.pf2"
 GRUB_DEFAULT=saved
 GRUB_SAVEDEFAULT=true
-# GRUB_FORCE_HIDDEN_MENU=true
+#GRUB_SAVEDEFAULT="true"
+GRUB_FONT="/boot/grubfont.pf2"
+
+GRUB_TIMEOUT=3
+GRUB_TIMEOUT_STYLE='countdown'
