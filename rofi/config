@@ -1,7 +1,10 @@
-rofi.theme: /usr/share/rofi/themes/gruvbox-dark-soft.rasi
+rofi.theme: ~/.config/rofi/dracula.rasi
 rofi.modi:                           window,run,ssh
 rofi.terminal:                       urxvt
 rofi.run-shell-command:              {terminal} -e {cmd}
+rofi.lines:                          10
+rofi.font:                           Iosevka 28
+rofi.sorting-method:                 fzf
 rofi.display-ssh:                    
 rofi.display-run:   :                  
 rofi.display-window:                 
