@@ -3,9 +3,9 @@ set nocompatible
 call plug#begin('~/.local/share/nvim/plugged')
 
 "Plug 'joshdick/onedark.vim'
-Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
+""Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'chriskempson/base16-vim'
+""Plug 'chriskempson/base16-vim'
 Plug 'mike-hearn/base16-vim-lightline'
 Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
@@ -13,8 +13,10 @@ Plug 'taohexxx/lightline-buffer'
 Plug 'takac/vim-hardtime'
 Plug 'edkolev/tmuxline.vim'
 Plug 'Yggdroot/indentLine'
+Plug 'vimwiki/vimwiki'
+Plug 'mhinz/vim-startify'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jsfaint/gen_tags.vim'
@@ -29,7 +31,7 @@ Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-github'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-racer', { 'for': 'rust' }
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install', 'for': 'javascript' }
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install', 'for': 'javascript' }
 Plug 'ncm2/ncm2-jedi', {'for': 'python' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -37,7 +39,7 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 
 Plug 'rust-lang/rust.vim'
-
+Plug 'lervag/vimtex'
 
 " Plug 'autozimu/LanguageClient-neovim', {
 "     \ 'branch': 'next',
@@ -51,6 +53,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 call plug#end()
 
@@ -312,7 +316,9 @@ let g:tmuxline_powerline_separators = 0
 
 " Vim indentline/
 let g:indentLine_enabled = 1
+let g:indentLine_fileType = ['c', 'cpp', 'rust', 'python']
 " let g:indentLine_setColors = 0
+" let g:indentLine_concealcursor = 'c'
 let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_char = '┆'
@@ -325,4 +331,41 @@ let g:indentLine_bgcolor_gui = '#282A36'
 call neomake#configure#automake('w')
 autocmd User NeomakeJobFinished echom printf('%s exited with %d', g:neomake_hook_context.jobinfo.maker.name, g:neomake_hook_context.jobinfo.exit_code)
 
+" Vim pandoc
+let g:pandoc#syntax#conceal#urls=1
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 
+" Vimwiki
+au FileType vimwiki set syntax=pandoc
+au FileType vimwiki set filetype=pandoc
+let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'index': 'main', 'ext': '.md', 'syntax': 'markdown'}]
+
+"Vimtex
+let g:vimtex_compiler_engine = 'lualatex'
+let g:vimtex_compiler_method = 'latexmk'
+let g:vimtex_view_method = 'zathura'
+" let g:vimtex_compiler_latexmk = { 
+"     \ 'backend': 'nvim'
+"     \ }
+
+let g:vimtex_compiler_latexmk_engines = {
+    \ '_'                : '-lualatex',
+    \ 'pdflatex'         : '-pdf',
+    \ 'dvipdfex'         : '-pdfdvi',
+    \ 'lualatex'         : '-lualatex',
+    \ 'xelatex'          : '-xelatex',
+    \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
+    \ 'context (luatex)' : '-pdf -pdflatex=context',
+    \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+    \}
+let g:vimtex_mappings_enabled = 0
+
+"VIm Startify
+let g:startify_bookmarks = [ {'c': '~/Dropbox/wiki/main.md'}]
+let g:startify_lists = [
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
