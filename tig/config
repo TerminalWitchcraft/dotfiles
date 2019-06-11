@@ -1,1 +1,5 @@
 source ~/.config/tig/vim.tigrc
+bind status P !git push origin
+
+color cursor	black	color253	bold	
+color title-focus 	black 	color141 	bold
