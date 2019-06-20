@@ -34,6 +34,7 @@ Plug 'neomake/neomake'
 " Plug 'w0rp/ale'
 Plug 'sbdchd/neoformat'
 Plug 'ncm2/ncm2'
+Plug 'Shougo/echodoc.vim'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
@@ -91,7 +92,7 @@ set hidden
 set grepprg=rg\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 set completeopt=noinsert,menuone,noselect
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+" set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 " set tabstop=4
 " set expandtab
 " set softtabstop=4
@@ -196,8 +197,8 @@ let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
 autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+autocmd  FileType fzf set laststatus=0 noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 ruler
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -426,3 +427,7 @@ autocmd filetype python map <silent> <Leader>kg <Plug>(IPy-Interrupt)
 
 " Vebugger
 " let g:vebugger_leader='<Leader>d'
+
+" Echodoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'echo'
