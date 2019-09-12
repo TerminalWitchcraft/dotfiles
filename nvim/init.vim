@@ -9,7 +9,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 "Plug 'joshdick/onedark.vim'
 ""Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
+Plug 'arcticicestudio/nord-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'drewtempelmeyer/palenight.vim'
 ""Plug 'chriskempson/base16-vim'
 " Plug 'mike-hearn/base16-vim-lightline'
 Plug 'ryanoasis/vim-devicons'
@@ -18,13 +20,17 @@ Plug 'taohexxx/lightline-buffer'
 Plug 'takac/vim-hardtime'
 Plug 'edkolev/tmuxline.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
+Plug 'wesQ3/vim-windowswap'
+Plug 'blueyed/vim-diminactive'
+Plug 'mbbill/undotree'
 
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'jsfaint/gen_tags.vim'
+Plug 'majutsushi/tagbar'
+" Plug 'jsfaint/gen_tags.vim'
 Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 " Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
@@ -63,7 +69,8 @@ Plug 'pgdouyon/vim-evanesco'
 Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
@@ -103,12 +110,12 @@ set completeopt=noinsert,menuone,noselect
 " let g:nord_italic_comments = 1
 " let g:nord_comment_brightness = 16
 " let g:nord_cursor_line_number_background = 1
-colorscheme dracula
+colorscheme palenight
 
 let mapleader=" "
 " " Copy to clipboard
 vnoremap  <leader>y  "+y
-nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>Y  "+yg
 nnoremap  <leader>y  "+y
 nnoremap  <leader>yy  "+yy
 
@@ -228,13 +235,15 @@ command! -bang -nargs=* Tags :call fzf#vim#tags(<q-args>, {'options': ['--no-rev
 
 " ncm2
 autocmd BufEnter * call ncm2#enable_for_buffer()
-
+function LightlineNeomake()
+    return '%{neomake#statusline#LoclistStatus()}'
+endfunction
 let g:lightline = {
           \ 'enable': {
             \ 'statusline': 1,
             \ 'tabline': 1
             \ },
-	 \ 'colorscheme': 'dracula',
+	 \ 'colorscheme': 'palenight',
          \ }
 
 let g:lightline.active = {
@@ -350,7 +359,7 @@ let g:indentLine_leadingSpaceChar = ' '
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_char = '┆'
 " let g:indentLine_bgcolor_term = 234
-let g:indentLine_bgcolor_gui = '#282A36'
+let g:indentLine_bgcolor_gui = '#2e3440'
 " let g:indentLine_color_term = 234
 " let g:indentLine_color_gui = '#425550'
 
@@ -363,11 +372,11 @@ let g:pandoc#syntax#conceal#urls=1
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
 
 " Vimwiki
-au FileType vimwiki set syntax=pandoc
-au FileType vimwiki set filetype=pandoc
-let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'index': 'main', 'ext': '.md', 'syntax': 'markdown'}]
-nmap <Leader>wq <Plug>VimwikiVSplitLink
-nmap <Leader>we <Plug>VimwikiSplitLink
+" au FileType vimwiki set syntax=pandoc
+" au FileType vimwiki set filetype=pandoc
+" let g:vimwiki_list = [{'path': '~/Dropbox/wiki/', 'index': 'main', 'ext': '.md', 'syntax': 'markdown'}]
+" nmap <Leader>wq <Plug>VimwikiVSplitLink
+" nmap <Leader>we <Plug>VimwikiSplitLink
 
 "Vimtex
 let g:vimtex_compiler_engine = 'lualatex'
@@ -398,6 +407,9 @@ let g:startify_lists = [
       \ { 'type': 'sessions',  'header': ['   Sessions']       },
       \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
+let g:startify_session_before_save = [
+	\ 'TagbarClose',
+	\ ]
 
 "Vim Header
 let g:header_field_author = 'Hitesh Paul'
@@ -424,6 +436,10 @@ autocmd filetype python map <silent> <Leader>kg <Plug>(IPy-Interrupt)
 "   " autocmd BufWritePre * undojoin | Neoformat
 " augroup END
 
+" augroup fmt
+"     autocmd!
+"     autocmd BufWritePre * undojoin | Neoformat
+" augroup END
 
 " Vebugger
 " let g:vebugger_leader='<Leader>d'
@@ -431,3 +447,44 @@ autocmd filetype python map <silent> <Leader>kg <Plug>(IPy-Interrupt)
 " Echodoc
 let g:echodoc#enable_at_startup = 1
 let g:echodoc#type = 'echo'
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+let g:rust_use_custom_ctags_defs = 1  " if using rust.vim
+let g:tagbar_zoomwidth = 40
+let g:tagbar_autofocus = 1
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+" autocmd FileType * nested :call tagbar#autoopen(0)
+let g:tagbar_type_rust = {
+  \ 'ctagsbin' : '/usr/bin/ctags',
+  \ 'ctagstype' : 'rust',
+  \ 'kinds' : [
+      \ 'n:modules',
+      \ 's:structures:1',
+      \ 'i:interfaces',
+      \ 'c:implementations',
+      \ 'f:functions:1',
+      \ 'g:enumerations:1',
+      \ 't:type aliases:1:0',
+      \ 'v:constants:1:0',
+      \ 'M:macros:1',
+      \ 'm:fields:1:0',
+      \ 'e:enum variants:1:0',
+      \ 'P:methods:1',
+  \ ],
+  \ 'sro': '::',
+  \ 'kind2scope' : {
+      \ 'n': 'module',
+      \ 's': 'struct',
+      \ 'i': 'interface',
+      \ 'c': 'implementation',
+      \ 'f': 'function',
+      \ 'g': 'enum',
+      \ 't': 'typedef',
+      \ 'v': 'variable',
+      \ 'M': 'macro',
+      \ 'm': 'field',
+      \ 'e': 'enumerator',
+      \ 'P': 'method',
+  \ },
+\ }
