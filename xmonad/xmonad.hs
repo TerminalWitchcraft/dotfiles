@@ -102,11 +102,11 @@ myStartupHook = do
  
 myModMask = mod4Mask
 myFocusFollowsMouse = False
-myBrowser = "firefox"
+myBrowser = "vivaldi-stable"
 myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
 myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
 myBorderWidth = 2
-myTerminal = "urxvt"
+myTerminal = "alacritty"
 myScreensaver = "i3lock-fancy"
 -- myWorkspaces = map show [1..9]
 myWorkspaces = ["Main", "Dev", "Web", "Chat", "Media", "Games", "Read", "Misc", "Scratch"]
@@ -389,7 +389,7 @@ main = do
 
     xmonad . ewmh $
             myBaseConfig
-                { logHook = myLogHook2 <+> dynamicLogWithPP (myLogHook dbus)
+                { logHook =  dynamicLogWithPP (myLogHook dbus)
 , startupHook = myStartupHook
 , terminal = myTerminal
 , layoutHook = smartBorders $ workspaceLayout
