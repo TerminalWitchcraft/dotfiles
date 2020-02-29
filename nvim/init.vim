@@ -20,13 +20,16 @@ Plug 'taohexxx/lightline-buffer'
 Plug 'takac/vim-hardtime'
 Plug 'edkolev/tmuxline.vim'
 Plug 'Yggdroot/indentLine'
+Plug 'ianding1/leetcode.vim'
 " Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
 Plug 'wesQ3/vim-windowswap'
 Plug 'blueyed/vim-diminactive'
 Plug 'mbbill/undotree'
+Plug 'wakatime/vim-wakatime'
 
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'majutsushi/tagbar'
@@ -38,21 +41,22 @@ Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
 Plug 'neomake/neomake'
 " Plug 'tpope/vim-dispatch'
 " Plug 'w0rp/ale'
-Plug 'sbdchd/neoformat'
-Plug 'ncm2/ncm2'
-Plug 'Shougo/echodoc.vim'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-github'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'ncm2/ncm2-racer', { 'for': 'rust' }
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-jedi', {'for': 'python' }
-Plug 'ncm2/ncm2-pyclang', {'for': ['c', 'cpp']}
-Plug 'ncm2/ncm2-go'
-Plug 'fatih/vim-go'
-Plug 'sebdah/vim-delve'
+" Plug 'sbdchd/neoformat'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'ncm2/ncm2'
+" Plug 'Shougo/echodoc.vim'
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-github'
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'ncm2/ncm2-racer', { 'for': 'rust' }
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'ncm2/ncm2-jedi', {'for': 'python' }
+" Plug 'ncm2/ncm2-pyclang', {'for': ['c', 'cpp']}
+" Plug 'ncm2/ncm2-go'
+" Plug 'fatih/vim-go'
+" Plug 'sebdah/vim-delve'
 
 Plug 'chemzqm/vim-jsx-improve'
 " Plug 'mattn/emmet-vim'
@@ -84,7 +88,6 @@ set showtabline=2
 " set clipboard+=unnamed
 " set cursorline
 set splitbelow
-set shortmess+=c
 set splitright
 set confirm
 set undofile
@@ -96,6 +99,11 @@ set laststatus=2
 set nu
 set noshowmode
 set hidden
+set nobackup
+set nowritebackup
+set cmdheight=2
+set shortmess+=c
+set signcolumn=yes
 set grepprg=rg\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 set completeopt=noinsert,menuone,noselect
@@ -152,7 +160,7 @@ nnoremap tn :tabnew<CR>
 nmap <F9> :Neomake<CR>
 nmap <Leader>a :History<CR>
 nmap <Leader>f :FZF<CR>
-nmap <Leader>F :FZF ~<CR>
+" nmap <Leader>F :FZF ~<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>t :BTags<CR>
 " nmap <Leader>t :call LanguageClient_textDocument_documentSymbol()<CR>
@@ -171,11 +179,115 @@ nmap <Leader>g :Rg<cr>
 " augroup END " }
 inoremap <c-c> <ESC>
 " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("<CR>", 'n') : "\<CR>")
-" inoremap <expr> <C-k> (pumvisible() ? ncm2_ultisnips#expand_or('', 'n') : "\<C-k>")
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("<CR>", 'n') : "\<CR>")
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+nmap <leader>rn <Plug>(coc-rename)
+" Formatting selected code.
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>A  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>E  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>C  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>O  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>S  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>J  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>K  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>P  :<C-u>CocListResume<CR>
 
 " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -234,10 +346,11 @@ command! -bang -nargs=* Tags :call fzf#vim#tags(<q-args>, {'options': ['--no-rev
 
 
 " ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-function LightlineNeomake()
-    return '%{neomake#statusline#LoclistStatus()}'
-endfunction
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+" function LightlineNeomake()
+"     return '%{neomake#statusline#LoclistStatus()}'
+" endfunction
+
 let g:lightline = {
           \ 'enable': {
             \ 'statusline': 1,
@@ -488,3 +601,8 @@ let g:tagbar_type_rust = {
       \ 'P': 'method',
   \ },
 \ }
+
+
+" Leetcode
+let g:leetcode_browser='firefox'
+let g:leetcode_solution_filetype='python3'
