@@ -1,55 +1,45 @@
-" File              : init.vim
-" Author            : Hitesh Paul <hp1293@nyu.edu>
-" Date              : 28.05.2019
-" Last Modified Date: 28.05.2019
-" Last Modified By  : Hitesh Paul <hp1293@nyu.edu>
 set nocompatible
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-"Plug 'joshdick/onedark.vim'
-""Plug 'arcticicestudio/nord-vim', { 'branch': 'develop' }
-Plug 'arcticicestudio/nord-vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'drewtempelmeyer/palenight.vim'
-""Plug 'chriskempson/base16-vim'
-" Plug 'mike-hearn/base16-vim-lightline'
+Plug 'editorconfig/editorconfig-vim'
+
 Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
-Plug 'taohexxx/lightline-buffer'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'takac/vim-hardtime'
 Plug 'edkolev/tmuxline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ianding1/leetcode.vim'
 " Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
-Plug 'wesQ3/vim-windowswap'
-Plug 'blueyed/vim-diminactive'
+Plug 'TaDaa/vimade'
 Plug 'mbbill/undotree'
 Plug 'wakatime/vim-wakatime'
+Plug 'mcchrish/nnn.vim'
 
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" TODO replace fzf with skim
 Plug '/usr/bin/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'majutsushi/tagbar'
-" Plug 'jsfaint/gen_tags.vim'
-Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
-" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-" Plug 'idanarye/vim-vebugger', { 'branch': 'develop' }
 
-Plug 'neomake/neomake'
-" Plug 'tpope/vim-dispatch'
-" Plug 'w0rp/ale'
-" Plug 'sbdchd/neoformat'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'ncm2/ncm2'
-" Plug 'Shougo/echodoc.vim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path'
+" TODO review lexima.vim for future change
+Plug 'jiangmiao/auto-pairs'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+
+Plug 'liuchengxu/vista.vim'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 " Plug 'ncm2/ncm2-github'
-" Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/float-preview.nvim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 " Plug 'ncm2/ncm2-racer', { 'for': 'rust' }
 " Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
 " Plug 'ncm2/ncm2-jedi', {'for': 'python' }
@@ -58,6 +48,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'fatih/vim-go'
 " Plug 'sebdah/vim-delve'
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'chemzqm/vim-jsx-improve'
 " Plug 'mattn/emmet-vim'
 Plug 'SirVer/ultisnips'
@@ -70,10 +61,10 @@ Plug 'lervag/vimtex'
 Plug 'alpertuna/vim-header'
 Plug 'junegunn/goyo.vim'
 Plug 'pgdouyon/vim-evanesco'
-Plug 'justinmk/vim-dirvish'
+" Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-unimpaired'
-" Plug 'tpope/vim-commentary'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -101,13 +92,13 @@ set noshowmode
 set hidden
 set nobackup
 set nowritebackup
-set cmdheight=2
+set cmdheight=1
 set shortmess+=c
 set signcolumn=yes
 set grepprg=rg\ --vimgrep
 set grepformat^=%f:%l:%c:%m
 set completeopt=noinsert,menuone,noselect
-" set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 " set tabstop=4
 " set expandtab
 " set softtabstop=4
@@ -145,7 +136,7 @@ nnoremap <C-H> <C-W><
 "nnoremap <C-H> <C-W><C-H>
 
 " For terminal use
-tnoremap jk <C-\><C-N>
+" tnoremap jk <C-\><C-N>
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
 tnoremap <C-k> <C-\><C-N><C-w>k
@@ -157,18 +148,19 @@ nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 nnoremap tn :tabnew<CR>
 
-nmap <F9> :Neomake<CR>
 nmap <Leader>a :History<CR>
 nmap <Leader>f :FZF<CR>
-" nmap <Leader>F :FZF ~<CR>
+nmap <Leader>F :FZF ~<CR>
 nmap <Leader>b :Buffers<CR>
-nmap <Leader>t :BTags<CR>
-" nmap <Leader>t :call LanguageClient_textDocument_documentSymbol()<CR>
-nmap <Leader>T :Tags<CR>
+nmap <Leader>u :UndotreeToggle<CR>
+nmap <Leader>U :UndotreeFocus<CR>
+nmap <Leader>v :Vista!!<CR>
+nmap <Leader>V :Vista focus<CR>
+" nmap <Leader>t :BTags<CR>
+nmap <Leader>t :call LanguageClient_textDocument_documentSymbol()<CR>
 nmap <Leader>m :Marks<CR>
 nmap <Leader>M :History:<CR>
 nmap <Leader>c :Commands<CR>
-nmap <Leader>h :Helptags<CR>
 nmap <Leader>l :BLines<CR>
 nmap <Leader>L :Lines<CR>
 nmap <Leader>g :Rg<cr>
@@ -179,22 +171,16 @@ nmap <Leader>g :Rg<cr>
 " augroup END " }
 inoremap <c-c> <ESC>
 " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" inoremap <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("<CR>", 'n') : "\<CR>")
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("<CR>", 'n') : "\<CR>")
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <c-space> coc#refresh()
 
 if has('patch8.1.1068')
   " Use `complete_info` if your (Neo)Vim version supports it.
@@ -203,96 +189,13 @@ else
   imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
-nmap <leader>rn <Plug>(coc-rename)
-" Formatting selected code.
-xmap <leader>F  <Plug>(coc-format-selected)
-nmap <leader>F  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for selections ranges.
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Mappings using CoCList:
-" Show all diagnostics.
-nnoremap <silent> <space>A  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent> <space>E  :<C-u>CocList extensions<cr>
-" Show commands.
-nnoremap <silent> <space>C  :<C-u>CocList commands<cr>
-" Find symbol of current document.
-nnoremap <silent> <space>O  :<C-u>CocList outline<cr>
-" Search workspace symbols.
-nnoremap <silent> <space>S  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>J  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>K  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent> <space>P  :<C-u>CocListResume<CR>
-
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " let g:AutoPairsFlyMode = 1
 let g:AutoPairsShortcutBackInsert = '<M-b>'
 " Press enter key to trigger snippet expansion
@@ -303,11 +206,12 @@ command! -nargs=* Vterm vsplit | terminal <args>
 autocmd CompleteDone * silent! pclose!
 autocmd FileType javascript set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
 
-" let g:LanguageClient_serverCommands = {
-"     \ 'rust': ['~/.local/share/cargo/bin/rustup', 'run', 'stable', 'rls'],
-"     \ 'python': ['/usr/bin/pyls'],
-"     \ 'javascript': ['/usr/bin/javascript-typescript-stdio'],
-"     \ }
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rust-analyzer'],
+    \ 'python': ['pyls'],
+    \ 'go': ['gopls'],
+    \ 'javascript': ['javascript-typescript-langserver'],
+    \ }
 
 " c-j c-k for moving in snippet
 let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
@@ -346,10 +250,10 @@ command! -bang -nargs=* Tags :call fzf#vim#tags(<q-args>, {'options': ['--no-rev
 
 
 " ncm2
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" function LightlineNeomake()
-"     return '%{neomake#statusline#LoclistStatus()}'
-" endfunction
+autocmd BufEnter * call ncm2#enable_for_buffer()
+function LightlineNeomake()
+    return '%{neomake#statusline#LoclistStatus()}'
+endfunction
 
 let g:lightline = {
           \ 'enable': {
@@ -361,9 +265,8 @@ let g:lightline = {
 
 let g:lightline.active = {
    \ 'left': [ [ 'mode', 'paste' ],
-   \           [ 'gitbranch', 'readonly', 'relativepath', 'modified'] ],
-   \ 'right': [ [ 'neomake' ],
-   \            [ 'lineinfo' ],
+   \           [ 'gitbranch', 'readonly', 'absolutepath', 'modified', 'method'] ],
+   \ 'right': [ [ 'lineinfo' ],
    \            [ 'percent' ],
    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
 let g:lightline.inactive = {
@@ -371,31 +274,24 @@ let g:lightline.inactive = {
    \ 'right': [ [ 'lineinfo' ],
    \            [ 'percent' ] ] }
 let g:lightline.tabline = {
-   \ 'left': [ [ 'bufferinfo' ], ['seperator'],
-   \           ['bufferbefore', 'buffercurrent', 'bufferafter' ],],
-   \ 'right': [ [ 'close' ] ] }
+   \ 'left': [ [ 'buffers' ] ] }
 
 let g:lightline.tab = {
     \ 'active': [ 'tabnum', 'filename', 'modified' ],
     \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
 let g:lightline.component_expand = {
-    \   'buffercurrent': 'lightline#buffer#buffercurrent',
-    \   'bufferbefore': 'lightline#buffer#bufferbefore',
-    \   'bufferafter': 'lightline#buffer#bufferafter',
-    \   'neomake': 'LightlineNeomake',
+    \ 'buffers': 'lightline#bufferline#buffers',
     \ }
 let g:lightline.component_type = {
-    \   'buffercurrent': 'tabsel',
-    \   'bufferbefore': 'raw',
-    \   'bufferafter': 'raw',
-    \   'neomake': 'error',
+    \   'buffers': 'tabsel',
     \ }
 let g:lightline.component_function = {
     \   'bufferinfo': 'lightline#buffer#bufferinfo',
     \   'filetype': 'MyFiletype',
     \   'fileformat': 'MyFileformat',
-    \   'gitbranch': 'fugitive#head'
+    \   'gitbranch': 'fugitive#head',
+    \   'method': 'NearestMethodOrFunction',
     \ }
 let g:lightline.component = {
     \   'separator': '',
@@ -407,6 +303,10 @@ endfunction
 
 function! MyFileformat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
 
 
@@ -441,6 +341,7 @@ let g:lightline_buffer_reservelen = 20
 
 
 
+" sneak.vim
 let g:sneak#s_next = 1
 let g:sneak#label = 1
 let g:sneak#prompt = '>>>'
@@ -476,9 +377,6 @@ let g:indentLine_bgcolor_gui = '#2e3440'
 " let g:indentLine_color_term = 234
 " let g:indentLine_color_gui = '#425550'
 
-" Neomake
-call neomake#configure#automake('w')
-autocmd User NeomakeJobFinished echom printf('%s exited with %d', g:neomake_hook_context.jobinfo.maker.name, g:neomake_hook_context.jobinfo.exit_code)
 
 " Vim pandoc
 let g:pandoc#syntax#conceal#urls=1
@@ -520,13 +418,13 @@ let g:startify_lists = [
       \ { 'type': 'sessions',  'header': ['   Sessions']       },
       \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
-let g:startify_session_before_save = [
-	\ 'TagbarClose',
-	\ ]
+" let g:startify_session_before_save = [
+" 	\ 'TagbarClose',
+" 	\ ]
 
 "Vim Header
 let g:header_field_author = 'Hitesh Paul'
-let g:header_field_author_email = 'hp1293@nyu.edu'
+let g:header_field_author_email = 'git@hiteshpaul.com'
 let g:header_auto_add_header = 0
 let g:header_field_timestamp_format = '%d.%m.%Y'
 
@@ -542,67 +440,28 @@ autocmd filetype python map <silent> <Leader>kq <Plug>(IPy-Terminate)
 autocmd filetype python map <silent> <Leader>kg <Plug>(IPy-Interrupt)
 
 
-"Neoformat
-" augroup fmt
-"   autocmd!
-"   au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | endtry
-"   " autocmd BufWritePre * undojoin | Neoformat
-" augroup END
 
-" augroup fmt
-"     autocmd!
-"     autocmd BufWritePre * undojoin | Neoformat
-" augroup END
-
-" Vebugger
-" let g:vebugger_leader='<Leader>d'
-
-" Echodoc
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'echo'
-
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
-let g:rust_use_custom_ctags_defs = 1  " if using rust.vim
-let g:tagbar_zoomwidth = 40
-let g:tagbar_autofocus = 1
-let g:tagbar_ctags_bin='/usr/bin/ctags'
-" autocmd FileType * nested :call tagbar#autoopen(0)
-let g:tagbar_type_rust = {
-  \ 'ctagsbin' : '/usr/bin/ctags',
-  \ 'ctagstype' : 'rust',
-  \ 'kinds' : [
-      \ 'n:modules',
-      \ 's:structures:1',
-      \ 'i:interfaces',
-      \ 'c:implementations',
-      \ 'f:functions:1',
-      \ 'g:enumerations:1',
-      \ 't:type aliases:1:0',
-      \ 'v:constants:1:0',
-      \ 'M:macros:1',
-      \ 'm:fields:1:0',
-      \ 'e:enum variants:1:0',
-      \ 'P:methods:1',
-  \ ],
-  \ 'sro': '::',
-  \ 'kind2scope' : {
-      \ 'n': 'module',
-      \ 's': 'struct',
-      \ 'i': 'interface',
-      \ 'c': 'implementation',
-      \ 'f': 'function',
-      \ 'g': 'enum',
-      \ 't': 'typedef',
-      \ 'v': 'variable',
-      \ 'M': 'macro',
-      \ 'm': 'field',
-      \ 'e': 'enumerator',
-      \ 'P': 'method',
-  \ },
-\ }
 
 
 " Leetcode
 let g:leetcode_browser='firefox'
 let g:leetcode_solution_filetype='python3'
+
+
+"Vimade
+let g:vimade = {}
+let g:vimade.fadelevel = 0.7
+let g:vimade.enablesigns = 1
+
+"Undotree
+let g:undotree_WindowLayout=2
+
+"Vista.vim
+let g:vista_default_executive = 'lcn'
+let g:vista_fzf_preview = ['right:50%']
+let g:vista_echo_cursor_strategy = "both"
+let g:vista_highlight_whole_line=1
+
+"nnn.vim
+let g:nnn#command = 'nnn -d -H -R'
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
