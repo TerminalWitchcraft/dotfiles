@@ -16,6 +16,7 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
 import qualified Codec.Binary.UTF8.String as UTF8
 
+import XMonad.Layout.WindowNavigation as WinNav
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Accordion
 import XMonad.Layout.ResizableTile
@@ -42,6 +43,11 @@ import qualified Data.Map as M
 import Control.Monad (liftM2)
 import qualified DBus as D
 import qualified DBus.Client as D
+import Data.List (sortBy)
+import Data.Function (on)
+import Control.Monad (forM_, join)
+import XMonad.Util.Run (safeSpawn)
+import XMonad.Util.NamedWindows (getName)
 
 setFullscreenSupported :: X ()
 setFullscreenSupported = withDisplay $ \dpy -> do
@@ -64,22 +70,22 @@ setFullscreenSupported = withDisplay $ \dpy -> do
 myLogHook :: D.Client -> PP
 myLogHook dbus = def
     { ppOutput = dbusOutput dbus
-    , ppCurrent = wrap ("%{u" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{-u}"
+    , ppCurrent = wrap ("%{F" ++ "#ffffff" ++ "} ") " %{F-}"
     , ppVisible = wrap ("%{B" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{B-}"
     -- , ppLayout = wrap ("%{B" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{B-}"
     , ppUrgent = wrap ("%{F" ++ "#fe8019" ++ "} ") " %{F-}"
     , ppHidden = wrap " " " "
-    , ppLayout = wrap ("%{u" ++ xmobarCurrentWorkspaceColor ++ "} ") " %{-u}"
+    , ppLayout = wrap " " " "
     , ppWsSep = ""
     , ppSep = " "
     , ppOrder = \(ws:a:t:_) -> [ws,a,t]
     , ppTitle = shorten 40
     }
-
-myLogHook2 :: X ()
-myLogHook2 = fadeInactiveLogHook fadeAmount
-    where fadeAmount = 0.8
--- Emit a DBus signal on log updates
+-- 
+-- myLogHook2 :: X ()
+-- myLogHook2 = fadeInactiveLogHook fadeAmount
+--     where fadeAmount = 0.8
+-- -- Emit a DBus signal on log updates
 dbusOutput :: D.Client -> String -> IO ()
 dbusOutput dbus str = do
     let signal = (D.signal objectPath interfaceName memberName) {
@@ -94,19 +100,21 @@ dbusOutput dbus str = do
 myStartupHook = do
     setFullscreenSupported
     spawn ".config/polybar/launch.sh"
-    spawnOn "Chat" "urxvt -e neomutt"
-    spawnOn "Chat" "urxvt -e weechat"
-    spawn myBrowser
+    spawn "notion-app"
+    spawn "firefox"
+    -- spawnOn "Chat" "urxvt -e neomutt"
+    -- spawnOn "Chat" "urxvt -e weechat"
+    -- spawn myBrowser
 
 
  
 myModMask = mod4Mask
 myFocusFollowsMouse = False
-myBrowser = "vivaldi-stable"
-myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
-myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
+myBrowser = "firefox"
+-- myTopBar = "xmobar ~/.config/xmobar/topbar.hs"
+-- myBottomBar = "xmobar ~/.config/xmobar/bottombar.hs"
 myBorderWidth = 2
-myTerminal = "alacritty"
+myTerminal = "kitty"
 myScreensaver = "i3lock-fancy"
 -- myWorkspaces = map show [1..9]
 myWorkspaces = ["Main", "Dev", "Web", "Chat", "Media", "Games", "Read", "Misc", "Scratch"]
@@ -127,8 +135,9 @@ xmobarCurrentWorkspaceColor = "#5DBCD2"
 -- window manipulations
 myManageHook = composeAll
     [ className =? "Chromium"       --> doShift "Web"
-    , className =? "Firefox"  --> viewShift "Web"
+    , className =? "firefox"  --> viewShift "Web"
     , className =? "qutebrowser"  --> viewShift "Web"
+    , className =? "Chrome"  --> viewShift "Web"
     -- , className =? "Mailspring"  --> viewShift "4"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
@@ -152,25 +161,32 @@ tabConfig = defaultTheme {
     inactiveBorderColor = "#7C7C7C",
     inactiveTextColor = "#EEEEEE",
     inactiveColor = "#282a36",
-	decoHeight = 48,
-	fontName = "xft:Iosevka Nerd Font:size=8"
+    decoHeight = 48,
+    fontName = "xft:Iosevka Nerd Font:size=8"
 }
 
-workspaceLayout = onWorkspace "Web" webLayout $ onWorkspace "Dev" devLayout $ defaultLayout
+workspaceLayout = onWorkspace "Web" webLayout $ onWorkspace "Dev" devLayout $ onWorkspace "Main" mainLayout $ defaultLayout
     where
         -- webLayout = avoidStrutsOn [U] (noBorders (Full (tabbed shrinkText tabConfig)) )
-        webLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (TwoPane (3/100) (1/2)) ||| noBorders (fullscreenFull webTabbed)
-        devLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (
-            ResizableTall 1 (3/100) (3/5) [] |||
+        webLayout = mkToggle (single NBFULL) $ 
+	    avoidStrutsOn [U] $ WinNav.windowNavigation (
+            	ThreeCol 1 (1/100) (1/2)  |||
+            	ResizableTall 1 (3/100) (3/5) []
+            	-- StackTile 3 (3/100) (4/5) 
+		) ||| 
+	    noBorders (fullscreenFull webTabbed)
+        devLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] $ WinNav.windowNavigation (
+            ThreeColMid 1 (1/100) (2/5)  |||
+            ThreeCol 1 (1/100) (2/5)  |||
+            ResizableTall 1 (1/100) (3/5) [] |||
             Mirror (ResizableTall 1 (3/100) (3/5) []) |||
             Accordion |||
-            StackTile 3 (3/100) (4/5) |||
-            ThreeCol 1 (3/100) (3/5)  |||
-            TwoPane (3/100) (3/5) |||
+            -- StackTile 3 (3/100) (4/5) |||
+            -- TwoPane (3/100) (3/5) |||
             tabbed shrinkText tabConfig |||
             spiral (6/7)  |||
             Grid(16/10) )
-        defaultLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] (
+        defaultLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] $ WinNav.windowNavigation (
             ResizableTall 1 (3/100) (1/2) [] |||
             -- simpleTabBar (simpleTabbed) |||
             tabbed shrinkText tabConfig |||
@@ -179,6 +195,14 @@ workspaceLayout = onWorkspace "Web" webLayout $ onWorkspace "Dev" devLayout $ de
             Grid(16/10) ||| 
             ThreeColMid 1 (3/100) (1/2) ) |||
             noBorders (fullscreenFull Full) 
+        mainLayout = mkToggle (single NBFULL) $ avoidStrutsOn [U] $ WinNav.windowNavigation (
+            -- simpleTabBar (simpleTabbed) |||
+            ThreeColMid 1 (3/100) (1/2) ) |||
+            ResizableTall 1 (3/100) (1/2) [] |||
+            Mirror (ResizableTall 1 (3/100) (1/2) []) |||
+            spiral (6/7)  |||
+            Grid(16/10) ||| 
+            tabbed shrinkText tabConfig
         webTabbed = tabbed shrinkText tabConfig ||| Grid(16/10)
 
 -- myLayout = avoidStrutsOn [U] (
@@ -298,17 +322,26 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_Tab),
      windows W.focusDown)
 
+  , ((modMask .|. shiftMask, xK_Tab),
+     windows W.focusUp)
+
   -- Move focus to the next window.
   , ((modMask, xK_j),
-     windows W.focusDown)
+     sendMessage $ Go WinNav.D)
 
   -- Move focus to the previous window.
   , ((modMask, xK_k),
-     windows W.focusUp  )
+     sendMessage $ Go WinNav.U)
+
+  , ((modMask, xK_h),
+     sendMessage $ Go WinNav.L)
+
+  , ((modMask, xK_l),
+     sendMessage $ Go WinNav.R)
 
   -- Move focus to the master window.
   , ((modMask, xK_m),
-     windows W.focusMaster  )
+     windows W.focusMaster)
 
   -- Swap the focused window and the master window.
   , ((modMask, xK_Return),
@@ -316,18 +349,24 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Swap the focused window with the next window.
   , ((modMask .|. shiftMask, xK_j),
-     windows W.swapDown  )
+     sendMessage $ Swap WinNav.D)
 
   -- Swap the focused window with the previous window.
   , ((modMask .|. shiftMask, xK_k),
-     windows W.swapUp    )
+     sendMessage $ Swap WinNav.U)
+
+  , ((modMask .|. shiftMask, xK_h),
+     sendMessage $ Swap WinNav.L)
+
+  , ((modMask .|. shiftMask, xK_l),
+     sendMessage $ Swap WinNav.R)
 
   -- Shrink the master area.
-  , ((modMask, xK_h),
+  , ((modMask .|. shiftMask, xK_comma),
      sendMessage Shrink)
 
   -- Expand the master area.
-  , ((modMask, xK_l),
+  , ((modMask .|. shiftMask, xK_period),
      sendMessage Expand)
 
   -- Push window back into tiling.
@@ -378,18 +417,32 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
+eventLogHook = do
+  winset <- gets windowset
+  title <- maybe (return "") (fmap show . getName) . W.peek $ winset
+  let currWs = W.currentTag winset
+  let wss = map W.tag $ W.workspaces winset
+  let wsStr = join $ map (fmt currWs) $ sort' wss
+
+  io $ appendFile "/tmp/.xmonad-title-log" (title ++ "\n")
+  io $ appendFile "/tmp/.xmonad-workspace-log" (wsStr ++ "\n")
+
+  where fmt currWs ws
+          | currWs == ws = " %{u#ff9900}" ++ ws ++ "%{-u} "
+          | otherwise    = " " ++ ws ++ " "
+        sort' = sortBy (compare `on` (!! 0))
+
 main :: IO ()
 main = do
 
     dbus <- D.connectSession
     -- Request access to the DBus name
     D.requestName dbus (D.busName_ "org.xmonad.Log")
-        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
-
+       [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
     xmonad . ewmh $
-            myBaseConfig
-                { logHook =  dynamicLogWithPP (myLogHook dbus)
+            myBaseConfig{
+  logHook =  dynamicLogWithPP (myLogHook dbus) 
 , startupHook = myStartupHook
 , terminal = myTerminal
 , layoutHook = smartBorders $ workspaceLayout
