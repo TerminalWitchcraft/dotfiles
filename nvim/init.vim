@@ -2,14 +2,17 @@ set nocompatible
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'psliwka/vim-smoothie'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'chaoren/vim-wordmotion'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'takac/vim-hardtime'
 Plug 'edkolev/tmuxline.vim'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
 Plug 'ianding1/leetcode.vim'
 " Plug 'vimwiki/vimwiki'
@@ -60,7 +63,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'lervag/vimtex'
 Plug 'alpertuna/vim-header'
 Plug 'junegunn/goyo.vim'
-Plug 'pgdouyon/vim-evanesco'
+" Plug 'pgdouyon/vim-evanesco'
 " Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-eunuch'
 Plug 'justinmk/vim-sneak'
@@ -112,6 +115,7 @@ set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 colorscheme palenight
 
 let mapleader=" "
+nnoremap <silent> <esc> :nohlsearch<cr> <esc>
 " " Copy to clipboard
 vnoremap  <leader>y  "+y
 nnoremap  <leader>Y  "+yg
@@ -158,6 +162,7 @@ nmap <Leader>v :Vista!!<CR>
 nmap <Leader>V :Vista focus<CR>
 " nmap <Leader>t :BTags<CR>
 nmap <Leader>t :call LanguageClient_textDocument_documentSymbol()<CR>
+nmap <Leader>T :call LanguageClient_workspace_symbol()<CR>
 nmap <Leader>m :Marks<CR>
 nmap <Leader>M :History:<CR>
 nmap <Leader>c :Commands<CR>
@@ -203,9 +208,10 @@ let g:AutoPairsShortcutBackInsert = '<M-b>'
 " inoremap <silent> <expr> <C-k> ncm2_ultisnips#expand_or("/<CR>", 'n')
 command! -nargs=* Term 10split | terminal <args>
 command! -nargs=* Vterm vsplit | terminal <args>
-autocmd CompleteDone * silent! pclose!
+" autocmd CompleteDone * silent! pclose!
 autocmd FileType javascript set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
 
+let g:LanguageClient_virtualTextPrefix=" ┆ [LSP] => "
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rust-analyzer'],
     \ 'python': ['pyls'],
@@ -465,3 +471,7 @@ let g:vista_highlight_whole_line=1
 "nnn.vim
 let g:nnn#command = 'nnn -d -H -R'
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+
+"Vim wordmotion
+let g:wordmotion_prefix = '<Bslash>'
+
